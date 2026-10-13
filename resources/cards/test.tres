@@ -1,10 +1,11 @@
-[gd_resource type="Resource" script_class="HealCardRes" format=3 uid="uid://dwbx4tnnowlac"]
+[gd_resource type="Resource" script_class="DamageCardRes" format=3 uid="uid://cbq8v5hf8lfx0"]
 
-[ext_resource type="Script" uid="uid://d001jyqasw4ul" path="res://scripts/tools/basescripts/heal_card_res.gd" id="1_mjrdj"]
-[ext_resource type="Texture2D" uid="uid://ckw3wms7yu1e1" path="res://assets/images/cards/test_tex.png" id="1_u2uun"]
+[ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="1_u2uun"]
+[ext_resource type="Script" uid="uid://iirghxdbe277" path="res://scripts/tools/basescripts/damage_card_res.gd" id="2_u2uun"]
 
 [resource]
-script = ExtResource("1_mjrdj")
-heal_amount = 666.0
-card_name = "Test"
+script = ExtResource("2_u2uun")
+damage_amount = 55.0
+damage_check = true
+card_name = "test"
 card_image = ExtResource("1_u2uun")

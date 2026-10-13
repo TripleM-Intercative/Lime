@@ -1,4 +1,4 @@
-extends HealCardBase
+extends DamageCardBase
 class_name Test
 
 func _init() -> void:

@@ -19,7 +19,7 @@ var buff_card_data: Structs.BuffCardData = Structs.BuffCardData.new()
 
 func _run():
 	window = Window.new()
-	EditorInterface.popup_dialog(window, Rect2(Vector2(100, 100), Vector2(300, 720)))
+	EditorInterface.popup_dialog(window, Rect2(Vector2(100, 100), Vector2(350, 720)))
 	
 	window.close_requested.connect(func():
 		window.queue_free())
@@ -59,6 +59,7 @@ func _on_card_type_selected(type: int):
 	clear_content()
 	create_name_input_layout()
 	create_image_input_layout()
+	create_heat_input()
 	
 	match card_type:
 		Enums.CardType.None:
@@ -121,6 +122,20 @@ func _on_file_selected(path: String) -> void:
 	else:
 		print("Error: CardBuilder could not load image")
 
+func create_heat_input():
+	var heat_input_container: HBoxContainer = HBoxContainer.new()
+	
+	var heat_drop_down = Utils.create_dropdown_input_with_enum(Enums.HeatCost, "Heat", 
+		func(value: Enums.HeatCost): base_card_data.heat_type = value)
+	
+	var heat_amount_input = Utils.create_int_input_field("Amount",
+		func(value: int): base_card_data.heat_amount = value)
+		
+	heat_input_container.add_child(heat_drop_down)
+	heat_input_container.add_child(heat_amount_input)
+	
+	content.add_child(heat_input_container)
+
 func create_name_input_layout():
 	var name_input_field: LineEdit = LineEdit.new()
 	name_input_field.placeholder_text = "Enter Card Name"
@@ -169,6 +184,8 @@ func create_card_resource() -> String:
 			card_res = set_up_buff_card_res()
 	
 	card_res.card_name = base_card_data.name_field.text
+	card_res.heat_cost = base_card_data.heat_type
+	card_res.heat_cost_amount = base_card_data.heat_amount
 	
 	var card_image_path: String 
 	card_image_path = Utils.safe_image_to_assets(base_card_data.image_pc_path, card_res.card_name)
@@ -213,7 +230,7 @@ func set_up_buff_card_res() -> BaseCardRes:
 func create_damage_input_layout():
 	var damage_amount_input: HBoxContainer = Utils.create_float_input_field("Damage amount:",
 		func(value: float): damage_card_data.amount = value)
-	var damage_checkbox_input: HBoxContainer = Utils.create_bool_input_field("Peter",
+	var damage_checkbox_input: HBoxContainer = Utils.create_bool_input_field("Checkbox",
 		func(value: bool): damage_card_data.check = value)
 	content.add_child(damage_amount_input)
 	content.add_child(damage_checkbox_input)

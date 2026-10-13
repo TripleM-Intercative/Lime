@@ -9,3 +9,5 @@ damage_amount = 55.0
 damage_check = true
 card_name = "test"
 card_image = ExtResource("1_u2uun")
+heat_cost = 1
+heat_cost_amount = 5

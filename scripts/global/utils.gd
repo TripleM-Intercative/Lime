@@ -97,8 +97,38 @@ static func create_bool_input_field(text: String, on_value_changed: Callable) ->
 	return container
 	
 	
+static func create_dropdown_input_with_enum(options, text: String, on_value_changed: Callable) -> VBoxContainer:
+	var container: VBoxContainer = VBoxContainer.new()
+	var dropdown: OptionButton = OptionButton.new()
+	var input_text: Label = Label.new()
 	
+	input_text.text = text
+	dropdown.item_selected.connect(on_value_changed)
 	
+	for option in options.keys():
+		dropdown.add_item(option)
+	
+	container.add_child(input_text)
+	container.add_child(dropdown)
+	
+	return container
+	
+static func create_int_input_field(text: String, on_value_changed: Callable) -> HBoxContainer:
+	var container: HBoxContainer = HBoxContainer.new()
+	var input_text: Label = Label.new()
+	var input_field: SpinBox = SpinBox.new()
+	
+	input_text.text = text
+	input_field.min_value = 0
+	input_field.max_value = INT_MAX
+	input_field.step = 1
+	
+	input_field.value_changed.connect(on_value_changed)
+	
+	container.add_child(input_text)
+	container.add_child(input_field)
+	
+	return container
 	
 	
 	

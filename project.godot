@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="Lime"
+run/main_scene="uid://daid1a8kuec7m"
 config/features=PackedStringArray("4.7", "Mobile")
 config/icon="res://icon.svg"
 
@@ -23,6 +24,11 @@ Structs="*uid://b5o0e25s7nqio"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
 
 [physics]
 

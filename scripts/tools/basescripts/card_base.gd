@@ -11,8 +11,8 @@ var card_data: BaseCardRes
 @onready var card_description_label: Label = $MarginContainer/VBoxContainer/CardDescription
 
 #Anims
-var scale_tween: Tween = create_tween()
-var move_tween: Tween = create_tween()
+var scale_tween: Tween
+var move_tween: Tween
 var origin_pos: Vector2 = self.position
 var base_z_index: int
 var is_clicked: bool = false
@@ -41,7 +41,6 @@ func init_card_ui() -> void:
 	heat_amount_label.text = str(card_data.heat_cost_amount)
 	origin_pos = self.position
 	base_z_index = self.z_index
-
 
 func _on_mouse_entered() -> void:
 	scale_card(Vector2(1.1, 1.1), 0.3)
@@ -73,13 +72,23 @@ func move_card(target: Vector2, duration: float, clicked: bool) -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		origin_pos = self.position
 		var target = calculat_card_target_pos()
 		move_card(target, 0.1, true)
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-		move_card(origin_pos, 0.1, false)
-		scale_card(Vector2(1,1), 0.3)
-		self.z_index = base_z_index
+		if is_in_activation_range() and is_clicked:
+			use_card()
+		else:
+			move_card(origin_pos, 0.1, false)
+			scale_card(Vector2(1,1), 0.3)
+			self.z_index = base_z_index
+	
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		if is_clicked:
+			move_card(origin_pos, 0.1, false)
+			scale_card(Vector2(1,1), 0.3)
+			self.z_index = base_z_index
 
 func calculat_card_target_pos() -> Vector2:
 	var target_pos: Vector2 = get_viewport().get_mouse_position() - self.size / 2
@@ -87,3 +96,15 @@ func calculat_card_target_pos() -> Vector2:
 
 func set_is_clicked(clicked: bool):
 	is_clicked = clicked
+
+func is_in_activation_range() -> bool :
+	var viewport_size: Vector2 = get_viewport().size
+	var activation_line: float = viewport_size.y * 0.7
+	if get_viewport().get_mouse_position().y < activation_line:
+		return true
+	else:
+		return false
+
+func use_card():
+	print("Used: " + card_data.card_name)
+	self.queue_free()

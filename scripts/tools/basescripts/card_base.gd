@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 class_name CardBase
 
@@ -10,10 +10,14 @@ var card_data: BaseCardRes
 @onready var card_name_label: Label = $MarginContainer/VBoxContainer/CardName
 @onready var card_description_label: Label = $MarginContainer/VBoxContainer/CardDescription
 
+signal card_used(card: CardBase)
+
 #Anims
 var scale_tween: Tween
 var move_tween: Tween
+var rotation_tween: Tween
 var origin_pos: Vector2 = self.position
+var origin_rotation: float
 var base_z_index: int
 var is_clicked: bool = false
 
@@ -43,12 +47,14 @@ func init_card_ui() -> void:
 	base_z_index = self.z_index
 
 func _on_mouse_entered() -> void:
-	scale_card(Vector2(1.1, 1.1), 0.3)
+	self.position.y -= self.size.y / 2
+	self.rotation_degrees = 0.0
 	self.z_index = 999
 
 
 func _on_mouse_exited() -> void:
-	scale_card(Vector2(1,1), 0.3)
+	self.position.y = origin_pos.y
+	self.rotation_degrees = origin_rotation
 	self.z_index = base_z_index
 
 func scale_card(target: Vector2, duration: float) -> void:
@@ -69,10 +75,17 @@ func move_card(target: Vector2, duration: float, clicked: bool) -> void:
 	
 	move_tween.finished.connect(set_is_clicked.bind(clicked))
 
+func rotate_card(target: float, duration: float) -> void:
+	if rotation_tween:
+		rotation_tween.kill()
+	rotation_tween = create_tween()
+	rotation_tween.set_ease(Tween.EASE_IN_OUT)
+	rotation_tween.set_trans(Tween.TRANS_SINE)
+	rotation_tween.tween_property(self, "rotation_degrees", target, duration)
+
 func _on_gui_input(event: InputEvent) -> void:
 	
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		origin_pos = self.position
 		var target = calculat_card_target_pos()
 		move_card(target, 0.1, true)
 	
@@ -87,7 +100,6 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		if is_clicked:
 			move_card(origin_pos, 0.1, false)
-			scale_card(Vector2(1,1), 0.3)
 			self.z_index = base_z_index
 
 func calculat_card_target_pos() -> Vector2:
@@ -98,7 +110,7 @@ func set_is_clicked(clicked: bool):
 	is_clicked = clicked
 
 func is_in_activation_range() -> bool :
-	var viewport_size: Vector2 = get_viewport().size
+	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
 	var activation_line: float = viewport_size.y * 0.7
 	if get_viewport().get_mouse_position().y < activation_line:
 		return true
@@ -106,5 +118,6 @@ func is_in_activation_range() -> bool :
 		return false
 
 func use_card():
+	card_used.emit(self)
 	print("Used: " + card_data.card_name)
 	self.queue_free()

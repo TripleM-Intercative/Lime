@@ -1,6 +1,40 @@
 [gd_scene format=3 uid="uid://daid1a8kuec7m"]
 
 [ext_resource type="Script" uid="uid://dclh8yx1rvhfc" path="res://scripts/ui/main_menu.gd" id="1_sl1te"]
+[ext_resource type="Shader" uid="uid://it2c2h6e5qsi" path="res://shader/planet.gdshader" id="2_fe2o3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f5ddx"]
+shader = ExtResource("2_fe2o3")
+shader_parameter/planet_radius = 0.4
+shader_parameter/cloud_radius = 0.45
+shader_parameter/planet_cell_amount = 10
+shader_parameter/cloud_cell_amount = 10
+shader_parameter/planet_period = Vector3(9.5, 9.5, 9.5)
+shader_parameter/cloud_period = Vector3(9.5, 9.5, 9.5)
+shader_parameter/planet_seed = Vector3(0, 0, 0)
+shader_parameter/cloud_seed = Vector3(2, 2, 2)
+shader_parameter/rotation = Vector3(1, 1, 0)
+shader_parameter/rotation_speed = 0.1
+shader_parameter/planet_threshold_0_ = 0.44
+shader_parameter/planet_color_0_ = Color(0.114, 0.306, 0.537, 1)
+shader_parameter/planet_threshold_1_ = 0.5
+shader_parameter/planet_color_1_ = Color(0, 0.698, 0.792, 1)
+shader_parameter/planet_threshold_2_ = 0.54
+shader_parameter/planet_color_2_ = Color(0.984, 0.82, 0.635, 1)
+shader_parameter/planet_threshold_3_ = 0.58
+shader_parameter/planet_color_3_ = Color(0.968, 0.573, 0.337, 1)
+shader_parameter/planet_threshold_4_ = 0.69
+shader_parameter/planet_color_4_ = Color(0.2, 0.792, 0.498, 1)
+shader_parameter/planet_threshold_5_ = 1.0
+shader_parameter/planet_color_5_ = Color(0.078, 0.349, 0.114, 1)
+shader_parameter/cloud_threshold_0_ = 0.5
+shader_parameter/cloud_color_0_ = Color(0, 0, 0, 0)
+shader_parameter/cloud_threshold_1_ = 0.6
+shader_parameter/cloud_color_1_ = Color(0.5, 0.5, 0.5, 0.5)
+shader_parameter/cloud_threshold_2_ = 0.62
+shader_parameter/cloud_color_2_ = Color(0.8, 0.8, 0.8, 0.8)
+shader_parameter/cloud_threshold_3_ = 1.0
+shader_parameter/cloud_color_3_ = Color(1, 1, 1, 1)
 
 [node name="Control" type="Control" unique_id=675810772]
 layout_mode = 3
@@ -10,6 +44,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sl1te")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2080691515]
+material = SubResource("ShaderMaterial_f5ddx")
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -523.0
+offset_top = -452.0
+offset_right = 128.0
+offset_bottom = 199.0
+grow_horizontal = 0
+grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1435512148]
 layout_mode = 1
@@ -43,7 +92,6 @@ text = "Credits
 layout_mode = 2
 text = "Quit"
 
-[connection signal="focus_entered" from="VBoxContainer/StartButton" to="." method="_on_start_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_credits_pressed"]

@@ -101,19 +101,16 @@ func _on_gui_input(event: InputEvent) -> void:
 			move_card(origin_offset, 0.1, false)
 			self.z_index = base_z_index
 
-# Offset, mit dem die Kartenmitte unter dem Mauszeiger liegt
 func calculat_card_target_pos() -> Vector2:
 	var target_global: Vector2 = get_global_mouse_position() - self.size / 2
 	return target_global - get_layout_global_pos()
 
-# Globale Position des Platzes, den der Container der Karte zuweist (ohne Offset)
 func get_layout_global_pos() -> Vector2:
 	var parent_control: Control = get_parent() as Control
 	if parent_control:
 		return parent_control.global_position + self.position
 	return self.position
 
-# Globale Position, an der die Karte gerade tatsächlich zu sehen ist
 func get_visual_global_pos() -> Vector2:
 	return get_layout_global_pos() + self.offset_transform_position
 
@@ -132,3 +129,9 @@ func use_card():
 	card_used.emit(self)
 	print("Used: " + card_data.card_name)
 	#self.queue_free()
+
+func reset_card():
+	is_clicked = false
+	scale = Vector2.ONE
+	offset_transform_position = Vector2.ZERO
+	offset_transform_rotation = 0.0

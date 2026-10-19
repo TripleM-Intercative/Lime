@@ -26,6 +26,10 @@ var card_size: Vector2
 
 var spawn_positions: Dictionary = {}
 
+#For Testing
+var draw_deck_text: Label = Label.new()
+var discard_pile_text: Label = Label.new()
+
 
 func _init() -> void:
 	set_up_card_pool()
@@ -34,6 +38,8 @@ func _init() -> void:
 func _ready() -> void:
 	viewport_size = get_viewport().get_visible_rect().size
 	init_card_deck()
+	create_deck_visuals()
+	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func init_card_deck() -> void:
@@ -122,16 +128,21 @@ func create_random_deck(amount: int) -> void:
 
 
 func add_card_to_hand(card: CardBase) -> void:
+	card.reset_card()
 	current_hand.append(card)
 	spawn_positions[card] = Vector2(0, viewport_size.y)
 	deck_container.add_child(card)
+	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func draw_cards(amount: int) -> void:
+	if(draw_deck.is_empty()):
+		shuffle_to_draw_deck()
 	for i in range(amount):
 		if draw_deck.is_empty():
 			break
 		add_card_to_hand(draw_deck.pop_back())
+	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func get_random_cards_form_deck(amount: int) -> void:
@@ -141,6 +152,7 @@ func get_random_cards_form_deck(amount: int) -> void:
 		var card_index: int = randi_range(0, draw_deck.size() - 1)
 		add_card_to_hand(draw_deck.pop_at(card_index))
 	organize_hand()
+	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func move_card_to_discard_pile(card: CardBase) -> void:
@@ -149,11 +161,12 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 		return
 	current_hand.remove_at(card_index)
 	discard_pile.append(card)
-	spawn_positions.erase(card)
+	#spawn_positions.erase(card)
 	deck_container.remove_child(card)
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)
 	organize_hand()
+	discard_pile_text.text = "Grave: " + str(discard_pile.size())
 
 
 func remove_card_from_deck(card: CardBase) -> void:
@@ -166,6 +179,15 @@ func remove_card_from_deck(card: CardBase) -> void:
 		deck_container.remove_child(card)
 	organize_hand()
 
+func shuffle_to_draw_deck():
+	if discard_pile.is_empty():
+		return
+	discard_pile.shuffle()
+	for i in range(discard_pile.size() -1, -1 , -1):
+		draw_deck.push_front(discard_pile[i])
+		discard_pile.remove_at(i)
+	discard_pile_text.text = str(discard_pile.size())
+	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 func get_random_pos_above_screen(max_distance: float) -> Vector2:
 	var x: float = randf_range(0.0, viewport_size.x)
@@ -178,3 +200,37 @@ func calculate_card_spacing(card_count: int) -> float:
 		return 0.0
 	var spacing: float = MAX_HAND_WIDTH / (card_count - 1)
 	return clampf(spacing, MIN_SPACING, MAX_SPACING)
+
+func create_deck_visuals():
+	draw_deck_text= Label.new()
+	discard_pile_text = Label.new()
+	
+	draw_deck_text.size = Vector2(150,50)
+	draw_deck_text.position = Vector2(0, viewport_size.y - draw_deck_text.size.y)
+	
+	discard_pile_text.size = Vector2(50,50)
+	discard_pile_text.position = Vector2(viewport_size.x - discard_pile_text.size.x * 2, viewport_size.y - discard_pile_text.size.y)
+	
+	draw_deck_text.text = "[Draw]"
+	discard_pile_text.text = "[Discard]"
+	
+	get_tree().current_scene.add_child.call_deferred(draw_deck_text)
+	get_tree().current_scene.add_child.call_deferred(discard_pile_text)
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

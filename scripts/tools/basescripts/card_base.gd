@@ -16,7 +16,7 @@ signal card_used(card: CardBase)
 var scale_tween: Tween
 var move_tween: Tween
 var rotation_tween: Tween
-var origin_pos: Vector2 = self.position
+var origin_offset: Vector2 = Vector2.ZERO
 var origin_rotation: float
 var base_z_index: int
 var is_clicked: bool = false
@@ -27,13 +27,13 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if is_clicked:
-		self.position = calculat_card_target_pos()
+		self.offset_transform_position = calculat_card_target_pos()
 
 func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
 	card_name_label.text = card_data.card_name
 	card_description_label.text = "Sehr toll Karte, mit der man ganz viel Spaß hat!!"
-	
+
 	match card_data.heat_cost:
 		Enums.HeatCost.NoCost:
 			heat_icon_rect.texture = load("res://assets/default_card_image.png")
@@ -41,20 +41,19 @@ func init_card_ui() -> void:
 			heat_icon_rect.texture = load("res://assets/images/test_heat_icon.png")
 		Enums.HeatCost.Cooldown:
 			heat_icon_rect.texture = load("res://assets/images/test_cooldown_icon.png")
-	
+
 	heat_amount_label.text = str(card_data.heat_cost_amount)
-	origin_pos = self.position
 	base_z_index = self.z_index
 
 func _on_mouse_entered() -> void:
-	self.position.y -= self.size.y / 2
-	self.rotation_degrees = 0.0
+	self.offset_transform_position.y = origin_offset.y - self.size.y / 2
+	self.offset_transform_rotation = 0.0
 	self.z_index = 999
 
 
 func _on_mouse_exited() -> void:
-	self.position.y = origin_pos.y
-	self.rotation_degrees = origin_rotation
+	self.offset_transform_position.y = origin_offset.y
+	self.offset_transform_rotation = deg_to_rad(origin_rotation)
 	self.z_index = base_z_index
 
 func scale_card(target: Vector2, duration: float) -> void:
@@ -71,8 +70,8 @@ func move_card(target: Vector2, duration: float, clicked: bool) -> void:
 	move_tween = create_tween()
 	move_tween.set_ease(Tween.EASE_IN_OUT)
 	move_tween.set_trans(Tween.TRANS_SINE)
-	move_tween.tween_property(self, "position", target, duration)
-	
+	move_tween.tween_property(self, "offset_transform_position", target, duration)
+
 	move_tween.finished.connect(set_is_clicked.bind(clicked))
 
 func rotate_card(target: float, duration: float) -> void:
@@ -81,30 +80,42 @@ func rotate_card(target: float, duration: float) -> void:
 	rotation_tween = create_tween()
 	rotation_tween.set_ease(Tween.EASE_IN_OUT)
 	rotation_tween.set_trans(Tween.TRANS_SINE)
-	rotation_tween.tween_property(self, "rotation_degrees", target, duration)
+	rotation_tween.tween_property(self, "offset_transform_rotation", deg_to_rad(target), duration)
 
 func _on_gui_input(event: InputEvent) -> void:
-	
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var target = calculat_card_target_pos()
 		move_card(target, 0.1, true)
-	
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		if is_in_activation_range() and is_clicked:
 			use_card()
 		else:
-			move_card(origin_pos, 0.1, false)
+			move_card(origin_offset, 0.1, false)
 			scale_card(Vector2(1,1), 0.3)
 			self.z_index = base_z_index
-	
+
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		if is_clicked:
-			move_card(origin_pos, 0.1, false)
+			move_card(origin_offset, 0.1, false)
 			self.z_index = base_z_index
 
+# Offset, mit dem die Kartenmitte unter dem Mauszeiger liegt
 func calculat_card_target_pos() -> Vector2:
-	var target_pos: Vector2 = get_viewport().get_mouse_position() - self.size / 2
-	return target_pos
+	var target_global: Vector2 = get_global_mouse_position() - self.size / 2
+	return target_global - get_layout_global_pos()
+
+# Globale Position des Platzes, den der Container der Karte zuweist (ohne Offset)
+func get_layout_global_pos() -> Vector2:
+	var parent_control: Control = get_parent() as Control
+	if parent_control:
+		return parent_control.global_position + self.position
+	return self.position
+
+# Globale Position, an der die Karte gerade tatsächlich zu sehen ist
+func get_visual_global_pos() -> Vector2:
+	return get_layout_global_pos() + self.offset_transform_position
 
 func set_is_clicked(clicked: bool):
 	is_clicked = clicked
@@ -120,4 +131,4 @@ func is_in_activation_range() -> bool :
 func use_card():
 	card_used.emit(self)
 	print("Used: " + card_data.card_name)
-	self.queue_free()
+	#self.queue_free()

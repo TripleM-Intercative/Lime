@@ -36,6 +36,8 @@ shader_parameter/cloud_color_2_ = Color(0.8, 0.8, 0.8, 0.8)
 shader_parameter/cloud_threshold_3_ = 1.0
 shader_parameter/cloud_color_3_ = Color(1, 1, 1, 1)
 
+[sub_resource type="Theme" id="Theme_lwawy"]
+
 [node name="Control" type="Control" unique_id=675810772]
 layout_mode = 3
 anchors_preset = 15
@@ -77,6 +79,7 @@ grow_vertical = 2
 [node name="StartButton" type="Button" parent="VBoxContainer" unique_id=1042983443]
 layout_mode = 2
 offset_transform_enabled = true
+theme = SubResource("Theme_lwawy")
 text = "Start Game"
 
 [node name="OptionsButton" type="Button" parent="VBoxContainer" unique_id=703611467]

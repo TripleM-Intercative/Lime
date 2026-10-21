@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/noahf/Projects/games/lime/cmake_install.cmake",
+		"/home/noahf/Projects/games/lime/godot-cpp/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

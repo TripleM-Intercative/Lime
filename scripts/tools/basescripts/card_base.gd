@@ -16,6 +16,8 @@ signal card_used(card: CardBase)
 var scale_tween: Tween
 var move_tween: Tween
 var rotation_tween: Tween
+
+var viewport_size: Vector2
 var origin_offset: Vector2 = Vector2.ZERO
 var origin_rotation: float
 var base_z_index: int
@@ -24,6 +26,7 @@ var is_clicked: bool = false
 func _ready() -> void:
 	if card_data:
 		init_card_ui()
+	viewport_size = get_viewport().get_visible_rect().size
 
 func _process(delta: float) -> void:
 	if is_clicked:
@@ -32,7 +35,7 @@ func _process(delta: float) -> void:
 func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
 	card_name_label.text = card_data.card_name
-	card_description_label.text = "Sehr toll Karte, mit der man ganz viel Spaß hat!!"
+	card_description_label.text = "Sehr tolle Karte, mit der man ganz viel Spaß hat!!"
 
 	match card_data.heat_cost:
 		Enums.HeatCost.NoCost:
@@ -46,7 +49,12 @@ func init_card_ui() -> void:
 	base_z_index = self.z_index
 
 func _on_mouse_entered() -> void:
-	self.offset_transform_position.y = origin_offset.y - self.size.y / 2
+	if rotation_tween:
+		rotation_tween.kill()
+	if move_tween:
+		move_tween.kill()
+	var target_global_y: float = viewport_size.y - self.size.y
+	self.offset_transform_position.y = target_global_y - get_layout_global_pos().y
 	self.offset_transform_rotation = 0.0
 	self.z_index = 999
 
@@ -83,7 +91,6 @@ func rotate_card(target: float, duration: float) -> void:
 	rotation_tween.tween_property(self, "offset_transform_rotation", deg_to_rad(target), duration)
 
 func _on_gui_input(event: InputEvent) -> void:
-
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		var target = calculat_card_target_pos()
 		move_card(target, 0.1, true)

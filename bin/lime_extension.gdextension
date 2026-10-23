@@ -6,12 +6,12 @@ reloadable = true
 
 [libraries]
 
-macos.debug = "./lime_extension.macos.template_debug.dylib"
-macos.release = "./lime_extension.macos.template_release.dylib"
-windows.debug.x86_32 = "./gdexample.windows.template_debug.x86_32.dll"
-windows.release.x86_32 = "./gdexample.windows.template_release.x86_32.dll"
-windows.debug.x86_64 = "./gdexample.windows.template_debug.x86_64.dll"
-windows.release.x86_64 = "./gdexample.windows.template_release.x86_64.dll"
+macos.debug = "./macos/lime_extension.macos.template_debug.dylib"
+macos.release = "./macos/lime_extension.macos.template_release.dylib"
+windows.debug.x86_32 = "./windows/lime_extension.windows.template_debug.x86_32.dll"
+windows.release.x86_32 = "./windows/lime_extension.windows.template_release.x86_32.dll"
+windows.debug.x86_64 = "./windows/lime_extension.windows.template_debug.x86_64.dll"
+windows.release.x86_64 = "./windows/lime_extension.windows.template_release.x86_64.dll"
 linux.debug.x86_64 = "./linux/lime_extension.linux.template_debug.x86_64.so"
 linux.release.x86_64 = "./linux/lime_extension.linux.template_release.x86_64.so"
 linux.debug.arm64 = "./linux/lime_extension.linux.template_debug.arm64.so"

@@ -1,7 +1,6 @@
-/home/noahf/Projects/games/lime/CMakeFiles/lime_extension.dir
-/home/noahf/Projects/games/lime/CMakeFiles/edit_cache.dir
-/home/noahf/Projects/games/lime/CMakeFiles/rebuild_cache.dir
-/home/noahf/Projects/games/lime/godot-cpp/CMakeFiles/generate_bindings.dir
-/home/noahf/Projects/games/lime/godot-cpp/CMakeFiles/godot-cpp.dir
-/home/noahf/Projects/games/lime/godot-cpp/CMakeFiles/edit_cache.dir
-/home/noahf/Projects/games/lime/godot-cpp/CMakeFiles/rebuild_cache.dir
+C:/Users/Admin/Documents/Projects/Lime/CMakeFiles/lime_extension.dir
+C:/Users/Admin/Documents/Projects/Lime/CMakeFiles/ALL_BUILD.dir
+C:/Users/Admin/Documents/Projects/Lime/CMakeFiles/ZERO_CHECK.dir
+C:/Users/Admin/Documents/Projects/Lime/godot-cpp/CMakeFiles/generate_bindings.dir
+C:/Users/Admin/Documents/Projects/Lime/godot-cpp/CMakeFiles/godot-cpp.dir
+C:/Users/Admin/Documents/Projects/Lime/godot-cpp/CMakeFiles/ALL_BUILD.dir

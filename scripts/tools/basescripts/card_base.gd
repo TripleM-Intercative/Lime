@@ -125,7 +125,7 @@ func set_is_clicked(clicked: bool):
 	is_clicked = clicked
 
 func is_in_activation_range() -> bool :
-	var viewport_size: Vector2 = get_viewport().get_visible_rect().size
+	viewport_size = get_viewport().get_visible_rect().size
 	var activation_line: float = viewport_size.y * 0.7
 	if get_viewport().get_mouse_position().y < activation_line:
 		return true

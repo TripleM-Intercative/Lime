@@ -6,6 +6,7 @@
 [ext_resource type="Shader" uid="uid://dr5868mg3mrf" path="res://shader/screen_transition.gdshader" id="4_btxxm"]
 [ext_resource type="Script" uid="uid://bahktj8wkuw5r" path="res://scripts/ui/screen_transition.gd" id="5_wb0q5"]
 [ext_resource type="Texture2D" uid="uid://blr5dfa0yx2w7" path="res://assets/images/space_foreground.png" id="6_q85j6"]
+[ext_resource type="Shader" uid="uid://bp0bq1wv7us3y" path="res://shader/holo.gdshader" id="7_btxxm"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f5ddx"]
 shader = ExtResource("2_fe2o3")
@@ -55,8 +56,8 @@ shader_parameter/atmosphere_density = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uhagc"]
 shader = ExtResource("4_btxxm")
-shader_parameter/size = Vector2(0, 0)
-shader_parameter/cell_size = 20.0
+shader_parameter/size = Vector2(1283, 722)
+shader_parameter/cell_size = 40.0
 shader_parameter/cell_offset = Vector2(0, 0)
 shader_parameter/cell_color = Color(0, 0, 0, 1)
 shader_parameter/effect_origin = Vector2(0.5, 0.5)
@@ -70,7 +71,19 @@ shader_parameter/effect_rotation_offset = 0.6
 shader_parameter/light_direction = Vector3(1, 0, 0)
 shader_parameter/light_color = Color(0.3, 0.3, 0.3, 1)
 shader_parameter/gradient_scale = 2.0
-shader_parameter/dobble_light = false
+shader_parameter/dobble_light = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_btxxm"]
+shader = ExtResource("7_btxxm")
+shader_parameter/tint = Color(0.35, 0.9, 1, 1)
+shader_parameter/opacity = 0.75
+shader_parameter/edge_glow = 1.4
+shader_parameter/line_count = 10.0
+shader_parameter/line_strength = 0.45
+shader_parameter/scroll_speed = 0.6
+shader_parameter/flicker = 0.15
+shader_parameter/glitch = 0.35
+shader_parameter/glitch_shift = 0.04
 
 [sub_resource type="Theme" id="Theme_lwawy"]
 
@@ -83,9 +96,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_sl1te")
 
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=876402350]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=455226083]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("2_uhagc")
-centered = false
+expand_mode = 1
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=2080691515]
 material = SubResource("ShaderMaterial_f5ddx")
@@ -108,13 +127,21 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 7.0
+offset_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_wb0q5")
 
-[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=13244245]
+[node name="TextureRect" type="TextureRect" parent="." unique_id=91843640]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 texture = ExtResource("6_q85j6")
-centered = false
+expand_mode = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1435512148]
 layout_mode = 1
@@ -131,6 +158,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="StartButton" type="Button" parent="VBoxContainer" unique_id=1042983443]
+material = SubResource("ShaderMaterial_btxxm")
 layout_mode = 2
 offset_transform_enabled = true
 theme = SubResource("Theme_lwawy")

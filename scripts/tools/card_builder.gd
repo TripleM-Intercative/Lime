@@ -232,8 +232,14 @@ func create_damage_input_layout():
 		func(value: float): damage_card_data.amount = value)
 	var damage_checkbox_input: HBoxContainer = Utils.create_bool_input_field("Checkbox",
 		func(value: bool): damage_card_data.check = value)
+	var grid_selector: GridSelector = GridSelector.new()
+	grid_selector.set_grid_positions.connect(set_target_cells)
+	var edit_grid_button: Button = Button.new()
+	edit_grid_button.text = "Edit Grid"
+	edit_grid_button.pressed.connect(grid_selector.edit_grid)
 	content.add_child(damage_amount_input)
 	content.add_child(damage_checkbox_input)
+	content.add_child(edit_grid_button)
 
 func create_heal_input_layout():
 	var damage_amount_input: HBoxContainer = Utils.create_float_input_field("Heal amount:",
@@ -250,7 +256,12 @@ func create_buff_input_layout():
 		func(value: float): buff_card_data.amount = value)
 	content.add_child(damage_amount_input)
 	
-	
+func set_target_cells(positions: Array[Vector2], origin: Vector2):
+	base_card_data.target_cells.clear()
+	for pos in positions:
+		base_card_data.target_cells.append(pos - origin)
+	print(positions)
+	print(base_card_data.target_cells)
 	
 	
 	

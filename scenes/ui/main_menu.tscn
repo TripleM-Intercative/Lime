@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dclh8yx1rvhfc" path="res://scripts/ui/main_menu.gd" id="1_sl1te"]
 [ext_resource type="Script" uid="uid://dsti8gklbnp6i" path="res://scripts/deck.gd" id="2_uhagc"]
-[ext_resource type="Script" uid="uid://dnhwfg84u6wvk" path="res://scripts/tools/grid_selector.gd" id="3_1g8jr"]
 
 [node name="Control" type="Control" unique_id=675810772]
 layout_mode = 3
@@ -47,9 +46,6 @@ text = "Quit"
 
 [node name="TestDeck" type="Node" parent="." unique_id=1267608740]
 script = ExtResource("2_uhagc")
-
-[node name="Node" type="Node" parent="TestDeck" unique_id=729437580]
-script = ExtResource("3_1g8jr")
 
 [connection signal="focus_entered" from="VBoxContainer/StartButton" to="." method="_on_start_button_focus_entered"]
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_pressed"]

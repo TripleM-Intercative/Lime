@@ -260,8 +260,7 @@ func set_target_cells(positions: Array[Vector2], origin: Vector2):
 	base_card_data.target_cells.clear()
 	for pos in positions:
 		base_card_data.target_cells.append(pos - origin)
-	print(positions)
-	print(base_card_data.target_cells)
+	
 	
 	
 	

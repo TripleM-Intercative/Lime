@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://bk4tevy02ar3r"]
+
+[ext_resource type="Texture2D" uid="uid://dieq3xcpmsl02" path="res://assets/images/cards/bestcard_tex.png" id="1_ihh1y"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_tp7la"]
+[ext_resource type="Script" uid="uid://dc8pmj10prp8e" path="res://scripts/effects/guardian_effect.gd" id="3_n7rs8"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_e675u"]
+
+[sub_resource type="Resource" id="Resource_ghwhr"]
+script = ExtResource("3_n7rs8")
+amount = 123.0
+
+[resource]
+script = ExtResource("4_e675u")
+card_name = "BestCard"
+card_image = ExtResource("1_ihh1y")
+heat_cost = 2
+heat_cost_amount = 3
+target_cells = Array[Vector2]([Vector2(-1, 0), Vector2(0, 0), Vector2(1, 0)])
+effects = Array[ExtResource("2_tp7la")]([SubResource("Resource_ghwhr")])

@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bahktj8wkuw5r" path="res://scripts/ui/screen_transition.gd" id="5_wb0q5"]
 [ext_resource type="Texture2D" uid="uid://blr5dfa0yx2w7" path="res://assets/images/space_foreground.png" id="6_q85j6"]
 [ext_resource type="Shader" uid="uid://bp0bq1wv7us3y" path="res://shader/holo.gdshader" id="7_btxxm"]
+[ext_resource type="Script" uid="uid://dsti8gklbnp6i" path="res://scripts/deck.gd" id="8_wb0q5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f5ddx"]
 shader = ExtResource("2_fe2o3")
@@ -56,12 +57,12 @@ shader_parameter/atmosphere_density = 2.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uhagc"]
 shader = ExtResource("4_btxxm")
-shader_parameter/size = Vector2(1283, 722)
+shader_parameter/size = Vector2(1159, 649)
 shader_parameter/cell_size = 40.0
 shader_parameter/cell_offset = Vector2(0, 0)
 shader_parameter/cell_color = Color(0, 0, 0, 1)
 shader_parameter/effect_origin = Vector2(0.5, 0.5)
-shader_parameter/effect_value = 0.0
+shader_parameter/effect_value = 1.0
 shader_parameter/effect_length = Vector2(50, 100)
 shader_parameter/effect_delay = 0.05
 shader_parameter/target_rotation = 0.05
@@ -176,6 +177,9 @@ text = "Credits
 [node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=1569704766]
 layout_mode = 2
 text = "Quit"
+
+[node name="Node" type="Node" parent="." unique_id=302825182]
+script = ExtResource("8_wb0q5")
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]

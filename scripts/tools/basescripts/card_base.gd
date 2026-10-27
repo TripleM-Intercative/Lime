@@ -35,7 +35,7 @@ func _process(delta: float) -> void:
 func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
 	card_name_label.text = card_data.card_name
-	card_description_label.text = "Sehr tolle Karte, mit der man ganz viel Spaﬂ hat!!"
+	card_description_label.text = "Sehr tolle Karte, mit der man ganz viel Spa√ü hat!!"
 
 	match card_data.heat_cost:
 		Enums.HeatCost.NoCost:

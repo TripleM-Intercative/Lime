@@ -133,6 +133,8 @@ func is_in_activation_range() -> bool :
 		return false
 
 func use_card():
+	for effect: CardEffect in card_data.effects:
+		effect.apply(self)
 	card_used.emit(self)
 	print("Used: " + card_data.card_name)
 	#self.queue_free()

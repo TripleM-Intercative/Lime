@@ -22,7 +22,7 @@ static func safe_image_to_assets(source: String, save_name: String) -> String:
 	if error == OK:
 		
 		if Engine.is_editor_hint():
-			var fs := EditorInterface.get_resource_filesystem()
+			var fs: EditorFileSystem = EditorInterface.get_resource_filesystem()
 			fs.update_file(full_path)
 			fs.reimport_files(PackedStringArray([full_path]))
 		
@@ -31,30 +31,18 @@ static func safe_image_to_assets(source: String, save_name: String) -> String:
 		print("Failed to copy file. Error code: ", error)
 		return DEFAULT_CARD_IMAGE
 
-static func create_card_script(card_name: String, resource_path: String, card_type: Enums.CardType) -> String:
+static func create_card_script(card_name: String, resource_path: String) -> String:
 	var full_path: String = CARD_SCRIPT_PATH + card_name.to_snake_case() + "_card.gd"
 
 	if not DirAccess.dir_exists_absolute(CARD_SCRIPT_PATH):
 		DirAccess.make_dir_recursive_absolute(CARD_SCRIPT_PATH)
 
-	var file := FileAccess.open(full_path, FileAccess.WRITE)
+	var file: FileAccess = FileAccess.open(full_path, FileAccess.WRITE)
 	if file == null:
 		print("Failed to create card script. Error code: ", FileAccess.get_open_error())
 		return ""
 	
-	var parent_card_class: String
-	
-	match card_type:
-		Enums.CardType.None:
-			parent_card_class = "CardBase"
-		Enums.CardType.Damage:
-			parent_card_class = "DamageCardBase"
-		Enums.CardType.Heal:
-			parent_card_class = "HealCardBase"
-		Enums.CardType.Aura:
-			parent_card_class = "AuraCardBase"
-		Enums.CardType.Buff:
-			parent_card_class = "BuffCardBase"
+	var parent_card_class: String = "CardBase"
 	
 	var new_script_class_name: String = card_name.to_pascal_case()
 

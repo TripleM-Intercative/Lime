@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://bb1y1stamete4"]
+
+[ext_resource type="Texture2D" uid="uid://fpuvr67hkvl0" path="res://assets/images/cards/newcard_tex.png" id="1_nej2e"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_kyoa3"]
+[ext_resource type="Script" uid="uid://ca8i5mdaplfnr" path="res://scripts/effects/damage_effect.gd" id="3_wlta4"]
+[ext_resource type="Script" uid="uid://dnclnten8i4rt" path="res://scripts/effects/heal_effect.gd" id="4_bvqih"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="5_bcres"]
+
+[sub_resource type="Resource" id="Resource_7yrll"]
+script = ExtResource("3_wlta4")
+amount = 50.0
+
+[sub_resource type="Resource" id="Resource_00ddr"]
+script = ExtResource("4_bvqih")
+
+[resource]
+script = ExtResource("5_bcres")
+card_name = "NewCard"
+card_image = ExtResource("1_nej2e")
+heat_cost = 1
+heat_cost_amount = 5
+target_cells = Array[Vector2]([Vector2(-2, -1), Vector2(-2, 0), Vector2(-2, 1), Vector2(-1, -2), Vector2(-1, -1), Vector2(-1, 0), Vector2(-1, 1), Vector2(-1, 2), Vector2(0, -2), Vector2(0, -1), Vector2(0, 0), Vector2(0, 1), Vector2(0, 2), Vector2(1, -2), Vector2(1, -1), Vector2(1, 0), Vector2(1, 1), Vector2(1, 2), Vector2(2, -1), Vector2(2, 0), Vector2(2, 1)])
+effects = Array[ExtResource("2_kyoa3")]([SubResource("Resource_7yrll"), SubResource("Resource_00ddr")])

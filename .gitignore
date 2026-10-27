@@ -1,3 +1,21 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+/fmod/.unsaved/
+/fmod/.user/
+
+/godot-cpp/
+/ZERO_CHECK.dir/
+/lime_extension.dir/
+/ALL_BUILD.dir/
+/x64/
+/Debug/
+/Release/
+/CMakeFiles/
+
+lime.slnx
+lime_extension.vcxproj
+lime_extension.vcxproj.filters
+ZERO_CHECK*
+ALL_BUILD*

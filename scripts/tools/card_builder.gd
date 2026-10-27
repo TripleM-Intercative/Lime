@@ -252,7 +252,7 @@ func add_effect(effect: CardEffect):
 	title.text = "%s (%s)" % [effect.get_script().get_global_name(), Enums.CardType.keys()[effect.card_type]]
 	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	var remove_button: Button = Button.new()
-	remove_button.text = "✕"
+	remove_button.text = "?"
 	remove_button.pressed.connect(func():
 		effects.erase(effect)
 		effects_list.remove_child(entry)

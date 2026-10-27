@@ -1,0 +1,2 @@
+extends CardBase
+class_name DamageCardBase

@@ -2,6 +2,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/lime_extension.dir/link.d"
   "CMakeFiles/lime_extension.dir/src/gdexample.cpp.o"
   "CMakeFiles/lime_extension.dir/src/gdexample.cpp.o.d"
+  "CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o"
+  "CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o.d"
   "CMakeFiles/lime_extension.dir/src/register_types.cpp.o"
   "CMakeFiles/lime_extension.dir/src/register_types.cpp.o.d"
   "lime_extension.linux.template_debug.x86_64.pdb"

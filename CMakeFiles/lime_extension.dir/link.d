@@ -1,8 +1,9 @@
 lime_extension.linux.template_debug.x86_64.so: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o \
-  CMakeFiles/lime_extension.dir/src/register_types.cpp.o \
   CMakeFiles/lime_extension.dir/src/gdexample.cpp.o \
+  CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o \
+  CMakeFiles/lime_extension.dir/src/register_types.cpp.o \
   bin/libgodot-cpp.linux.template_debug.x86_64.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so \
@@ -37,9 +38,11 @@ lime_extension.linux.template_debug.x86_64.so: \
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o:
 
-CMakeFiles/lime_extension.dir/src/register_types.cpp.o:
-
 CMakeFiles/lime_extension.dir/src/gdexample.cpp.o:
+
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o:
+
+CMakeFiles/lime_extension.dir/src/register_types.cpp.o:
 
 bin/libgodot-cpp.linux.template_debug.x86_64.a:
 

@@ -72,24 +72,10 @@ include CMakeFiles/lime_extension.dir/flags.make
 CMakeFiles/lime_extension.dir/codegen:
 .PHONY : CMakeFiles/lime_extension.dir/codegen
 
-CMakeFiles/lime_extension.dir/src/register_types.cpp.o: CMakeFiles/lime_extension.dir/flags.make
-CMakeFiles/lime_extension.dir/src/register_types.cpp.o: src/register_types.cpp
-CMakeFiles/lime_extension.dir/src/register_types.cpp.o: CMakeFiles/lime_extension.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lime_extension.dir/src/register_types.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lime_extension.dir/src/register_types.cpp.o -MF CMakeFiles/lime_extension.dir/src/register_types.cpp.o.d -o CMakeFiles/lime_extension.dir/src/register_types.cpp.o -c /home/noahf/Projects/games/lime/src/register_types.cpp
-
-CMakeFiles/lime_extension.dir/src/register_types.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lime_extension.dir/src/register_types.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noahf/Projects/games/lime/src/register_types.cpp > CMakeFiles/lime_extension.dir/src/register_types.cpp.i
-
-CMakeFiles/lime_extension.dir/src/register_types.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lime_extension.dir/src/register_types.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noahf/Projects/games/lime/src/register_types.cpp -o CMakeFiles/lime_extension.dir/src/register_types.cpp.s
-
 CMakeFiles/lime_extension.dir/src/gdexample.cpp.o: CMakeFiles/lime_extension.dir/flags.make
 CMakeFiles/lime_extension.dir/src/gdexample.cpp.o: src/gdexample.cpp
 CMakeFiles/lime_extension.dir/src/gdexample.cpp.o: CMakeFiles/lime_extension.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lime_extension.dir/src/gdexample.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/lime_extension.dir/src/gdexample.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lime_extension.dir/src/gdexample.cpp.o -MF CMakeFiles/lime_extension.dir/src/gdexample.cpp.o.d -o CMakeFiles/lime_extension.dir/src/gdexample.cpp.o -c /home/noahf/Projects/games/lime/src/gdexample.cpp
 
 CMakeFiles/lime_extension.dir/src/gdexample.cpp.i: cmake_force
@@ -100,21 +86,51 @@ CMakeFiles/lime_extension.dir/src/gdexample.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lime_extension.dir/src/gdexample.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noahf/Projects/games/lime/src/gdexample.cpp -o CMakeFiles/lime_extension.dir/src/gdexample.cpp.s
 
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o: CMakeFiles/lime_extension.dir/flags.make
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o: src/map/auto_wfc_tilemap_layer.cpp
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o: CMakeFiles/lime_extension.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o -MF CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o.d -o CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o -c /home/noahf/Projects/games/lime/src/map/auto_wfc_tilemap_layer.cpp
+
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noahf/Projects/games/lime/src/map/auto_wfc_tilemap_layer.cpp > CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.i
+
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noahf/Projects/games/lime/src/map/auto_wfc_tilemap_layer.cpp -o CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.s
+
+CMakeFiles/lime_extension.dir/src/register_types.cpp.o: CMakeFiles/lime_extension.dir/flags.make
+CMakeFiles/lime_extension.dir/src/register_types.cpp.o: src/register_types.cpp
+CMakeFiles/lime_extension.dir/src/register_types.cpp.o: CMakeFiles/lime_extension.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/lime_extension.dir/src/register_types.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/lime_extension.dir/src/register_types.cpp.o -MF CMakeFiles/lime_extension.dir/src/register_types.cpp.o.d -o CMakeFiles/lime_extension.dir/src/register_types.cpp.o -c /home/noahf/Projects/games/lime/src/register_types.cpp
+
+CMakeFiles/lime_extension.dir/src/register_types.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/lime_extension.dir/src/register_types.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noahf/Projects/games/lime/src/register_types.cpp > CMakeFiles/lime_extension.dir/src/register_types.cpp.i
+
+CMakeFiles/lime_extension.dir/src/register_types.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/lime_extension.dir/src/register_types.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noahf/Projects/games/lime/src/register_types.cpp -o CMakeFiles/lime_extension.dir/src/register_types.cpp.s
+
 # Object files for target lime_extension
 lime_extension_OBJECTS = \
-"CMakeFiles/lime_extension.dir/src/register_types.cpp.o" \
-"CMakeFiles/lime_extension.dir/src/gdexample.cpp.o"
+"CMakeFiles/lime_extension.dir/src/gdexample.cpp.o" \
+"CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o" \
+"CMakeFiles/lime_extension.dir/src/register_types.cpp.o"
 
 # External object files for target lime_extension
 lime_extension_EXTERNAL_OBJECTS =
 
-lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/src/register_types.cpp.o
 lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/src/gdexample.cpp.o
+lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o
+lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/src/register_types.cpp.o
 lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/build.make
 lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/compiler_depend.ts
 lime_extension.linux.template_debug.x86_64.so: bin/libgodot-cpp.linux.template_debug.x86_64.a
 lime_extension.linux.template_debug.x86_64.so: CMakeFiles/lime_extension.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX shared library lime_extension.linux.template_debug.x86_64.so"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/noahf/Projects/games/lime/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX shared library lime_extension.linux.template_debug.x86_64.so"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/lime_extension.dir/link.txt --verbose=$(VERBOSE)
 	/usr/bin/cmake -E rename /home/noahf/Projects/games/lime/lime_extension.linux.template_debug.x86_64.so /home/noahf/Projects/games/lime/bin/linux/lime_extension.linux.template_debug.x86_64.so
 

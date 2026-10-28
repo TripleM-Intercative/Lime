@@ -299,21 +299,35 @@ CMakeFiles/lime_extension.dir/src/gdexample.cpp.o: src/gdexample.cpp \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdint.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/syslimits.h
 
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o: src/map/auto_wfc_tilemap_layer.cpp \
+  /usr/include/stdc-predef.h
+
 CMakeFiles/lime_extension.dir/src/register_types.cpp.o: src/register_types.cpp \
   godot-cpp/gdextension/gdextension_interface.h \
+  godot-cpp/gen/include/godot_cpp/classes/base_button.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/button.hpp \
   godot-cpp/gen/include/godot_cpp/classes/canvas_item.hpp \
   godot-cpp/gen/include/godot_cpp/classes/class_db_singleton.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/control.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/display_server.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/editor_context_menu_plugin.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/editor_plugin.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/file_access.hpp \
   godot-cpp/gen/include/godot_cpp/classes/global_constants.hpp \
   godot-cpp/gen/include/godot_cpp/classes/global_constants_binds.hpp \
   godot-cpp/gen/include/godot_cpp/classes/node.hpp \
   godot-cpp/gen/include/godot_cpp/classes/node2d.hpp \
   godot-cpp/gen/include/godot_cpp/classes/object.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/os.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/project_settings.hpp \
   godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp \
   godot-cpp/gen/include/godot_cpp/classes/resource.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/shortcut.hpp \
   godot-cpp/gen/include/godot_cpp/classes/sprite2d.hpp \
   godot-cpp/gen/include/godot_cpp/classes/text_server.hpp \
   godot-cpp/gen/include/godot_cpp/classes/texture.hpp \
   godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp \
+  godot-cpp/gen/include/godot_cpp/classes/thread.hpp \
   godot-cpp/gen/include/godot_cpp/variant/array.hpp \
   godot-cpp/gen/include/godot_cpp/variant/builtin_binds.hpp \
   godot-cpp/gen/include/godot_cpp/variant/builtin_types.hpp \
@@ -337,6 +351,7 @@ CMakeFiles/lime_extension.dir/src/register_types.cpp.o: src/register_types.cpp \
   godot-cpp/gen/include/godot_cpp/variant/string_name.hpp \
   godot-cpp/gen/include/godot_cpp/variant/utility_functions.hpp \
   godot-cpp/gen/include/godot_cpp/variant/variant_size.hpp \
+  godot-cpp/include/godot_cpp/classes/editor_plugin_registration.hpp \
   godot-cpp/include/godot_cpp/classes/ref.hpp \
   godot-cpp/include/godot_cpp/classes/wrapped.hpp \
   godot-cpp/include/godot_cpp/core/binder_common.hpp \
@@ -390,6 +405,7 @@ CMakeFiles/lime_extension.dir/src/register_types.cpp.o: src/register_types.cpp \
   godot-cpp/include/godot_cpp/variant/vector3i.hpp \
   godot-cpp/include/godot_cpp/variant/vector4.hpp \
   godot-cpp/include/godot_cpp/variant/vector4i.hpp \
+  src/editor/build_lime_btn.hpp \
   src/gdexample.h \
   src/register_types.h \
   /usr/include/alloca.h \
@@ -616,6 +632,7 @@ lime_extension.linux.template_debug.x86_64.so: /usr/lib/crti.o \
   /usr/lib/libm.so.6 \
   /usr/lib/libmvec.so.1 \
   CMakeFiles/lime_extension.dir/src/gdexample.cpp.o \
+  CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o \
   CMakeFiles/lime_extension.dir/src/register_types.cpp.o \
   bin/libgodot-cpp.linux.template_debug.x86_64.a
 
@@ -630,8 +647,6 @@ CMakeFiles/lime_extension.dir/src/gdexample.cpp.o:
 
 /usr/lib/libm.so.6:
 
-/usr/lib/libc_nonshared.a:
-
 /usr/lib/ld-linux-x86-64.so.2:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a:
@@ -645,6 +660,28 @@ CMakeFiles/lime_extension.dir/src/gdexample.cpp.o:
 /usr/lib/libgcc_s.so.1:
 
 /usr/lib/crti.o:
+
+src/editor/build_lime_btn.hpp:
+
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o:
+
+godot-cpp/include/godot_cpp/classes/editor_plugin_registration.hpp:
+
+godot-cpp/gen/include/godot_cpp/classes/thread.hpp:
+
+godot-cpp/gen/include/godot_cpp/classes/shortcut.hpp:
+
+/usr/lib/libc_nonshared.a:
+
+godot-cpp/gen/include/godot_cpp/classes/project_settings.hpp:
+
+godot-cpp/gen/include/godot_cpp/classes/os.hpp:
+
+godot-cpp/gen/include/godot_cpp/classes/display_server.hpp:
+
+godot-cpp/gen/include/godot_cpp/classes/base_button.hpp:
+
+src/map/auto_wfc_tilemap_layer.cpp:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/syslimits.h:
 
@@ -733,6 +770,8 @@ godot-cpp/include/godot_cpp/variant/vector4.hpp:
 /usr/include/bits/long-double.h:
 
 /usr/include/c++/16/mutex:
+
+godot-cpp/gen/include/godot_cpp/classes/control.hpp:
 
 /usr/include/bits/types/clock_t.h:
 
@@ -848,6 +887,8 @@ godot-cpp/include/godot_cpp/core/math.compat.inc:
 
 godot-cpp/include/godot_cpp/classes/wrapped.hpp:
 
+godot-cpp/gen/include/godot_cpp/classes/editor_plugin.hpp:
+
 /usr/include/c++/16/bits/stl_iterator_base_types.h:
 
 godot-cpp/include/godot_cpp/templates/hash_map.hpp:
@@ -865,6 +906,8 @@ godot-cpp/gen/include/godot_cpp/classes/text_server.hpp:
 /usr/include/c++/16/set:
 
 godot-cpp/gen/include/godot_cpp/variant/builtin_vararg_methods.hpp:
+
+godot-cpp/gen/include/godot_cpp/classes/file_access.hpp:
 
 /usr/include/c++/16/bits/cpp_type_traits.h:
 
@@ -915,6 +958,8 @@ godot-cpp/gen/include/godot_cpp/variant/signal.hpp:
 godot-cpp/gen/include/godot_cpp/variant/builtin_types.hpp:
 
 /usr/include/bits/libc-header-start.h:
+
+godot-cpp/gen/include/godot_cpp/classes/button.hpp:
 
 godot-cpp/gen/include/godot_cpp/variant/packed_float64_array.hpp:
 
@@ -1023,6 +1068,8 @@ godot-cpp/include/godot_cpp/templates/cowdata.hpp:
 /usr/include/bits/sched.h:
 
 /usr/include/c++/16/bits/memoryfwd.h:
+
+godot-cpp/gen/include/godot_cpp/classes/editor_context_menu_plugin.hpp:
 
 /usr/include/bits/xopen_lim.h:
 

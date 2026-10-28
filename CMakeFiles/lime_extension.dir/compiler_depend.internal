@@ -300,22 +300,37 @@ CMakeFiles/lime_extension.dir/src/gdexample.cpp.o
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdint.h
  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/syslimits.h
 
+CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o
+ /home/noahf/Projects/games/lime/src/map/auto_wfc_tilemap_layer.cpp
+ /usr/include/stdc-predef.h
+
 CMakeFiles/lime_extension.dir/src/register_types.cpp.o
  /home/noahf/Projects/games/lime/src/register_types.cpp
  /home/noahf/Projects/games/lime/godot-cpp/gdextension/gdextension_interface.h
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/base_button.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/button.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/canvas_item.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/class_db_singleton.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/control.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/display_server.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/editor_context_menu_plugin.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/editor_plugin.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/file_access.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/global_constants.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/global_constants_binds.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/node.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/object.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/os.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/project_settings.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/ref_counted.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/resource.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/shortcut.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/sprite2d.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/text_server.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/texture.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/thread.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/variant/array.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/variant/builtin_binds.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/variant/builtin_types.hpp
@@ -339,6 +354,7 @@ CMakeFiles/lime_extension.dir/src/register_types.cpp.o
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/variant/string_name.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/variant/utility_functions.hpp
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/variant/variant_size.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/classes/editor_plugin_registration.hpp
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/classes/ref.hpp
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/classes/wrapped.hpp
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/core/binder_common.hpp
@@ -392,6 +408,7 @@ CMakeFiles/lime_extension.dir/src/register_types.cpp.o
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/variant/vector3i.hpp
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/variant/vector4.hpp
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/variant/vector4i.hpp
+ /home/noahf/Projects/games/lime/src/editor/build_lime_btn.hpp
  /home/noahf/Projects/games/lime/src/gdexample.h
  /home/noahf/Projects/games/lime/src/register_types.h
  /usr/include/alloca.h
@@ -619,6 +636,7 @@ lime_extension.linux.template_debug.x86_64.so
  /usr/lib/libm.so.6
  /usr/lib/libmvec.so.1
  /home/noahf/Projects/games/lime/CMakeFiles/lime_extension.dir/src/gdexample.cpp.o
+ /home/noahf/Projects/games/lime/CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o
  /home/noahf/Projects/games/lime/CMakeFiles/lime_extension.dir/src/register_types.cpp.o
  /home/noahf/Projects/games/lime/bin/libgodot-cpp.linux.template_debug.x86_64.a
 

@@ -220,9 +220,10 @@ CMakeFiles/lime_extension.dir/src/register_types.cpp.o: \
  /usr/include/c++/16/bits/stl_set.h \
  /usr/include/c++/16/bits/stl_multiset.h \
  /usr/include/c++/16/bits/erase_if.h \
- /home/noahf/Projects/games/lime/src/gdexample.h \
- /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/sprite2d.hpp \
- /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp \
+ /home/noahf/Projects/games/lime/src/editor/build_lime_btn.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/button.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/base_button.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/control.hpp \
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/canvas_item.hpp \
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/node.hpp \
  /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/classes/ref.hpp \
@@ -230,4 +231,16 @@ CMakeFiles/lime_extension.dir/src/register_types.cpp.o: \
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/text_server.hpp \
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/texture2d.hpp \
  /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/texture.hpp \
- /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/resource.hpp
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/resource.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/display_server.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/editor_plugin.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/editor_context_menu_plugin.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/shortcut.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/include/godot_cpp/classes/editor_plugin_registration.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/file_access.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/os.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/project_settings.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/thread.hpp \
+ /home/noahf/Projects/games/lime/src/gdexample.h \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/sprite2d.hpp \
+ /home/noahf/Projects/games/lime/godot-cpp/gen/include/godot_cpp/classes/node2d.hpp

@@ -180,6 +180,30 @@ src/gdexample.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lime_extension.dir/build.make CMakeFiles/lime_extension.dir/src/gdexample.cpp.s
 .PHONY : src/gdexample.cpp.s
 
+src/map/auto_wfc_tilemap_layer.o: src/map/auto_wfc_tilemap_layer.cpp.o
+.PHONY : src/map/auto_wfc_tilemap_layer.o
+
+# target to build an object file
+src/map/auto_wfc_tilemap_layer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lime_extension.dir/build.make CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o
+.PHONY : src/map/auto_wfc_tilemap_layer.cpp.o
+
+src/map/auto_wfc_tilemap_layer.i: src/map/auto_wfc_tilemap_layer.cpp.i
+.PHONY : src/map/auto_wfc_tilemap_layer.i
+
+# target to preprocess a source file
+src/map/auto_wfc_tilemap_layer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lime_extension.dir/build.make CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.i
+.PHONY : src/map/auto_wfc_tilemap_layer.cpp.i
+
+src/map/auto_wfc_tilemap_layer.s: src/map/auto_wfc_tilemap_layer.cpp.s
+.PHONY : src/map/auto_wfc_tilemap_layer.s
+
+# target to generate assembly for a file
+src/map/auto_wfc_tilemap_layer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lime_extension.dir/build.make CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.s
+.PHONY : src/map/auto_wfc_tilemap_layer.cpp.s
+
 src/register_types.o: src/register_types.cpp.o
 .PHONY : src/register_types.o
 
@@ -218,6 +242,9 @@ help:
 	@echo "... src/gdexample.o"
 	@echo "... src/gdexample.i"
 	@echo "... src/gdexample.s"
+	@echo "... src/map/auto_wfc_tilemap_layer.o"
+	@echo "... src/map/auto_wfc_tilemap_layer.i"
+	@echo "... src/map/auto_wfc_tilemap_layer.s"
 	@echo "... src/register_types.o"
 	@echo "... src/register_types.i"
 	@echo "... src/register_types.s"

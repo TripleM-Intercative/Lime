@@ -1,15 +1,21 @@
 [
 {
   "directory": "/home/noahf/Projects/games/lime",
-  "command": "/usr/bin/c++ -DDEBUG_ENABLED -DGDEXTENSION -DHOT_RELOAD_ENABLED -DLINUX_ENABLED -DTHREADS_ENABLED -DUNIX_ENABLED -Dlime_extension_EXPORTS -isystem /home/noahf/Projects/games/lime/godot-cpp/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gen/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gdextension -std=gnu++17 -fPIC -fno-gnu-unique -o CMakeFiles/lime_extension.dir/src/register_types.cpp.o -c /home/noahf/Projects/games/lime/src/register_types.cpp",
-  "file": "/home/noahf/Projects/games/lime/src/register_types.cpp",
-  "output": "CMakeFiles/lime_extension.dir/src/register_types.cpp.o"
-},
-{
-  "directory": "/home/noahf/Projects/games/lime",
   "command": "/usr/bin/c++ -DDEBUG_ENABLED -DGDEXTENSION -DHOT_RELOAD_ENABLED -DLINUX_ENABLED -DTHREADS_ENABLED -DUNIX_ENABLED -Dlime_extension_EXPORTS -isystem /home/noahf/Projects/games/lime/godot-cpp/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gen/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gdextension -std=gnu++17 -fPIC -fno-gnu-unique -o CMakeFiles/lime_extension.dir/src/gdexample.cpp.o -c /home/noahf/Projects/games/lime/src/gdexample.cpp",
   "file": "/home/noahf/Projects/games/lime/src/gdexample.cpp",
   "output": "CMakeFiles/lime_extension.dir/src/gdexample.cpp.o"
+},
+{
+  "directory": "/home/noahf/Projects/games/lime",
+  "command": "/usr/bin/c++ -DDEBUG_ENABLED -DGDEXTENSION -DHOT_RELOAD_ENABLED -DLINUX_ENABLED -DTHREADS_ENABLED -DUNIX_ENABLED -Dlime_extension_EXPORTS -isystem /home/noahf/Projects/games/lime/godot-cpp/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gen/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gdextension -std=gnu++17 -fPIC -fno-gnu-unique -o CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o -c /home/noahf/Projects/games/lime/src/map/auto_wfc_tilemap_layer.cpp",
+  "file": "/home/noahf/Projects/games/lime/src/map/auto_wfc_tilemap_layer.cpp",
+  "output": "CMakeFiles/lime_extension.dir/src/map/auto_wfc_tilemap_layer.cpp.o"
+},
+{
+  "directory": "/home/noahf/Projects/games/lime",
+  "command": "/usr/bin/c++ -DDEBUG_ENABLED -DGDEXTENSION -DHOT_RELOAD_ENABLED -DLINUX_ENABLED -DTHREADS_ENABLED -DUNIX_ENABLED -Dlime_extension_EXPORTS -isystem /home/noahf/Projects/games/lime/godot-cpp/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gen/include -isystem /home/noahf/Projects/games/lime/godot-cpp/gdextension -std=gnu++17 -fPIC -fno-gnu-unique -o CMakeFiles/lime_extension.dir/src/register_types.cpp.o -c /home/noahf/Projects/games/lime/src/register_types.cpp",
+  "file": "/home/noahf/Projects/games/lime/src/register_types.cpp",
+  "output": "CMakeFiles/lime_extension.dir/src/register_types.cpp.o"
 },
 {
   "directory": "/home/noahf/Projects/games/lime/godot-cpp",

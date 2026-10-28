@@ -1,17 +1,51 @@
 [gd_scene format=3 uid="uid://ihxs8aebf0k3"]
 
+[ext_resource type="Script" uid="uid://dd0pcpq0nsptx" path="res://scripts/ui/splash.gd" id="1_fgod4"]
 [ext_resource type="Texture2D" uid="uid://j83r3og11xa3" path="res://assets/images/misc/text-light.svg" id="1_sykqw"]
 [ext_resource type="Texture2D" uid="uid://ddddjrm0a5d4x" path="res://assets/images/misc/FMOD Logo White - Transparent Background.png" id="2_fgod4"]
+[ext_resource type="PackedScene" uid="uid://daid1a8kuec7m" path="res://scenes/ui/main_menu.tscn" id="2_poid3"]
+[ext_resource type="Shader" uid="uid://dr5868mg3mrf" path="res://shader/screen_transition.gdshader" id="4_bkb80"]
 
-[node name="Intro" type="Control" unique_id=1550144081]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8xeer"]
+shader = ExtResource("4_bkb80")
+shader_parameter/size = Vector2(600, 300)
+shader_parameter/cell_size = 40.0
+shader_parameter/cell_offset = Vector2(0, 0)
+shader_parameter/cell_color = Color(0, 0, 0, 1)
+shader_parameter/effect_origin = Vector2(0.5, 0.5)
+shader_parameter/effect_value = 0.0
+shader_parameter/effect_length = Vector2(50, 100)
+shader_parameter/effect_delay = 0.05
+shader_parameter/target_rotation = 0.05
+shader_parameter/effect_value_offset = 80.0
+shader_parameter/effect_length_offset = 0.4
+shader_parameter/effect_rotation_offset = 0.6
+shader_parameter/light_direction = Vector3(1, 0, 0)
+shader_parameter/light_color = Color(0.3, 0.3, 0.3, 1)
+shader_parameter/gradient_scale = 2.0
+shader_parameter/dobble_light = true
+
+[node name="Intro" type="Control" unique_id=1550144081 node_paths=PackedStringArray("screens", "transition_rect")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_fgod4")
+after_splash_scene = ExtResource("2_poid3")
+screens = [NodePath("CompanyLogo"), NodePath("CorpLogogs")]
+transition_rect = NodePath("Transitioner")
+screen_expose_time = 2.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=937828075]
+[node name="Background" type="ColorRect" parent="." unique_id=78669148]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [node name="CorpLogogs" type="VBoxContainer" parent="." unique_id=1910701711]
 layout_mode = 1
@@ -97,3 +131,12 @@ text = "
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Transitioner" type="ColorRect" parent="." unique_id=1379789779]
+material = SubResource("ShaderMaterial_8xeer")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

@@ -50,12 +50,23 @@ project(lime
 
 add_library(${LIBNAME} SHARED)
 
+file(GLOB_RECURSE HEADER_FILES
+     "./src/*.h"
+)
+
+file(GLOB_RECURSE SOURCE_FILES
+     "./src/*.cpp"
+)
+
+file(GLOB_RECURSE HEADERIMPL_FILES
+     "./src/*.hpp"
+)
+
 target_sources(${LIBNAME}
     PRIVATE
-    src/register_types.cpp
-    src/register_types.h
-    src/gdexample.cpp
-    src/gdexample.h
+    ${HEADER_FILES}
+    ${SOURCE_FILES}
+    ${HEADERIMPL_FILES}
 )
 
 # Fetch a list of the xml files to use for documentation and add to our target

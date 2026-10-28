@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Users/Admin/Documents/Projects/Lime/cmake_install.cmake",
-		"C:/Users/Admin/Documents/Projects/Lime/godot-cpp/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

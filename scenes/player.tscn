@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://bqcubfv3obva3"]
+
+[ext_resource type="Script" uid="uid://caexduckvq4ra" path="res://scripts/player/character_body_2d.gd" id="1_g2els"]
+[ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://dwwdi3m3m1o3h" path="res://scripts/player/input_manager.gd" id="3_qhqgy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+
+[node name="Player" type="CharacterBody2D" unique_id=1067804140]
+script = ExtResource("1_g2els")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=925264922]
+shape = SubResource("CircleShape2D_1vivr")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=850617548]
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("2_qhqgy")
+
+[node name="InputManager" type="Node" parent="." unique_id=1622911737]
+script = ExtResource("3_qhqgy")
+actions = Array[StringName]([&"player_up", &"player_down", &"player_left", &"player_right"])
+
+[connection signal="input_changed" from="InputManager" to="." method="_on_input_manager_input_changed"]

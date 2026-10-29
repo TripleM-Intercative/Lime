@@ -4,6 +4,9 @@ extends Node
 class BaseCardData:
 	var image_pc_path: String
 	var name_field: LineEdit
+	var heat_type: Enums.HeatCost
+	var heat_amount: int
+	var target_cells: Array[Vector2]
 
 class DamageCardData:
 	var amount: float

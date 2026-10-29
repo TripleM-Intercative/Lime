@@ -11,6 +11,7 @@ const MAX_HAND_WIDTH: float = 600.0
 const MAX_ROTATION: float = 15
 const DECK_HEIGHT: float = 30.0
 const DEFAULT_HAND_SIZE: int = 5
+const RESHUFFLE_TIME: float = 2.0
 
 var card_blueprint: Resource = preload(BASE_CARD_SCENE_PATH)
 var card_pool: Array[GDScript]
@@ -20,16 +21,18 @@ var current_hand: Array[CardBase]
 var discard_pile: Array[CardBase]   
 var draw_deck: Array[CardBase]     
 
-var deck_container: HBoxContainer
+var hand_container: HBoxContainer
 var viewport_size: Vector2
 var card_size: Vector2
 
 var spawn_positions: Dictionary = {}
 
-#For Testing
-var draw_deck_text: Label = Label.new()
-var discard_pile_text: Label = Label.new()
-
+#anims
+var draw_deck_text: Label
+var discard_pile_text: Label
+var draw_deck_img: TextureRect
+var discard_pile_img: TextureRect
+var deck_animator: DeckAnimator
 
 func _init() -> void:
 	set_up_card_pool()
@@ -37,26 +40,25 @@ func _init() -> void:
 
 func _ready() -> void:
 	viewport_size = get_viewport().get_visible_rect().size
-	init_card_deck()
 	create_deck_visuals()
-	draw_deck_text.text = "Deck: " + str(draw_deck.size())
+	init_card_deck()
 
 
 func init_card_deck() -> void:
 	create_random_deck(15)
 	setup_deck_container()
 	draw_cards(DEFAULT_HAND_SIZE)
-	get_tree().current_scene.add_child.call_deferred(deck_container)
 	organize_hand.call_deferred()
 
-
 func setup_deck_container() -> void:
-	deck_container = HBoxContainer.new()
-	deck_container.alignment = BoxContainer.ALIGNMENT_CENTER
-	deck_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	deck_container.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
-	deck_container.offset_top = -card_size.y / 2.0
-	deck_container.offset_bottom = card_size.y / 2.0
+	hand_container = $deck_container/hand_container
+	hand_container.alignment = BoxContainer.ALIGNMENT_CENTER
+	hand_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	hand_container.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	hand_container.offset_top = -card_size.y / 2.0
+	hand_container.offset_bottom = card_size.y / 2.0
+	
+
 
 
 func creat_new_card(script: GDScript) -> CardBase:
@@ -91,9 +93,9 @@ func organize_hand() -> void:
 	spawn_positions.clear()
 	
 	var spacing: float = calculate_card_spacing(current_hand.size())
-	deck_container.add_theme_constant_override("separation", roundi(spacing - card_size.x))
-	deck_container.queue_sort()
-	await deck_container.sort_children
+	hand_container.add_theme_constant_override("separation", roundi(spacing - card_size.x))
+	hand_container.queue_sort()
+	await hand_container.sort_children
 	
 	var center_index: float = (current_hand.size() - 1) / 2.0
 	for index in current_hand.size():
@@ -131,13 +133,16 @@ func add_card_to_hand(card: CardBase) -> void:
 	card.reset_card()
 	current_hand.append(card)
 	spawn_positions[card] = Vector2(0, viewport_size.y)
-	deck_container.add_child(card)
+	hand_container.add_child(card)
 	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func draw_cards(amount: int) -> void:
-	if(draw_deck.is_empty()):
-		shuffle_to_draw_deck()
+	if draw_deck.is_empty():
+		if discard_pile.is_empty():
+			return
+		deck_animator.anim_reshuffle_multiple(discard_pile.size(), RESHUFFLE_TIME)
+		return
 	for i in range(amount):
 		if draw_deck.is_empty():
 			break
@@ -162,7 +167,7 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 	current_hand.remove_at(card_index)
 	discard_pile.append(card)
 	#spawn_positions.erase(card)
-	deck_container.remove_child(card)
+	hand_container.remove_child(card)
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)
 	organize_hand()
@@ -175,8 +180,8 @@ func remove_card_from_deck(card: CardBase) -> void:
 	draw_deck.erase(card)
 	discard_pile.erase(card)
 	spawn_positions.erase(card)
-	if card.get_parent() == deck_container:
-		deck_container.remove_child(card)
+	if card.get_parent() == hand_container:
+		hand_container.remove_child(card)
 	organize_hand()
 
 func shuffle_to_draw_deck():
@@ -202,35 +207,20 @@ func calculate_card_spacing(card_count: int) -> float:
 	return clampf(spacing, MIN_SPACING, MAX_SPACING)
 
 func create_deck_visuals():
-	draw_deck_text= Label.new()
-	discard_pile_text = Label.new()
-	
-	draw_deck_text.size = Vector2(150,50)
-	draw_deck_text.position = Vector2(0, viewport_size.y - draw_deck_text.size.y)
-	
-	discard_pile_text.size = Vector2(50,50)
-	discard_pile_text.position = Vector2(viewport_size.x - discard_pile_text.size.x * 2, viewport_size.y - discard_pile_text.size.y)
+	draw_deck_text = $deck_container/VBoxContainer/draw_deck_txt
+	discard_pile_text = $deck_container/discard_container/discard_pile_txt
+	draw_deck_img = $deck_container/VBoxContainer/draw_deck_img
+	discard_pile_img = $deck_container/discard_container/discard_pile_img
 	
 	draw_deck_text.text = "[Draw]"
 	discard_pile_text.text = "[Discard]"
 	
-	get_tree().current_scene.add_child.call_deferred(draw_deck_text)
-	get_tree().current_scene.add_child.call_deferred(discard_pile_text)
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	deck_animator = DeckAnimator.new()
+	add_child(deck_animator)
+	deck_animator.setup(draw_deck_img, discard_pile_img)
+	deck_animator.finished_reshuffle_anim.connect(on_shuffle_finished)
+
+func on_shuffle_finished():
+	shuffle_to_draw_deck()
+	draw_cards(5)
+	organize_hand()

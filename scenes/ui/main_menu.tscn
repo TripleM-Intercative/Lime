@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bahktj8wkuw5r" path="res://scripts/ui/screen_transition.gd" id="5_wb0q5"]
 [ext_resource type="Texture2D" uid="uid://blr5dfa0yx2w7" path="res://assets/images/space_foreground.png" id="6_q85j6"]
 [ext_resource type="Shader" uid="uid://bp0bq1wv7us3y" path="res://shader/holo.gdshader" id="7_btxxm"]
+[ext_resource type="PackedScene" uid="uid://dy8s4h4a2uk7a" path="res://scenes/ui/player_deck.tscn" id="8_wb0q5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f5ddx"]
 shader = ExtResource("2_fe2o3")
@@ -176,6 +177,11 @@ text = "Credits
 [node name="ExitButton" type="Button" parent="VBoxContainer" unique_id=1569704766]
 layout_mode = 2
 text = "Quit"
+
+[node name="PlayerDeck" parent="." unique_id=750561058 instance=ExtResource("8_wb0q5")]
+layout_mode = 1
+offset_left = 3.0
+offset_right = 3.0
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionsButton" to="." method="_on_options_pressed"]

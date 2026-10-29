@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://dy8s4h4a2uk7a"]
+
+[ext_resource type="Script" uid="uid://dsti8gklbnp6i" path="res://scripts/deck/deck.gd" id="1_x2jdp"]
+[ext_resource type="Texture2D" uid="uid://b2qo4jfc28orp" path="res://assets/images/cards/peter_tex.png" id="2_0tkc0"]
+[ext_resource type="Texture2D" uid="uid://fpuvr67hkvl0" path="res://assets/images/cards/newcard_tex.png" id="3_wfdap"]
+
+[node name="PlayerDeck" type="Control" unique_id=750561058]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_x2jdp")
+
+[node name="deck_container" type="HBoxContainer" parent="." unique_id=397274986]
+layout_mode = 1
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 322.0
+offset_bottom = 322.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="deck_container" unique_id=1239259932]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(30, -60)
+offset_transform_scale = Vector2(1.5, 1.5)
+
+[node name="draw_deck_img" type="TextureRect" parent="deck_container/VBoxContainer" unique_id=827617941]
+z_index = 10
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_0tkc0")
+
+[node name="draw_deck_txt" type="Label" parent="deck_container/VBoxContainer" unique_id=1485817666]
+layout_mode = 2
+text = "10"
+horizontal_alignment = 1
+
+[node name="hand_container" type="HBoxContainer" parent="deck_container" unique_id=14077935]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="discard_container" type="VBoxContainer" parent="deck_container" unique_id=1203933813]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+offset_transform_enabled = true
+offset_transform_position = Vector2(-30, -60)
+offset_transform_scale = Vector2(1.5, 1.5)
+
+[node name="discard_pile_img" type="TextureRect" parent="deck_container/discard_container" unique_id=112458125]
+z_index = 10
+custom_maximum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("3_wfdap")
+
+[node name="discard_pile_txt" type="Label" parent="deck_container/discard_container" unique_id=429336450]
+layout_mode = 2
+text = "5"
+horizontal_alignment = 1

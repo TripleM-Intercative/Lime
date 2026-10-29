@@ -166,7 +166,7 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 		return
 	current_hand.remove_at(card_index)
 	discard_pile.append(card)
-	#spawn_positions.erase(card)
+	deck_animator.anim_move_to_deck_pos(discard_pile_img)
 	hand_container.remove_child(card)
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)

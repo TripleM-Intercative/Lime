@@ -68,6 +68,7 @@ target_sources(${LIBNAME}
     ${SOURCE_FILES}
     ${HEADERIMPL_FILES}
 )
+target_include_directories(${LIBNAME} PRIVATE "./src/")
 
 # Fetch a list of the xml files to use for documentation and add to our target
 file(GLOB_RECURSE DOC_XML LIST_DIRECTORIES NO CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/doc_classes/*.xml")

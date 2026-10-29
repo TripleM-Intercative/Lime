@@ -1,7 +1,8 @@
 #include "register_types.h"
 
-#include "editor/build_lime_btn.hpp"
-#include "gdexample.h"
+#include <editor/build_lime_btn.hpp>
+#include <gdexample.h>
+#include <map/ruinedcitytilemaplayer.h>
 
 
 #include <gdextension_interface.h>
@@ -14,8 +15,9 @@ using namespace godot;
 
 void initialize_lime_module(ModuleInitializationLevel p_level)
 {
-	if ( p_level != MODULE_INITIALIZATION_LEVEL_SCENE ) {
+	if ( p_level == MODULE_INITIALIZATION_LEVEL_SCENE ) {
 		GDREGISTER_CLASS(GDExample);
+		GDREGISTER_CLASS(RuinedCityTileMapLayer);
 	}
 
 

@@ -88,3 +88,4 @@ func _physics_process(delta: float) -> void:
 func new_target_pos(pos: Vector2):
 	target_pos = pos
 	lerp_time = 0
+	lerp_time;

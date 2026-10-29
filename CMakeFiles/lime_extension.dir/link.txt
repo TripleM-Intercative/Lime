@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -shared -s -Wl,--dependency-file=CMakeFiles/lime_extension.dir/link.d -Wl,-soname,lime_extension.linux.template_debug.x86_64.so -o lime_extension.linux.template_debug.x86_64.so CMakeFiles/lime_extension.dir/src/register_types.cpp.o CMakeFiles/lime_extension.dir/src/gdexample.cpp.o  bin/libgodot-cpp.linux.template_debug.x86_64.a

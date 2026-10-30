@@ -18,6 +18,10 @@ uniform float effect_length_offset : hint_range(0.0, 1.0) = 0.4;
 
 uniform float effect_rotation_offset : hint_range(0.0, 1.0) = 0.6;
 
+uniform bool use_texture = false;
+uniform sampler2D screen_texture;
+
+uniform bool use_light = false;
 uniform vec3 light_direction = vec3(1.0, 0.0, 0.0);
 uniform vec4 light_color : source_color = vec4(0.3, 0.3, 0.3, 1.0);
 uniform float gradient_scale = 2.0;
@@ -101,19 +105,29 @@ void fragment() {
 		discard;
 	}
 
-	// Light
-	vec3 normal = vec3(sin(scale * PI * 0.5) * -direction, 0.0, cos(scale * PI * 0.5));
-
-	vec3 cell_light_direction = light_direction;
-
-	if (dobble_light) {
-		cell_light_direction.x *= direction;
+	vec3 display_color = cell_color.rgb;
+	if (use_texture) {
+		vec2 card_uv = local_uv + 0.5;
+		vec2 tex_pos = (cell_index + card_uv) * cell_size + cell_offset;
+		display_color = texture(screen_texture, tex_pos / size).rgb;
 	}
 
-	float light = clamp(-dot(normal, normalize(cell_light_direction)), 0.0, 1.0);
+	if (use_light) {
+		vec3 normal = vec3(sin(scale * PI * 0.5) * -direction, 0.0, cos(scale * PI * 0.5));
 
-	float gardient_value = smoothstep(0.0, 1.0, scale * gradient_scale);
-	float gradient = mix(0.0, (local_uv.x * -direction + 0.5), gardient_value);
+		vec3 cell_light_direction = light_direction;
 
-	COLOR = vec4(mix(cell_color.rgb, light_color.rgb * gradient, light), 1.0);
+		if (dobble_light) {
+			cell_light_direction.x *= direction;
+		}
+
+		float light = clamp(-dot(normal, normalize(cell_light_direction)), 0.0, 1.0);
+
+		float gardient_value = smoothstep(0.0, 1.0, scale * gradient_scale);
+		float gradient = mix(0.0, (local_uv.x * -direction + 0.5), gardient_value);
+
+		display_color = mix(display_color.rgb, light_color.rgb * gradient, light);
+	}
+
+	COLOR = vec4(display_color, 1.0);
 }

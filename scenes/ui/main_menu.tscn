@@ -68,6 +68,7 @@ shader_parameter/target_rotation = 0.05
 shader_parameter/effect_value_offset = 80.0
 shader_parameter/effect_length_offset = 0.4
 shader_parameter/effect_rotation_offset = 0.6
+shader_parameter/use_texture = false
 shader_parameter/light_direction = Vector3(1, 0, 0)
 shader_parameter/light_color = Color(0.3, 0.3, 0.3, 1)
 shader_parameter/gradient_scale = 2.0

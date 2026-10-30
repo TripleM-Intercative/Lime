@@ -46,6 +46,8 @@ func _ready() -> void:
 
 func init_card_deck() -> void:
 	create_random_deck(15)
+	deck_animator.set_deck_count(draw_deck_img, draw_deck.size())
+	deck_animator.set_deck_count(discard_pile_img, discard_pile.size())
 	setup_deck_container()
 	draw_cards(DEFAULT_HAND_SIZE)
 	organize_hand.call_deferred()
@@ -134,7 +136,7 @@ func add_card_to_hand(card: CardBase) -> void:
 	current_hand.append(card)
 	spawn_positions[card] = Vector2(0, viewport_size.y)
 	hand_container.add_child(card)
-	draw_deck_text.text = "Deck: " + str(draw_deck.size())
+	deck_animator.change_deck_count(draw_deck_img, -1)
 
 
 func draw_cards(amount: int) -> void:
@@ -147,7 +149,6 @@ func draw_cards(amount: int) -> void:
 		if draw_deck.is_empty():
 			break
 		add_card_to_hand(draw_deck.pop_back())
-	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func get_random_cards_form_deck(amount: int) -> void:
@@ -157,7 +158,6 @@ func get_random_cards_form_deck(amount: int) -> void:
 		var card_index: int = randi_range(0, draw_deck.size() - 1)
 		add_card_to_hand(draw_deck.pop_at(card_index))
 	organize_hand()
-	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 
 func move_card_to_discard_pile(card: CardBase) -> void:
@@ -171,10 +171,13 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)
 	organize_hand()
-	discard_pile_text.text = "Grave: " + str(discard_pile.size())
 
 
 func remove_card_from_deck(card: CardBase) -> void:
+	if draw_deck.has(card):
+		deck_animator.change_deck_count(draw_deck_img, -1)
+	if discard_pile.has(card):
+		deck_animator.change_deck_count(discard_pile_img, -1)
 	current_deck.erase(card)
 	current_hand.erase(card)
 	draw_deck.erase(card)
@@ -191,8 +194,6 @@ func shuffle_to_draw_deck():
 	for i in range(discard_pile.size() -1, -1 , -1):
 		draw_deck.push_front(discard_pile[i])
 		discard_pile.remove_at(i)
-	discard_pile_text.text = str(discard_pile.size())
-	draw_deck_text.text = "Deck: " + str(draw_deck.size())
 
 func get_random_pos_above_screen(max_distance: float) -> Vector2:
 	var x: float = randf_range(0.0, viewport_size.x)
@@ -211,16 +212,13 @@ func create_deck_visuals():
 	discard_pile_text = $deck_container/discard_container/discard_pile_txt
 	draw_deck_img = $deck_container/VBoxContainer/draw_deck_img
 	discard_pile_img = $deck_container/discard_container/discard_pile_img
-	
-	draw_deck_text.text = "[Draw]"
-	discard_pile_text.text = "[Discard]"
-	
+
 	deck_animator = DeckAnimator.new()
 	add_child(deck_animator)
-	deck_animator.setup(draw_deck_img, discard_pile_img)
+	deck_animator.setup(draw_deck_img, discard_pile_img, draw_deck_text, discard_pile_text)
 	deck_animator.finished_reshuffle_anim.connect(on_shuffle_finished)
 
 func on_shuffle_finished():
 	shuffle_to_draw_deck()
-	draw_cards(5)
+	draw_cards(DEFAULT_HAND_SIZE)
 	organize_hand()

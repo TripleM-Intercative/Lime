@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://bhmocce2oy36n"]
+
+[ext_resource type="Texture2D" uid="uid://mjduv2oqde1o" path="res://assets/images/card_back_test.png" id="1_2107c"]
+[ext_resource type="Script" uid="uid://l3liptwk4rhe" path="res://scripts/ui/card_ribbon.gd" id="2_8r3io"]
+
+[sub_resource type="Curve" id="Curve_lj17i"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9960159, 0.5371901), -0.1436801, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_cmiay"]
+offsets = PackedFloat32Array(0, 0.2044335)
+colors = PackedColorArray(0, 1, 1, 0.5529412, 0.07058824, 0.38039216, 0.38039216, 0)
+
+[sub_resource type="GDScript" id="GDScript_oinak"]
+script/source = "extends Line2D
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="CardBack" type="TextureRect" unique_id=162334402]
+z_index = 9
+texture = ExtResource("1_2107c")
+script = ExtResource("2_8r3io")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=613272739]
+top_level = true
+z_index = 8
+z_as_relative = false
+width = 50.0
+width_curve = SubResource("Curve_lj17i")
+default_color = Color(1, 0, 1, 1)
+gradient = SubResource("Gradient_cmiay")
+script = SubResource("GDScript_oinak")

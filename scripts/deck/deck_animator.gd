@@ -3,19 +3,43 @@ class_name DeckAnimator
 
 const CARD_BACK_IMG_PATH: String = "res://assets/images/card_back_test.png"
 const CARD_VIS_Z_INDEX: int = 9
+const DRAW_TEXT_PREFIX: String = "Deck: "
+const DISCARD_TEXT_PREFIX: String = "Grave: "
 
 signal finished_reshuffle_anim()
 
 var draw_deck_img: TextureRect
 var discard_pile_img: TextureRect
+var draw_deck_txt: Label
+var discard_txt: Label
+var card_back_scene: Resource = preload("res://scenes/ui/card_back.tscn")
 
 var card_vis_pool: Array[TextureRect]
 
 var bounce_tweens: Dictionary
+var deck_counts: Dictionary
 
-func setup(draw_img: TextureRect, discard_img: TextureRect) -> void:
+func setup(draw_img: TextureRect, discard_img: TextureRect, draw_deck_text: Label, discard_text: Label) -> void:
 	draw_deck_img = draw_img
 	discard_pile_img = discard_img
+	draw_deck_txt = draw_deck_text
+	discard_txt = discard_text
+
+
+func set_deck_count(deck_img: TextureRect, count: int) -> void:
+	deck_counts[deck_img] = count
+	_update_deck_text(deck_img)
+
+func change_deck_count(deck_img: TextureRect, amount: int) -> void:
+	set_deck_count(deck_img, deck_counts.get(deck_img, 0) + amount)
+
+func _update_deck_text(deck_img: TextureRect) -> void:
+	var count: int = deck_counts.get(deck_img, 0)
+	if deck_img == draw_deck_img:
+		draw_deck_txt.text = DRAW_TEXT_PREFIX + str(count)
+	elif deck_img == discard_pile_img:
+		discard_txt.text = DISCARD_TEXT_PREFIX + str(count)
+
 
 func create_new_card_vis() -> TextureRect:
 	for card in card_vis_pool:
@@ -23,7 +47,7 @@ func create_new_card_vis() -> TextureRect:
 			card.set_visible(true)
 			return card
 	
-	var new_card_vis: TextureRect = TextureRect.new()
+	var new_card_vis: TextureRect = card_back_scene.instantiate()
 	new_card_vis.texture = preload(CARD_BACK_IMG_PATH)
 	new_card_vis.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	new_card_vis.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -40,17 +64,9 @@ func create_new_card_vis() -> TextureRect:
 func anim_reshuffle(duration: float = 1, is_last_card: bool = false) -> void:
 	var ark_height = randi_range(500, 900)
 	var card_vis: TextureRect = create_new_card_vis()
-	
-	for card in card_vis_pool:
-		if not card.visible:
-			card_vis = card
-			card_vis.set_visible(true)
-			break
-	
-	if !card_vis:
-		card_vis = create_new_card_vis()
-	
+
 	bounce_deck_anim(discard_pile_img, 0.1)
+	change_deck_count(discard_pile_img, -1)
 	
 	
 	var discard_pos: Transform2D = _get_visual_global_transform(discard_pile_img)
@@ -67,21 +83,26 @@ func anim_reshuffle(duration: float = 1, is_last_card: bool = false) -> void:
 	move_tween.set_trans(Tween.TRANS_SINE)
 	move_tween.tween_method(_update_arc_card.bind(card_vis, start, control, end), 0.0, 1.0, duration)
 	move_tween.tween_callback(bounce_deck_anim.bind(draw_deck_img, 0.1))
+	move_tween.tween_callback(change_deck_count.bind(draw_deck_img, 1))
 	move_tween.tween_callback(card_vis.set_visible.bind(false))
 	if is_last_card:
 		move_tween.tween_callback(emit_reshuffle_done)
 
 func anim_move_to_deck_pos(deck_ref: TextureRect):
+	
 	var deck_pos: Transform2D = _get_visual_global_transform(deck_ref)
 	var end_pos: Vector2 = deck_pos * (discard_pile_img.size / 2.0)
 	var start_pos: Vector2 = get_global_mouse_position()
 	var card_vis = create_new_card_vis()
-	var control: Vector2 = (start_pos + end_pos) / 2.0 + Vector2(0, -100)
-	var move_tween: Tween = create_tween()
+	var control: Vector2 = (start_pos + end_pos) / 2.0 + Vector2(0, -500)
+	_update_arc_card(0.0, card_vis, start_pos, control, end_pos)
 	
+	var move_tween: Tween = create_tween()
 	move_tween.set_trans(Tween.TRANS_SINE)
-	move_tween.tween_method(_update_arc_card.bind(card_vis, start_pos, control, end_pos), 0.0, 1.0, 0.3)
+	move_tween.tween_method(_update_arc_card.bind(card_vis, start_pos, control, end_pos), 0.0, 1.0, 0.5)
 	move_tween.tween_callback(bounce_deck_anim.bind(discard_pile_img, 0.1))
+	move_tween.tween_callback(change_deck_count.bind(deck_ref, 1))
+	move_tween.tween_callback(card_vis.set_visible.bind(false))
 
 func _update_arc_card(t: float, card_vis: Control, start: Vector2, control: Vector2, end: Vector2) -> void:
 	var dir: Vector2 = _quadratic_bezier_tangent(start, control, end, t)
@@ -123,7 +144,6 @@ func _quadratic_bezier_tangent(p0: Vector2, p1: Vector2, p2: Vector2, t: float) 
 func anim_reshuffle_multiple(count: int, total_time: float = 5) -> void:
 	var delay: float = total_time / count
 	for i in count:
-		anim_reshuffle() 
 		if i == count - 1:
 			anim_reshuffle(1, true) 
 		else:

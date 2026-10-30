@@ -62,7 +62,7 @@ func create_new_card_vis() -> TextureRect:
 	return new_card_vis
 
 func anim_reshuffle(duration: float = 1, is_last_card: bool = false) -> void:
-	var ark_height = randi_range(500, 900)
+	var ark_height = randi_range(300, 500)
 	var card_vis: TextureRect = create_new_card_vis()
 
 	bounce_deck_anim(discard_pile_img, 0.1)

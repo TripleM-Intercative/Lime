@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://l3liptwk4rhe" path="res://scripts/ui/card_ribbon.gd" id="2_8r3io"]
 
 [sub_resource type="Curve" id="Curve_lj17i"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.9960159, 0.5371901), -0.1436801, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -0.1436801, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Gradient" id="Gradient_cmiay"]

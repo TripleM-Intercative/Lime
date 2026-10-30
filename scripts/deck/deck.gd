@@ -11,7 +11,7 @@ const MAX_HAND_WIDTH: float = 600.0
 const MAX_ROTATION: float = 15
 const DECK_HEIGHT: float = 30.0
 const DEFAULT_HAND_SIZE: int = 5
-const RESHUFFLE_TIME: float = 2.0
+const RESHUFFLE_TIME: float = 1.0
 
 var card_blueprint: Resource = preload(BASE_CARD_SCENE_PATH)
 var card_pool: Array[GDScript]

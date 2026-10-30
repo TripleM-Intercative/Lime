@@ -1,6 +1,6 @@
 extends TextureRect
 
-const MAX_POINTS: int = 30
+const MAX_POINTS: int = 100
 const RIBBON_WIDTH_RATIO: float = 1.0
 
 @onready var ribbon: Line2D = $Line2D

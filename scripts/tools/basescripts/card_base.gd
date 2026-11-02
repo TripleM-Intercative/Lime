@@ -22,6 +22,7 @@ var origin_offset: Vector2 = Vector2.ZERO
 var origin_rotation: float
 var base_z_index: int
 var is_clicked: bool = false
+var mouse_velocity: Vector2
 
 func _ready() -> void:
 	if card_data:
@@ -31,6 +32,13 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if is_clicked:
 		self.offset_transform_position = calculat_card_target_pos()
+		rotate_on_movment()
+		
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion && is_clicked:
+		mouse_velocity = Utils.get_mouse_velocity(event, get_process_delta_time())
+
 
 func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
@@ -144,3 +152,13 @@ func reset_card():
 	scale = Vector2.ONE
 	offset_transform_position = Vector2.ZERO
 	offset_transform_rotation = 0.0
+
+func rotate_on_movment() -> void:
+	var vel_x: float = mouse_velocity.x
+	var filtered: float = signf(vel_x) * maxf(absf(vel_x) - 100, 0.0)
+	
+	rotate_card(clampf(filtered * 0.02, -90, 90), 0.1)
+	print(mouse_velocity.x)
+	mouse_velocity = Vector2.ZERO
+	
+	

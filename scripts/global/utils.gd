@@ -118,8 +118,11 @@ static func create_int_input_field(text: String, on_value_changed: Callable) -> 
 	
 	return container
 	
-	
-	
+static func get_mouse_velocity(event: InputEvent, delta: float) -> Vector2:
+	if event is InputEventMouseMotion:
+		return event.relative / delta
+	else:
+		return Vector2.ZERO
 	
 	
 	

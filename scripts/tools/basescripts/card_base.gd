@@ -2,6 +2,10 @@ extends Control
 
 class_name CardBase
 
+const VIEWPORT_ACTIVATION_MARGIN: float = 0.7
+const ACTIVATION_SCALE: Vector2 = Vector2(0.1, 0.1)
+const ACTIVATION_SCALE_DURATION: float = 0.2
+
 var card_data: BaseCardRes
 @onready var card_image_rect: TextureRect = $MarginContainer/VBoxContainer/CardImage
 @onready var heat_icon_rect: TextureRect = $MarginContainer/VBoxContainer/HeatInfo/HeatIcon
@@ -11,6 +15,7 @@ var card_data: BaseCardRes
 @onready var card_description_label: Label = $MarginContainer/VBoxContainer/CardDescription
 
 signal card_used(card: CardBase)
+signal returned_card_to_hand(card: CardBase)
 
 #Anims
 var scale_tween: Tween
@@ -23,6 +28,7 @@ var origin_rotation: float
 var base_z_index: int
 var is_clicked: bool = false
 var mouse_velocity: Vector2
+var can_activate: bool = false
 
 func _ready() -> void:
 	if card_data:
@@ -32,8 +38,15 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if is_clicked:
 		self.offset_transform_position = calculat_card_target_pos()
+		snap_center_to_mouse()
 		rotate_on_movment()
-		
+		var in_range: bool = is_in_activation_range()
+		if in_range != can_activate:
+			can_activate = in_range
+			if can_activate:
+				scale_card(Vector2(0.3, 0.3), 0.1)
+			else:
+				scale_card(Vector2.ONE, 0.1)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion && is_clicked:
@@ -78,7 +91,7 @@ func scale_card(target: Vector2, duration: float) -> void:
 	scale_tween = create_tween()
 	scale_tween.set_ease(Tween.EASE_IN_OUT)
 	scale_tween.set_trans(Tween.TRANS_SINE)
-	scale_tween.tween_property(self, "scale", target, duration)
+	scale_tween.tween_property(self, "offset_transform_scale", target, duration)
 
 func move_card(target: Vector2, duration: float, clicked: bool) -> void:
 	if move_tween:
@@ -88,7 +101,10 @@ func move_card(target: Vector2, duration: float, clicked: bool) -> void:
 	move_tween.set_trans(Tween.TRANS_SINE)
 	move_tween.tween_property(self, "offset_transform_position", target, duration)
 
-	move_tween.finished.connect(set_is_clicked.bind(clicked))
+	if clicked:
+		move_tween.finished.connect(set_is_clicked.bind(true))
+	else:
+		set_is_clicked(false)
 
 func rotate_card(target: float, duration: float) -> void:
 	if rotation_tween:
@@ -104,21 +120,29 @@ func _on_gui_input(event: InputEvent) -> void:
 		move_card(target, 0.1, true)
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-		if is_in_activation_range() and is_clicked:
+		if can_activate and is_clicked:
 			use_card()
 		else:
-			move_card(origin_offset, 0.1, false)
-			scale_card(Vector2(1,1), 0.3)
-			self.z_index = base_z_index
+			return_to_hand()
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 		if is_clicked:
-			move_card(origin_offset, 0.1, false)
-			self.z_index = base_z_index
+			return_to_hand()
+
+func return_to_hand() -> void:
+	move_card(origin_offset, 0.1, false)
+	rotate_card(origin_rotation, 0.1)
+	scale_card(Vector2.ONE, 0.3)
+	self.z_index = base_z_index
+	returned_card_to_hand.emit(self)
 
 func calculat_card_target_pos() -> Vector2:
-	var target_global: Vector2 = get_global_mouse_position() - self.size / 2
+	var target_global: Vector2 = get_global_mouse_position() - self.size / 2.0
 	return target_global - get_layout_global_pos()
+
+func snap_center_to_mouse() -> void:
+	var actual_center: Vector2 = get_global_transform() * (self.size / 2.0)
+	self.offset_transform_position += get_global_mouse_position() - actual_center
 
 func get_layout_global_pos() -> Vector2:
 	var parent_control: Control = get_parent() as Control
@@ -131,14 +155,13 @@ func get_visual_global_pos() -> Vector2:
 
 func set_is_clicked(clicked: bool):
 	is_clicked = clicked
+	if is_clicked == false:
+		can_activate = false
 
 func is_in_activation_range() -> bool :
 	viewport_size = get_viewport().get_visible_rect().size
-	var activation_line: float = viewport_size.y * 0.7
-	if get_viewport().get_mouse_position().y < activation_line:
-		return true
-	else:
-		return false
+	var activation_line: float = viewport_size.y * VIEWPORT_ACTIVATION_MARGIN
+	return get_viewport().get_mouse_position().y < activation_line
 
 func use_card():
 	for effect: CardEffect in card_data.effects:
@@ -149,7 +172,10 @@ func use_card():
 
 func reset_card():
 	is_clicked = false
+	if scale_tween:
+		scale_tween.kill()
 	scale = Vector2.ONE
+	offset_transform_scale = Vector2.ONE
 	offset_transform_position = Vector2.ZERO
 	offset_transform_rotation = 0.0
 
@@ -158,7 +184,6 @@ func rotate_on_movment() -> void:
 	var filtered: float = signf(vel_x) * maxf(absf(vel_x) - 100, 0.0)
 	
 	rotate_card(clampf(filtered * 0.02, -90, 90), 0.1)
-	print(mouse_velocity.x)
 	mouse_velocity = Vector2.ZERO
 	
 	

@@ -171,3 +171,6 @@ func bounce_deck_anim(deck_vis: TextureRect, duration: float = 0.15, strength: f
 
 func emit_reshuffle_done():
 	finished_reshuffle_anim.emit()
+
+func shake_hand_cards(card: CardBase):
+	print("Shake")

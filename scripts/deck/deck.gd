@@ -61,12 +61,11 @@ func setup_deck_container() -> void:
 	hand_container.offset_bottom = card_size.y / 2.0
 	
 
-
-
 func creat_new_card(script: GDScript) -> CardBase:
 	var new_card: CardBase = card_blueprint.instantiate()
 	new_card.set_script(script)
 	new_card.card_used.connect(move_card_to_discard_pile)
+	new_card.returned_card_to_hand.connect(deck_animator.shake_hand_cards)
 	new_card.custom_minimum_size = new_card.size
 	new_card.offset_transform_enabled = true
 	new_card.offset_transform_visual_only = false

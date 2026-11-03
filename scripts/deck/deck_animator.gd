@@ -91,7 +91,7 @@ func anim_reshuffle(duration: float = 1, is_last_card: bool = false) -> void:
 func anim_move_to_deck_pos(deck_ref: TextureRect):
 	
 	var deck_pos: Transform2D = _get_visual_global_transform(deck_ref)
-	var end_pos: Vector2 = deck_pos * (discard_pile_img.size / 2.0)
+	var end_pos: Vector2 = deck_pos * (deck_ref.size / 2.0)
 	var start_pos: Vector2 = get_global_mouse_position()
 	var card_vis = create_new_card_vis()
 	var control: Vector2 = (start_pos + end_pos) / 2.0 + Vector2(0, -500)
@@ -100,7 +100,7 @@ func anim_move_to_deck_pos(deck_ref: TextureRect):
 	var move_tween: Tween = create_tween()
 	move_tween.set_trans(Tween.TRANS_SINE)
 	move_tween.tween_method(_update_arc_card.bind(card_vis, start_pos, control, end_pos), 0.0, 1.0, 0.5)
-	move_tween.tween_callback(bounce_deck_anim.bind(discard_pile_img, 0.1))
+	move_tween.tween_callback(bounce_deck_anim.bind(deck_ref, 0.1))
 	move_tween.tween_callback(change_deck_count.bind(deck_ref, 1))
 	move_tween.tween_callback(card_vis.set_visible.bind(false))
 
@@ -172,5 +172,6 @@ func bounce_deck_anim(deck_vis: TextureRect, duration: float = 0.15, strength: f
 func emit_reshuffle_done():
 	finished_reshuffle_anim.emit()
 
-func shake_hand_cards(card: CardBase):
-	print("Shake")
+func shake_hand_cards(current_hand: Array[CardBase]):
+	for card in current_hand:
+		card.shake_card()

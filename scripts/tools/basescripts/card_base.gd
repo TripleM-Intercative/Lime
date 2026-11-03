@@ -5,6 +5,7 @@ class_name CardBase
 const VIEWPORT_ACTIVATION_MARGIN: float = 0.7
 const ACTIVATION_SCALE: Vector2 = Vector2(0.1, 0.1)
 const ACTIVATION_SCALE_DURATION: float = 0.2
+const SHAKE_RETURN_DURATION: float = 0.1
 
 var card_data: BaseCardRes
 @onready var card_image_rect: TextureRect = $MarginContainer/VBoxContainer/CardImage
@@ -21,12 +22,14 @@ signal returned_card_to_hand(card: CardBase)
 var scale_tween: Tween
 var move_tween: Tween
 var rotation_tween: Tween
+var shake_tween: Tween
 
 var viewport_size: Vector2
 var origin_offset: Vector2 = Vector2.ZERO
 var origin_rotation: float
 var base_z_index: int
 var is_clicked: bool = false
+var is_held: bool = false
 var mouse_velocity: Vector2
 var can_activate: bool = false
 
@@ -74,6 +77,8 @@ func _on_mouse_entered() -> void:
 		rotation_tween.kill()
 	if move_tween:
 		move_tween.kill()
+	if shake_tween:
+		shake_tween.kill()
 	var target_global_y: float = viewport_size.y - self.size.y
 	self.offset_transform_position.y = target_global_y - get_layout_global_pos().y
 	self.offset_transform_rotation = 0.0
@@ -96,6 +101,8 @@ func scale_card(target: Vector2, duration: float) -> void:
 func move_card(target: Vector2, duration: float, clicked: bool) -> void:
 	if move_tween:
 		move_tween.kill()
+	if shake_tween:
+		shake_tween.kill()
 	move_tween = create_tween()
 	move_tween.set_ease(Tween.EASE_IN_OUT)
 	move_tween.set_trans(Tween.TRANS_SINE)
@@ -114,13 +121,39 @@ func rotate_card(target: float, duration: float) -> void:
 	rotation_tween.set_trans(Tween.TRANS_SINE)
 	rotation_tween.tween_property(self, "offset_transform_rotation", deg_to_rad(target), duration)
 
+func shake_card(strength: float = 10.0, duration: float = 0.3, steps: int = 8) -> void:
+	if is_clicked:
+		return
+	
+	var was_moving: bool = move_tween != null and move_tween.is_running()
+	if move_tween:
+		move_tween.kill()
+	if shake_tween:
+		shake_tween.kill()
+	
+	shake_tween = create_tween()
+	if was_moving:
+		shake_tween.tween_property(self, "offset_transform_position", origin_offset, SHAKE_RETURN_DURATION)
+	else:
+		offset_transform_position = origin_offset
+	
+	var step_time: float = duration / steps
+	for i in steps:
+		var falloff: float = 1.0 - float(i) / steps
+		var offset: Vector2 = Vector2(randf_range(-1, 1), randf_range(-1, 1)) * strength * falloff
+		shake_tween.tween_property(self, "offset_transform_position", origin_offset + offset, step_time)
+	
+	shake_tween.tween_property(self, "offset_transform_position", origin_offset, step_time)
+
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		is_held = true
 		var target = calculat_card_target_pos()
 		move_card(target, 0.1, true)
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 		if can_activate and is_clicked:
+			is_held = false
 			use_card()
 		else:
 			return_to_hand()
@@ -130,6 +163,9 @@ func _on_gui_input(event: InputEvent) -> void:
 			return_to_hand()
 
 func return_to_hand() -> void:
+	if not is_held:
+		return
+	is_held = false
 	move_card(origin_offset, 0.1, false)
 	rotate_card(origin_rotation, 0.1)
 	scale_card(Vector2.ONE, 0.3)
@@ -172,8 +208,11 @@ func use_card():
 
 func reset_card():
 	is_clicked = false
+	is_held = false
 	if scale_tween:
 		scale_tween.kill()
+	if shake_tween:
+		shake_tween.kill()
 	scale = Vector2.ONE
 	offset_transform_scale = Vector2.ONE
 	offset_transform_position = Vector2.ZERO

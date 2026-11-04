@@ -75,18 +75,12 @@ func creat_new_card(script: GDScript) -> CardBase:
 func _on_card_returned_to_hand(_card: CardBase = null) -> void:
 	deck_animator.shake_hand_cards(current_hand)
 
-
 func set_up_card_pool() -> void:
-	var script_files = DirAccess.get_files_at(CARD_SCRIPTS_PATH)
-	for script in script_files:
-		if script.ends_with(".uid"):
-			continue
-		elif script.ends_with("_card.gd"):
-			var full_script_path: String = CARD_SCRIPTS_PATH.path_join(script)
-			var card_script: GDScript = load(full_script_path)
+	for file in ResourceLoader.list_directory(CARD_SCRIPTS_PATH):
+		if file.ends_with("_card.gd"):
+			var card_script: GDScript = load(CARD_SCRIPTS_PATH.path_join(file))
 			if card_script:
 				card_pool.append(card_script)
-
 
 func organize_hand() -> void:
 	if current_hand.is_empty():

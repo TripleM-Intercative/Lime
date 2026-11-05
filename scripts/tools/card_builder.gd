@@ -19,7 +19,7 @@ var texture_rect: TextureRect
 var effects_list: VBoxContainer
 
 var card_list: ItemList
-var found_cards: Array[Dictionary] = []
+var found_cards: Array[Dictionary]
 
 
 func _run():

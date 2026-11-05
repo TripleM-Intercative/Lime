@@ -1,5 +1,6 @@
 @tool
-extends Node
+class_name Structs
+extends RefCounted
 
 class BaseCardData:
 	var image_pc_path: String

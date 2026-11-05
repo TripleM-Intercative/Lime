@@ -205,9 +205,9 @@ func calculate_card_spacing(card_count: int) -> float:
 	return clampf(spacing, MIN_SPACING, MAX_SPACING)
 
 func create_deck_visuals():
-	draw_deck_text = $deck_container/VBoxContainer/draw_deck_txt
+	draw_deck_text = $deck_container/draw_deck_container/draw_deck_txt
 	discard_pile_text = $deck_container/discard_container/discard_pile_txt
-	draw_deck_img = $deck_container/VBoxContainer/draw_deck_img
+	draw_deck_img = $deck_container/draw_deck_container/draw_deck_img
 	discard_pile_img = $deck_container/discard_container/discard_pile_img
 
 	deck_animator = DeckAnimator.new()

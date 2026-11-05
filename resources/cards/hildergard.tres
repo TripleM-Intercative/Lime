@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://chiqhroeg1g5k"]
+
+[ext_resource type="Texture2D" uid="uid://dxyj53kleu7te" path="res://assets/default_card_image.png" id="1_5pxxl"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_7iliu"]
+[ext_resource type="Script" uid="uid://ca8i5mdaplfnr" path="res://scripts/effects/damage_effect.gd" id="3_gjvho"]
+[ext_resource type="Script" uid="uid://blv2bdokecv48" path="res://scripts/effects/beacon_effect.gd" id="4_8jy2t"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="5_8u1mj"]
+
+[sub_resource type="Resource" id="Resource_uqnf3"]
+script = ExtResource("3_gjvho")
+
+[sub_resource type="Resource" id="Resource_5ei8r"]
+script = ExtResource("4_8jy2t")
+
+[resource]
+script = ExtResource("5_8u1mj")
+card_name = "Hildergard"
+card_image = ExtResource("1_5pxxl")
+heat_cost = 2
+heat_cost_amount = 12
+target_cells = Array[Vector2]([Vector2(-2, 1), Vector2(-2, 2), Vector2(-1, -1), Vector2(-1, 1), Vector2(-1, 2), Vector2(0, -1), Vector2(0, 1), Vector2(1, -2), Vector2(1, 0), Vector2(2, -2), Vector2(2, -1), Vector2(2, 0)])
+effects = Array[ExtResource("2_7iliu")]([SubResource("Resource_uqnf3"), SubResource("Resource_5ei8r")])

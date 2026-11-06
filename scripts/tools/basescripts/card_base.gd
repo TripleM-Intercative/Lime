@@ -6,6 +6,8 @@ const VIEWPORT_ACTIVATION_MARGIN: float = 0.7
 const ACTIVATION_SCALE: Vector2 = Vector2(0.1, 0.1)
 const ACTIVATION_SCALE_DURATION: float = 0.2
 const SHAKE_RETURN_DURATION: float = 0.1
+const ACTIVE_MOUSE_OFFSET: Vector2 = Vector2(16, 16)
+const ANCHOR_BLEND_DURATION: float = 0.1
 
 var card_data: BaseCardRes
 @onready var card_image_rect: TextureRect = $MarginContainer/VBoxContainer/CardImage
@@ -23,6 +25,7 @@ var scale_tween: Tween
 var move_tween: Tween
 var rotation_tween: Tween
 var shake_tween: Tween
+var anchor_tween: Tween
 
 var viewport_size: Vector2
 var origin_offset: Vector2 = Vector2.ZERO
@@ -32,6 +35,8 @@ var is_clicked: bool = false
 var is_held: bool = false
 var mouse_velocity: Vector2
 var can_activate: bool = false
+var target_cells: Array[Vector2i]
+var anchor_blend: float = 0.0
 
 func _ready() -> void:
 	if card_data:
@@ -41,15 +46,22 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if is_clicked:
 		self.offset_transform_position = calculat_card_target_pos()
-		snap_center_to_mouse()
+		snap_to_mouse()
 		rotate_on_movment()
 		var in_range: bool = is_in_activation_range()
 		if in_range != can_activate:
 			can_activate = in_range
 			if can_activate:
 				scale_card(Vector2(0.3, 0.3), 0.1)
+				blend_anchor(1.0)
 			else:
 				scale_card(Vector2.ONE, 0.1)
+				blend_anchor(0.0)
+	if is_held:
+		if can_activate:
+			MapManager.highlight_cells(MapManager.get_cells_in_range(target_cells))
+		else:
+			MapManager.clear_highlight()
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion && is_clicked:
@@ -60,6 +72,7 @@ func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
 	card_name_label.text = card_data.card_name
 	card_description_label.text = "Sehr tolle Karte, mit der man ganz viel Spaß hat!!"
+	target_cells = card_data.target_cells
 
 	match card_data.heat_cost:
 		Enums.HeatCost.NoCost:
@@ -166,6 +179,7 @@ func return_to_hand() -> void:
 	if not is_held:
 		return
 	is_held = false
+	MapManager.clear_highlight()
 	move_card(origin_offset, 0.1, false)
 	rotate_card(origin_rotation, 0.1)
 	scale_card(Vector2.ONE, 0.3)
@@ -176,9 +190,19 @@ func calculat_card_target_pos() -> Vector2:
 	var target_global: Vector2 = get_global_mouse_position() - self.size / 2.0
 	return target_global - get_layout_global_pos()
 
-func snap_center_to_mouse() -> void:
-	var actual_center: Vector2 = get_global_transform() * (self.size / 2.0)
-	self.offset_transform_position += get_global_mouse_position() - actual_center
+func snap_to_mouse() -> void:
+	var local_anchor: Vector2 = (self.size / 2.0).lerp(Vector2.ZERO, anchor_blend)
+	var actual_anchor: Vector2 = get_global_transform() * local_anchor
+	var target: Vector2 = get_global_mouse_position() + ACTIVE_MOUSE_OFFSET * anchor_blend
+	self.offset_transform_position += target - actual_anchor
+
+func blend_anchor(target: float) -> void:
+	if anchor_tween:
+		anchor_tween.kill()
+	anchor_tween = create_tween()
+	anchor_tween.set_ease(Tween.EASE_IN_OUT)
+	anchor_tween.set_trans(Tween.TRANS_SINE)
+	anchor_tween.tween_property(self, "anchor_blend", target, ANCHOR_BLEND_DURATION)
 
 func get_layout_global_pos() -> Vector2:
 	var parent_control: Control = get_parent() as Control
@@ -193,6 +217,7 @@ func set_is_clicked(clicked: bool):
 	is_clicked = clicked
 	if is_clicked == false:
 		can_activate = false
+		blend_anchor(0.0)
 
 func is_in_activation_range() -> bool :
 	viewport_size = get_viewport().get_visible_rect().size
@@ -200,6 +225,7 @@ func is_in_activation_range() -> bool :
 	return get_viewport().get_mouse_position().y < activation_line
 
 func use_card():
+	MapManager.clear_highlight()
 	for effect: CardEffect in card_data.effects:
 		effect.apply(self)
 	card_used.emit(self)
@@ -213,6 +239,9 @@ func reset_card():
 		scale_tween.kill()
 	if shake_tween:
 		shake_tween.kill()
+	if anchor_tween:
+		anchor_tween.kill()
+	anchor_blend = 0.0
 	scale = Vector2.ONE
 	offset_transform_scale = Vector2.ONE
 	offset_transform_position = Vector2.ZERO
@@ -224,5 +253,3 @@ func rotate_on_movment() -> void:
 	
 	rotate_card(clampf(filtered * 0.02, -90, 90), 0.1)
 	mouse_velocity = Vector2.ZERO
-	
-	

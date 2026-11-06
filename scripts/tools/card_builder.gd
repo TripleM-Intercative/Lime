@@ -247,13 +247,13 @@ func create_grid_selector_input():
 	var edit_grid_button: Button = _create_button("Edit Grid", grid_selector.edit_grid)
 	content.add_child(edit_grid_button)
 
-func get_grid_size_for(offsets: Array[Vector2]) -> int:
+func get_grid_size_for(offsets: Array[Vector2i]) -> int:
 	var max_offset: int = 0
-	for offset: Vector2 in offsets:
-		max_offset = max(max_offset, absi(int(offset.x)), absi(int(offset.y)))
-	return max(GridSelector.DEFAULT_SIZE, max_offset + 1)
+	for offset: Vector2i in offsets:
+		max_offset = maxi(max_offset, maxi(absi(offset.x), absi(offset.y)))
+	return maxi(GridSelector.DEFAULT_SIZE, max_offset + 1)
 
-func set_target_cells(positions: Array[Vector2], origin: Vector2):
+func set_target_cells(positions: Array[Vector2i], origin: Vector2i):
 	card.target_cells.clear()
 	for pos in positions:
 		card.target_cells.append(pos - origin)

@@ -24,6 +24,8 @@ var input_actions = {
 var current_path: Array[Vector2i] = []
 var astar = AStarGrid2D.new()
 
+var register_value
+
 func _ready() -> void:
 	assert(map, "No Map in Player")
 	
@@ -89,6 +91,7 @@ func _process(delta: float) -> void:
 			
 			can_move = false
 			movement_timer = 0.0
+			
 	else:
 		execute_move(delta)
 

@@ -4,13 +4,13 @@ class_name GridSelector
 const DEFAULT_SIZE: int = 3
 
 var grid_container: GridContainer = GridContainer.new()
-var selected_pos: Array[Vector2]
+var selected_pos: Array[Vector2i]
 var cells: Array[SelectorCell]
 var grid_window: Window
 var grid_size: int
-var grid_mid: Vector2
+var grid_mid: Vector2i
 
-signal set_grid_positions(positions: Array[Vector2], origin: Vector2)
+signal set_grid_positions(positions: Array[Vector2i], origin: Vector2i)
 
 func _init() -> void:
 	grid_container.add_theme_constant_override("h_separation", 0)
@@ -19,16 +19,16 @@ func _init() -> void:
 func get_real_grid_size() -> int:
 	return (grid_size - 1) * 2 + 1
 
-func create_new_grid(size: int, marked_offsets: Array[Vector2] = []):
+func create_new_grid(size: int, marked_offsets: Array[Vector2i] = []):
 	grid_size = clampi(size, 1, Utils.INT_MAX)
 	var real_grid_size: int = get_real_grid_size()
 	grid_container.columns = real_grid_size
-	grid_mid = Vector2(grid_size - 1, grid_size - 1)
+	grid_mid = Vector2i(grid_size - 1, grid_size - 1)
 	
 	for row in range(real_grid_size):
 		for column in range(real_grid_size):
 			var new_cell := SelectorCell.new()
-			new_cell.pos_in_grid = Vector2(row, column)
+			new_cell.pos_in_grid = Vector2i(row, column)
 			new_cell.is_mid = new_cell.pos_in_grid == grid_mid
 			new_cell.set_marked(marked_offsets.has(new_cell.pos_in_grid - grid_mid))
 			cells.append(new_cell)
@@ -42,8 +42,8 @@ func remove_grid():
 		cell.queue_free()
 	cells.clear()
 
-func get_marked_offsets() -> Array[Vector2]:
-	var offsets: Array[Vector2] = []
+func get_marked_offsets() -> Array[Vector2i]:
+	var offsets: Array[Vector2i] = []
 	for cell in cells:
 		if cell.is_marked:
 			offsets.append(cell.pos_in_grid - grid_mid)
@@ -53,7 +53,7 @@ func resize_grid(value):
 	var new_size: int = clampi(int(value), 1, Utils.INT_MAX)
 	if new_size == grid_size and !cells.is_empty():
 		return
-	var offsets: Array[Vector2] = get_marked_offsets()
+	var offsets: Array[Vector2i] = get_marked_offsets()
 	remove_grid()
 	create_new_grid(new_size, offsets)
 
@@ -68,7 +68,7 @@ func clear_grid():
 func circle_grid():
 	var radius: int = grid_size - 1
 	for cell in cells:
-		var offset: Vector2 = cell.pos_in_grid - grid_mid
+		var offset: Vector2i = cell.pos_in_grid - grid_mid
 		cell.set_marked(offset.length_squared() <= radius * radius + radius)
 
 func edit_grid():

@@ -25,7 +25,7 @@ offset_bottom = 322.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="deck_container" unique_id=1239259932]
+[node name="draw_deck_container" type="VBoxContainer" parent="deck_container" unique_id=1239259932]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -33,14 +33,14 @@ offset_transform_enabled = true
 offset_transform_position = Vector2(30, -60)
 offset_transform_scale = Vector2(1.5, 1.5)
 
-[node name="draw_deck_img" type="TextureRect" parent="deck_container/VBoxContainer" unique_id=827617941]
+[node name="draw_deck_img" type="TextureRect" parent="deck_container/draw_deck_container" unique_id=827617941]
 z_index = 10
 custom_maximum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_horizontal = 0
 texture = ExtResource("2_0tkc0")
 
-[node name="draw_deck_txt" type="Label" parent="deck_container/VBoxContainer" unique_id=1485817666]
+[node name="draw_deck_txt" type="Label" parent="deck_container/draw_deck_container" unique_id=1485817666]
 layout_mode = 2
 text = "10"
 horizontal_alignment = 1

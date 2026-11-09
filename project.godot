@@ -17,9 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-Enums="*uid://b6de14848oe2g"
-Structs="*uid://b5o0e25s7nqio"
 FmodManager="*uid://cds10pm7hwn3p"
+MapManager="*uid://mur4tbkjtfjr"
 
 [display]
 

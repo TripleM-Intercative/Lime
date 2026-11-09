@@ -20,6 +20,7 @@ func _ready() -> void:
 	var first_cell : Vector2i = map.get_used_cells().front()
 	position = map.map_to_local(first_cell)
 	print(global_position)
+	MapManager.register_map(map)
 	pass # Replace with function body.
 
 

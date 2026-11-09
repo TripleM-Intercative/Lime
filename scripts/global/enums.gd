@@ -1,3 +1,4 @@
+class_name Enums
 extends Node
 
 enum CardType {None, Damage, Heal, Beacon ,Guardian, Utility}

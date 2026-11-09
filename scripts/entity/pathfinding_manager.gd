@@ -12,8 +12,8 @@ var astar_grids: Dictionary[int, AStarGrid2D] = {}
 var offset_caches: Dictionary[int, Array] = {}
 
 var register_value_count := 0
-var entities: Dictionary[int, SmartStructs.Entity] = {}
-var obstacles: Dictionary[Vector2i, SmartStructs.Obstacle] = {}
+var entities: Dictionary[int, Structs.Entity] = {}
+var obstacles: Dictionary[Vector2i, Structs.Obstacle] = {}
 
 #Privat
 func _ready() -> void:
@@ -103,7 +103,7 @@ func _add_obstacle_area(type: int, pos: Vector2i, size: int, is_solid: bool) -> 
 		var check_pos = pos + offset
 		
 		if !obstacles.has(check_pos):
-			obstacles[check_pos] = SmartStructs.Obstacle.new()
+			obstacles[check_pos] = Structs.Obstacle.new()
 			
 		obstacles[check_pos].add(type, is_solid)
 
@@ -184,7 +184,7 @@ func add_obstacle(pos: Vector2i, type: Enums.ObstacleType, is_solid: bool = true
 		return false
 		
 	if !obstacles.has(pos):
-		obstacles[pos] = SmartStructs.Obstacle.new()
+		obstacles[pos] = Structs.Obstacle.new()
 		
 	obstacles[pos].add(type, is_solid)
 	
@@ -211,7 +211,7 @@ func register_entity(type: Enums.EntityType, pos: Vector2i, size: int, is_solid:
 		
 	register_value_count += 1
 	
-	entities[register_value_count] = SmartStructs.Entity.new(type, pos, size, is_solid)
+	entities[register_value_count] = Structs.Entity.new(type, pos, size, is_solid)
 	
 	_add_obstacle_area(Enums.ObstacleType.Entity, pos, size, is_solid)
 	_refresh_grid_area(pos, size)

@@ -8,7 +8,7 @@ const COLOR_MID: Color = Color.ORANGE
 const COLOR_BORDER: Color = Color(0.12, 0.12, 0.12)
 const MID_BORDER_WIDTH: int = 4
 
-var pos_in_grid: Vector2
+var pos_in_grid: Vector2i
 var is_marked: bool = false
 var is_mid: bool = false:
 	set(value):

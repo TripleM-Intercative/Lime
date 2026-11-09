@@ -194,6 +194,18 @@ position = Vector2(77, 33)
 script = ExtResource("7_vr11v")
 map = NodePath("../TileMapLayer")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1565212998]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=24393438]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerDeck" parent="CanvasLayer/Control" unique_id=750561058 instance=ExtResource("5_i1oa0")]
+
 [node name="DebugView" type="Node2D" parent="." unique_id=1691525539 node_paths=PackedStringArray("map")]
 script = ExtResource("8_vr11v")
 map = NodePath("../TileMapLayer")

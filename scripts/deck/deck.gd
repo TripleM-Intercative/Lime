@@ -61,29 +61,26 @@ func setup_deck_container() -> void:
 	hand_container.offset_bottom = card_size.y / 2.0
 	
 
-
-
 func creat_new_card(script: GDScript) -> CardBase:
 	var new_card: CardBase = card_blueprint.instantiate()
 	new_card.set_script(script)
 	new_card.card_used.connect(move_card_to_discard_pile)
+	new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
 	new_card.custom_minimum_size = new_card.size
 	new_card.offset_transform_enabled = true
 	new_card.offset_transform_visual_only = false
 	return new_card
 
 
+func _on_card_returned_to_hand(_card: CardBase = null) -> void:
+	deck_animator.shake_hand_cards(current_hand)
+
 func set_up_card_pool() -> void:
-	var script_files = DirAccess.get_files_at(CARD_SCRIPTS_PATH)
-	for script in script_files:
-		if script.ends_with(".uid"):
-			continue
-		elif script.ends_with("_card.gd"):
-			var full_script_path: String = CARD_SCRIPTS_PATH.path_join(script)
-			var card_script: GDScript = load(full_script_path)
+	for file in ResourceLoader.list_directory(CARD_SCRIPTS_PATH):
+		if file.ends_with("_card.gd"):
+			var card_script: GDScript = load(CARD_SCRIPTS_PATH.path_join(file))
 			if card_script:
 				card_pool.append(card_script)
-
 
 func organize_hand() -> void:
 	if current_hand.is_empty():
@@ -208,9 +205,9 @@ func calculate_card_spacing(card_count: int) -> float:
 	return clampf(spacing, MIN_SPACING, MAX_SPACING)
 
 func create_deck_visuals():
-	draw_deck_text = $deck_container/VBoxContainer/draw_deck_txt
+	draw_deck_text = $deck_container/draw_deck_container/draw_deck_txt
 	discard_pile_text = $deck_container/discard_container/discard_pile_txt
-	draw_deck_img = $deck_container/VBoxContainer/draw_deck_img
+	draw_deck_img = $deck_container/draw_deck_container/draw_deck_img
 	discard_pile_img = $deck_container/discard_container/discard_pile_img
 
 	deck_animator = DeckAnimator.new()

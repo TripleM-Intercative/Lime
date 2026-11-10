@@ -1,8 +1,8 @@
 extends Node
 class_name PathfindingManager
 
-@export var m_map: TileMapLayer
-@export var m_obstacle_weights: Dictionary[Enums.ObstacleType, int] = {
+@export var map: TileMapLayer
+@export var obstacle_weights: Dictionary[Enums.ObstacleType, int] = {
 	Enums.ObstacleType.Entity: 100,
 	Enums.ObstacleType.Attack: 20
 }
@@ -16,7 +16,7 @@ var m_entities: Dictionary[int, Structs.Entity] = {}
 var m_obstacles: Dictionary[Vector2i, Structs.Obstacle] = {}
 
 func _ready() -> void:
-	assert(m_map, "No Map in Map_Pathfinding")
+	assert(map, "No Map in Map_Pathfinding")
 	
 	m_init_offset_caches()
 	
@@ -186,7 +186,7 @@ func m_init_astar() -> void:
 	
 	for size in m_supported_sizes:
 		var astar = AStarGrid2D.new()
-		astar.region = m_map.get_used_rect()
+		astar.region = map.get_used_rect()
 		astar.cell_size = Vector2i.ONE
 		astar.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER
 		astar.default_compute_heuristic = AStarGrid2D.HEURISTIC_MANHATTAN
@@ -198,7 +198,7 @@ func m_init_astar() -> void:
 		m_set_astar_for_size(size)
 
 func m_set_astar_for_size(size: int) -> void:
-	var rect = m_map.get_used_rect()
+	var rect = map.get_used_rect()
 	var astar = m_astar_grids[size]
 	
 	for x in range(rect.position.x, rect.end.x):
@@ -214,7 +214,7 @@ func m_is_valid_pos(top_left: Vector2i, size: int) -> bool:
 	for offset in m_offset_caches.get(size, [Vector2i.ZERO]):
 		var check_pos = top_left + offset
 			
-		if !astar.is_in_boundsv(check_pos) || m_map.get_cell_source_id(check_pos) == -1:
+		if !astar.is_in_boundsv(check_pos) || map.get_cell_source_id(check_pos) == -1:
 			return false
 			
 		if m_obstacles.has(check_pos):
@@ -232,7 +232,7 @@ func m_get_obstacle_weight(pos: Vector2i) -> int:
 	
 	for obstacle_type in obstacle.soft_data.keys():
 		var count = obstacle.soft_data[obstacle_type]
-		var base_weight = m_obstacle_weights.get(obstacle_type, 1)
+		var base_weight = obstacle_weights.get(obstacle_type, 1)
 		total_weight += count * max(base_weight, 1)
 		
 	return total_weight

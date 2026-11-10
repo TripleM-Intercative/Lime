@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dj0bmhx2igip3" path="res://scenes/pathfinding_manager.tscn" id="5_i1oa0"]
 [ext_resource type="Script" uid="uid://cec72wkmkjuvh" path="res://scripts/entity/pathfinding_manager.gd" id="6_7lmfh"]
 [ext_resource type="Script" uid="uid://blms7xpx38nwd" path="res://scripts/entity/player.gd" id="7_vr11v"]
-[ext_resource type="Script" uid="uid://b4iobmkiaksc5" path="res://scripts/test/debug_view.gd" id="8_vr11v"]
+[ext_resource type="Script" uid="uid://b4iobmkiaksc5" path="res://scripts/test/astar_debug_view.gd" id="8_vr11v"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_imscb"]
 noise_type = 2
@@ -207,7 +207,7 @@ mouse_filter = 1
 
 [node name="PlayerDeck" parent="CanvasLayer/Control" unique_id=750561058 instance=ExtResource("5_i1oa0")]
 
-[node name="DebugView" type="Node2D" parent="." unique_id=1691525539 node_paths=PackedStringArray("map")]
+[node name="AStarDebugView" type="Node2D" parent="." unique_id=1691525539 node_paths=PackedStringArray("map")]
 script = ExtResource("8_vr11v")
 map = NodePath("../TileMapLayer")
 

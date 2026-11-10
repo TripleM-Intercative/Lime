@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://cjmq0jrxdpwj7"]
+
+[ext_resource type="PackedScene" uid="uid://b4py7eu03xcp7" path="res://scenes/lime_character.tscn" id="1_4ra3w"]
+[ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="3_c4w8v"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c1fuu"]
+
+[node name="Enemy" unique_id=1969356312 instance=ExtResource("1_4ra3w")]
+
+[node name="Sprite" parent="." index="0" unique_id=1791472282]
+modulate = Color(1, 0.01666665, 0, 1)
+scale = Vector2(0.02, 0.02)
+texture = ExtResource("3_c4w8v")
+
+[node name="Collision" parent="." index="1" unique_id=626519246]
+shape = SubResource("CircleShape2D_c1fuu")

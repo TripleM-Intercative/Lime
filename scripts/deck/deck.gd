@@ -20,6 +20,7 @@ var current_deck: Array[CardBase]
 var current_hand: Array[CardBase]   
 var discard_pile: Array[CardBase]   
 var draw_deck: Array[CardBase]     
+var exile_deck: Array[CardBase]
 
 var hand_container: HBoxContainer
 var viewport_size: Vector2
@@ -162,13 +163,15 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 	if card_index == -1:
 		return
 	current_hand.remove_at(card_index)
-	discard_pile.append(card)
+	if !card.card_data.exhausted_on_use:
+		discard_pile.append(card)
+	else:
+		exile_deck.append(card)
 	deck_animator.anim_move_to_deck_pos(discard_pile_img)
 	hand_container.remove_child(card)
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)
 	organize_hand()
-
 
 func remove_card_from_deck(card: CardBase) -> void:
 	if draw_deck.has(card):

@@ -170,6 +170,7 @@ func show_card_form(card_res: BaseCardRes, path: String):
 	create_name_input()
 	create_image_input()
 	create_heat_input()
+	create_exhaust_input()
 	create_grid_selector_input()
 	create_effects_input()
 	create_form_buttons()
@@ -237,6 +238,13 @@ func create_heat_input():
 	heat_input_container.add_child(heat_drop_down)
 	heat_input_container.add_child(heat_amount_input)
 	content.add_child(heat_input_container)
+
+func create_exhaust_input():
+	var exhaust_input: HBoxContainer = Utils.create_bool_input_field("Is exhausted on use",
+	func(value: bool): card.exhausted_on_use = value )
+	
+	content.add_child(exhaust_input)
+
 
 func create_grid_selector_input():
 	var grid_selector: GridSelector = GridSelector.new()

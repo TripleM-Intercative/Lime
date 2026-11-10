@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dc8pmj10prp8e" path="res://scripts/effects/guardian_effect.gd" id="3_n7rs8"]
 [ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_e675u"]
 
-[sub_resource type="Resource" id="Resource_ghwhr"]
+[sub_resource type="Resource" id="Resource_ihh1y"]
 script = ExtResource("3_n7rs8")
 amount = 123.0
 
@@ -15,5 +15,6 @@ card_name = "BestCard"
 card_image = ExtResource("1_ihh1y")
 heat_cost = 2
 heat_cost_amount = 3
+exhausted_on_use = true
 target_cells = Array[Vector2i]([Vector2i(-1, 0), Vector2i(0, 0), Vector2i(1, 0)])
-effects = Array[ExtResource("2_tp7la")]([SubResource("Resource_ghwhr")])
+effects = Array[ExtResource("2_tp7la")]([SubResource("Resource_ihh1y")])

@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bm2behjkllwmj" path="res://ressources/neo_zero_buildings_02.png" id="1_ygxep"]
 [ext_resource type="Script" uid="uid://cpip88qtjtfn2" path="res://scripts/control/draggable_camera_2d.gd" id="2_2lkk8"]
 [ext_resource type="PackedScene" uid="uid://bqcubfv3obva3" path="res://scenes/player.tscn" id="4_lwawy"]
+[ext_resource type="PackedScene" uid="uid://dy8s4h4a2uk7a" path="res://scenes/ui/player_deck.tscn" id="5_i1oa0"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_imscb"]
 noise_type = 2
@@ -174,6 +175,7 @@ noise_threshold = 0.6
 map = NodePath("TileMapLayer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1412098393]
+position = Vector2(578, 321)
 script = ExtResource("2_2lkk8")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1504299760]
@@ -182,5 +184,9 @@ tile_set = SubResource("TileSet_f5ddx")
 
 [node name="Player" parent="." unique_id=1067804140 node_paths=PackedStringArray("map") instance=ExtResource("4_lwawy")]
 map = NodePath("../TileMapLayer")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1638159041]
+
+[node name="PlayerDeck" parent="CanvasLayer" unique_id=750561058 instance=ExtResource("5_i1oa0")]
 
 [connection signal="editor_state_changed" from="." to="." method="_editor_state_changed"]

@@ -14,11 +14,11 @@ func _draw() -> void:
 		for y in range(100):
 			var pos = Vector2i(x, y)
 			
-			if mp.astar_grids[2].is_point_solid(pos):
+			if mp.m_astar_grids[2].is_point_solid(pos):
 				var world_pos = map.map_to_local(pos)
 				var rect = Rect2(world_pos - (cell_size / 2.0), cell_size)
 				draw_rect(rect, Color(1, 0, 0, 0.4))
-			elif mp.astar_grids[2].get_point_weight_scale(pos) > 1.0:
+			elif mp.m_astar_grids[2].get_point_weight_scale(pos) > 1.0:
 				var world_pos = map.map_to_local(pos)
 				var rect = Rect2(world_pos - (cell_size / 2.0), cell_size)
 				draw_rect(rect, Color(0, 0, 1, 0.4))

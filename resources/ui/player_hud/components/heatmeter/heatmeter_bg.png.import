@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bm2behjkllwmj"
-path="res://.godot/imported/neo_zero_buildings_02.png-f754aec5979c17fe3f3268427afc4a8b.ctex"
+uid="uid://bror6gwktq5pv"
+path="res://.godot/imported/heatmeter_bg.png-dd0fb24c1f87145b43c4c4d3c5ea25ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ressources/neo_zero_buildings_02.png"
-dest_files=["res://.godot/imported/neo_zero_buildings_02.png-f754aec5979c17fe3f3268427afc4a8b.ctex"]
+source_file="res://resources/ui/player_hud/components/heatmeter/heatmeter_bg.png"
+dest_files=["res://.godot/imported/heatmeter_bg.png-dd0fb24c1f87145b43c4c4d3c5ea25ab.ctex"]
 
 [params]
 

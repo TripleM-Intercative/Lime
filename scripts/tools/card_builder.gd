@@ -2,8 +2,8 @@
 extends EditorScript
 class_name CardBuilder
 
-const window_margin: int = 20
-const y_padding: int = 20
+const WINDOW_MARGIN: int = 20
+const Y_PADDING: int = 20
 const EFFECT_BASE_CLASS: String = "CardEffect"
 const CARD_SEARCH_PATH: String = "res://resources/"
 const NEW_CARD_PATH: String = "res://resources/cards/"
@@ -17,6 +17,7 @@ var edit_path: String = ""
 var new_image_path: String = "" 
 var texture_rect: TextureRect
 var effects_list: VBoxContainer
+var grid_edit_button: Button
 
 var card_list: ItemList
 var found_cards: Array[Dictionary]
@@ -25,13 +26,13 @@ var found_cards: Array[Dictionary]
 func _run():
 	window = Window.new()
 	window.title = "Card Builder"
-	EditorInterface.popup_dialog(window, Rect2(Vector2(100, 100), Vector2(400, 720)))
+	EditorInterface.popup_dialog(window, Rect2(Vector2(100, 100), Vector2(400, 800)))
 	window.close_requested.connect(_close)
 	
 	var margin: MarginContainer = MarginContainer.new()
 	margin.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	for side in ["margin_left", "margin_top", "margin_right", "margin_bottom"]:
-		margin.add_theme_constant_override(side, window_margin)
+		margin.add_theme_constant_override(side, WINDOW_MARGIN)
 	window.add_child(margin)
 	
 	var scroll: ScrollContainer = ScrollContainer.new()
@@ -40,7 +41,7 @@ func _run():
 	
 	root = VBoxContainer.new()
 	root.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	root.add_theme_constant_override("separation", y_padding)
+	root.add_theme_constant_override("separation", Y_PADDING)
 	scroll.add_child(root)
 	
 	show_start_screen()
@@ -55,7 +56,7 @@ func clear_content():
 		content.queue_free()
 	
 	content = VBoxContainer.new()
-	content.add_theme_constant_override("separation", y_padding)
+	content.add_theme_constant_override("separation", Y_PADDING)
 	root.add_child(content)
 
 func is_edit_mode() -> bool:
@@ -165,12 +166,15 @@ func show_card_form(card_res: BaseCardRes, path: String):
 	card = card_res
 	edit_path = path
 	new_image_path = ""
-	
+	grid_edit_button = null
+
 	clear_content()
 	create_name_input()
 	create_image_input()
 	create_heat_input()
+	create_card_range_input()
 	create_exhaust_input()
+	create_range_type_input()
 	create_grid_selector_input()
 	create_effects_input()
 	create_form_buttons()
@@ -216,6 +220,26 @@ func _on_load_image_button_pressed():
 	window.add_child(file_dialog)
 	file_dialog.popup_centered(Vector2i(600, 400))
 
+func create_range_type_input():
+	var range_type_input: VBoxContainer = Utils.create_dropdown_input_with_enum(Enums.RangeType, "Range Type", _on_range_type_changed)
+	(range_type_input.get_child(Utils.VALUE_CHILD_INDEX) as OptionButton).select(card.range_type)
+	content.add_child(range_type_input)
+
+func _on_range_type_changed(new_type: Enums.RangeType):
+	card.range_type = new_type
+	_update_grid_edit_button()
+
+func _update_grid_edit_button():
+	if grid_edit_button:
+		grid_edit_button.visible = card.range_type == Enums.RangeType.AOE
+
+func create_card_range_input():
+	var range_input: HBoxContainer = Utils.create_int_input_field("Card Range",
+	func(value: int): card.card_range = value)
+	(range_input.get_child(Utils.VALUE_CHILD_INDEX) as SpinBox).value = card.card_range
+	
+	content.add_child(range_input)
+
 func _on_file_selected(path: String) -> void:
 	var img: Image = Image.load_from_file(path)
 	if img:
@@ -229,11 +253,11 @@ func create_heat_input():
 	
 	var heat_drop_down: VBoxContainer = Utils.create_dropdown_input_with_enum(Enums.HeatCost, "Heat",
 		func(value: int): card.heat_cost = value)
-	(heat_drop_down.get_child(1) as OptionButton).select(card.heat_cost)
+	(heat_drop_down.get_child(Utils.VALUE_CHILD_INDEX) as OptionButton).select(card.heat_cost)
 	
 	var heat_amount_input: HBoxContainer = Utils.create_int_input_field("Amount",
 		func(value: float): card.heat_cost_amount = int(value))
-	(heat_amount_input.get_child(1) as SpinBox).value = card.heat_cost_amount
+	(heat_amount_input.get_child(Utils.VALUE_CHILD_INDEX) as SpinBox).value = card.heat_cost_amount
 	
 	heat_input_container.add_child(heat_drop_down)
 	heat_input_container.add_child(heat_amount_input)
@@ -242,9 +266,9 @@ func create_heat_input():
 func create_exhaust_input():
 	var exhaust_input: HBoxContainer = Utils.create_bool_input_field("Is exhausted on use",
 	func(value: bool): card.exhausted_on_use = value )
+	(exhaust_input.get_child(Utils.VALUE_CHILD_INDEX) as CheckBox).set_pressed_no_signal(card.exhausted_on_use)
 	
 	content.add_child(exhaust_input)
-
 
 func create_grid_selector_input():
 	var grid_selector: GridSelector = GridSelector.new()
@@ -253,7 +277,9 @@ func create_grid_selector_input():
 	grid_selector.set_grid_positions.connect(set_target_cells)
 	
 	var edit_grid_button: Button = _create_button("Edit Grid", grid_selector.edit_grid)
+	grid_edit_button = edit_grid_button
 	content.add_child(edit_grid_button)
+	_update_grid_edit_button()
 
 func get_grid_size_for(offsets: Array[Vector2i]) -> int:
 	var max_offset: int = 0
@@ -293,7 +319,7 @@ func fill_effect_menu(popup: PopupMenu):
 	for effect_class: Dictionary in classes:
 		var instance: CardEffect = load(effect_class["path"]).new()
 		types.append(instance.card_type)
-
+	
 	for type: int in Enums.CardType.values():
 		var has_separator: bool = false
 		for i: int in classes.size():
@@ -303,7 +329,7 @@ func fill_effect_menu(popup: PopupMenu):
 				popup.add_separator(Enums.CardType.keys()[type])
 				has_separator = true
 			popup.add_item(String(classes[i]["class"]), i)
-
+	
 	popup.id_pressed.connect(func(id: int):
 		var effect: CardEffect = load(classes[id]["path"]).new()
 		card.effects.append(effect)
@@ -346,13 +372,13 @@ func create_effect_entry(effect: CardEffect):
 	header.add_child(title)
 	header.add_child(remove_button)
 	box.add_child(header)
-
+	
 	for prop: Dictionary in effect.get_property_list():
 		if prop["usage"] & PROPERTY_USAGE_SCRIPT_VARIABLE and prop["usage"] & PROPERTY_USAGE_EDITOR:
 			var field: Control = create_property_field(effect, prop)
 			if field:
 				box.add_child(field)
-
+	
 	effects_list.add_child(entry)
 	update_effect_separators()
 
@@ -370,19 +396,19 @@ func create_property_field(effect: CardEffect, prop: Dictionary) -> Control:
 		TYPE_BOOL:
 			var bool_field: HBoxContainer = Utils.create_bool_input_field(label,
 				func(value: bool): effect.set(prop_name, value))
-			bool_field.get_child(1).button_pressed = current
+			bool_field.get_child(Utils.VALUE_CHILD_INDEX).button_pressed = current
 			return bool_field
 		TYPE_INT:
 			if prop["hint"] == PROPERTY_HINT_ENUM:
 				return create_enum_field(effect, prop)
 			var int_field: HBoxContainer = Utils.create_int_input_field(label,
 				func(value: float): effect.set(prop_name, int(value)))
-			int_field.get_child(1).value = current
+			int_field.get_child(Utils.VALUE_CHILD_INDEX).value = current
 			return int_field
 		TYPE_FLOAT:
 			var float_field: HBoxContainer = Utils.create_float_input_field(label,
 				func(value: float): effect.set(prop_name, value))
-			float_field.get_child(1).value = current
+			float_field.get_child(Utils.VALUE_CHILD_INDEX).value = current
 			return float_field
 
 	return null

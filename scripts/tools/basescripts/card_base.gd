@@ -42,6 +42,9 @@ func _ready() -> void:
 	if card_data:
 		init_card_ui()
 	viewport_size = get_viewport().get_visible_rect().size
+	if card_data.range_type == Enums.RangeType.SingelTarget:
+		target_cells.clear()
+		target_cells.append(Vector2i.ZERO)
 
 func _process(delta: float) -> void:
 	if is_clicked:

@@ -17,4 +17,5 @@ heat_cost = 2
 heat_cost_amount = 3
 exhausted_on_use = true
 target_cells = Array[Vector2i]([Vector2i(-1, 0), Vector2i(0, 0), Vector2i(1, 0)])
+range_type = 1
 effects = Array[ExtResource("2_tp7la")]([SubResource("Resource_ihh1y")])

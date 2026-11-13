@@ -29,6 +29,7 @@ func _ready() -> void:
 	
 	current_cell = map.local_to_map(position)
 	position = map.map_to_local(current_cell)
+	MapManager.register_map(map)
 	
 	setup_astar()
 

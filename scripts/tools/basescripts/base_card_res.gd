@@ -7,4 +7,6 @@ extends Resource
 @export var heat_cost_amount: int = 0
 @export var exhausted_on_use: bool = false
 @export var target_cells: Array[Vector2i] = []
+@export var range_type: Enums.RangeType = Enums.RangeType.AOE
+@export var card_range: int = 0
 @export var effects: Array[CardEffect] = []

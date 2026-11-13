@@ -86,7 +86,7 @@ static func create_bool_input_field(text: String, on_value_changed: Callable) ->
 	return container
 	
 	
-static func create_dropdown_input_with_enum(options, text: String, on_value_changed: Callable) -> VBoxContainer:
+static func create_dropdown_input_with_enum(options: Dictionary	, text: String, on_value_changed: Callable) -> VBoxContainer:
 	var container: VBoxContainer = VBoxContainer.new()
 	var dropdown: OptionButton = OptionButton.new()
 	var input_text: Label = Label.new()

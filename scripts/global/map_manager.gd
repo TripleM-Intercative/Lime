@@ -29,16 +29,16 @@ func has_map() -> bool:
 
 
 func _process(_delta: float) -> void:
-	if not has_map():
+	if !has_map():
 		return
-	var cell := current_map.local_to_map(current_map.get_local_mouse_position())
+	var cell: Vector2i = current_map.local_to_map(current_map.get_local_mouse_position())
 	if cell != hovered_cell:
 		hovered_cell = cell
 		hovered_cell_changed.emit(cell)
 
 
 func is_valid_cell(cell: Vector2i) -> bool:
-	return has_map() and current_map.get_cell_source_id(cell) != -1
+	return has_map() && current_map.get_cell_source_id(cell) != -1
 
 func cell_to_world(cell: Vector2i) -> Vector2:
 	return current_map.to_global(current_map.map_to_local(cell))

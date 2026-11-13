@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bqcubfv3obva3" path="res://scenes/player.tscn" id="4_lwawy"]
 [ext_resource type="PackedScene" uid="uid://dj0bmhx2igip3" path="res://scenes/pathfinding_manager.tscn" id="5_i1oa0"]
 [ext_resource type="Script" uid="uid://cec72wkmkjuvh" path="res://scripts/entity/pathfinding_manager.gd" id="6_7lmfh"]
-[ext_resource type="Script" uid="uid://blms7xpx38nwd" path="res://scripts/entity/player.gd" id="7_vr11v"]
 [ext_resource type="Script" uid="uid://b4iobmkiaksc5" path="res://scripts/test/astar_debug_view.gd" id="8_vr11v"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_imscb"]
@@ -191,7 +190,6 @@ tile_set = SubResource("TileSet_f5ddx")
 
 [node name="Player" parent="." unique_id=1969356312 node_paths=PackedStringArray("map") instance=ExtResource("4_lwawy")]
 position = Vector2(77, 33)
-script = ExtResource("7_vr11v")
 map = NodePath("../TileMapLayer")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1565212998]

@@ -36,9 +36,10 @@ func _ready() -> void:
 	
 	register_value = %PathfindingManager.register_entity(Enums.EntityType.Player, current_cell, 2, true)
 	
-	print(%PathfindingManager.calculate_path_segment(register_value, Vector2i(10, 2)) - current_cell)
+	print(%PathfindingManager.calculate_path(register_value, Vector2i(10, 2)))
+	print(%PathfindingManager.m_obstacles.size())
 	
-	#%PathfindingManager.update_pos(register_value, %PathfindingManager.calculate_path_segment(register_value, Vector2i(10, 2)))
+	%PathfindingManager.update_pos(register_value, Vector2i(10, 2))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo():

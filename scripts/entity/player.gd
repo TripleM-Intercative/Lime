@@ -33,7 +33,7 @@ func _ready() -> void:
 	current_cell = map.local_to_map(position)
 	position = map.map_to_local(current_cell)
 	
-	register_value = pathfinding.register_entity(Enums.EntityType.Player, current_cell, 2, true)
+	register_value = pathfinding.register_entity(Enums.EntityType.Player, current_cell, 2, false)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo():

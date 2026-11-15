@@ -1,103 +1,173 @@
 extends CharacterBody2D
 
-@export var map : TileMapLayer
+@export var map: TileMapLayer
+ 
+@export var movement_duration: float = 0.5
+@export var input_buffer_duration: float = 0.2
+ 
+@onready var path_manager: PathManager = %PathManager
+ 
+var m_entity_id: int = -1
 
-@export var movement_duration := 0.5
-@export var input_buffer_duration := 0.2
+#Movement
+var m_move_from_cell: Vector2i = Vector2i.ZERO
+var m_move_to_cell: Vector2i = Vector2i.ZERO
 
-var current_cell := Vector2i(0, 0)
-var target_cell := Vector2i(0, 0)
+var m_move_from_pos: Vector2 = Vector2.ZERO
+var m_move_to_pos: Vector2 = Vector2.ZERO
 
-var movement_timer := 0.0
-var can_move := true
+var m_movement_timer: float = 0.0
+var m_can_move: bool = true
 
-var input_stack: Array[StringName] = []
-var input_buffer: StringName = &""
-
-var input_actions = {
-	&"player_up" : Vector2i.UP,
-	&"player_left" : Vector2i.LEFT,
-	&"player_down" : Vector2i.DOWN,
-	&"player_right" : Vector2i.RIGHT
+var m_input_actions: Dictionary[StringName, Vector2i] = {
+	&"player_up": Vector2i.UP,
+	&"player_left": Vector2i.LEFT,
+	&"player_down": Vector2i.DOWN,
+	&"player_right": Vector2i.RIGHT
 }
 
-var current_path: PackedVector2Array = []
+var m_input_stack: Array[StringName] = []
+var m_input_buffer: StringName = &""
 
-var register_value
-@onready var pathfinding: PathfindingManager = %PathfindingManager
+var m_path_target_cell: Vector2i = Vector2i.ZERO
+var m_use_path: bool = false
+
 
 
 func _ready() -> void:
 	assert(map, "No Map in Player")
+	assert(path_manager, "No PathfindingManager in Player")
 	
-	current_cell = map.local_to_map(position)
-	position = map.map_to_local(current_cell)
+	m_move_from_cell = map.local_to_map(position)
+	m_move_to_cell = m_move_from_cell
 	
-	register_value = pathfinding.register_entity(Enums.EntityType.Player, current_cell, 2, false)
+	position = map.map_to_local(m_move_from_cell)
+	
+	m_move_from_pos = position
+	m_move_to_pos = position
+	
+	m_entity_id = path_manager.register_entity(Enums.EntityType.Player, m_move_from_cell, 1, true)
+	
+	assert(m_entity_id != -1, "Player could not be registered, start cell is blocked")
+
+func _process(delta: float) -> void:
+	if m_can_move:
+		if m_calculate_move_target():
+			m_start_move()
+			
+	else:
+		m_update_move(delta)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo():
 		return
 		
-	for action in input_actions:
+	for action in m_input_actions:
 		if event.is_action_pressed(action):
-			input_stack.erase(action)
-			input_stack.push_back(action)
+			m_input_stack.erase(action)
+			m_input_stack.push_back(action)
 			
-			if !can_move:
-				var threshold = 1.0 - (input_buffer_duration / movement_duration)
-				if movement_timer >= threshold:
-					input_buffer = action
+			if !m_can_move:
+				var threshold: float = 1.0 - (input_buffer_duration / movement_duration)
+				
+				if m_movement_timer >= threshold:
+					m_input_buffer = action
+					
+			if m_use_path:
+				m_use_path = false
+				
+				m_input_buffer = action
 			
 		if event.is_action_released(action):
-			input_stack.erase(action)
+			m_input_stack.erase(action)
 			
-	if event.is_action_pressed("player_to"):
-		var clicked_cell = map.local_to_map(map.to_local(get_global_mouse_position()))
-
-func _process(delta: float) -> void:
-	if can_move:
-		var has_input := false
-		var target: Vector2i
+	if event.is_action_pressed(&"player_to"):
+		var clicked_cell: Vector2i = map.local_to_map(map.to_local(get_global_mouse_position()))
 		
-		if input_buffer.is_empty():
-			if !input_stack.is_empty():
-				has_input = true
-				current_path.clear()
-				target = calculate_direction() + current_cell
-		else:
-			has_input = true
-			current_path.clear()
-			target = input_actions[input_buffer] + current_cell
-			input_buffer = &""
+		if !path_manager.has_entity_space(m_entity_id, clicked_cell):
+			return
 			
-		if has_input && is_valid_target(target):
-			target_cell = target
-			
-			can_move = false
-			movement_timer = 0.0
-			
-			pathfinding.update_pos(register_value, target)
-			
-			
-	else:
-		execute_move(delta)
+		m_path_target_cell = clicked_cell
+		m_use_path = true
+ 
 
-func calculate_direction() -> Vector2i:
-	if input_stack.is_empty():
+
+func get_input_stack_direction() -> Vector2i:
+	if m_input_stack.is_empty():
 		return Vector2i.ZERO
+	
 	else:
-		return input_actions[input_stack.back()]
+		return m_input_actions[m_input_stack.back()]
 
-func is_valid_target(cell: Vector2i) -> bool:
-	return pathfinding.has_entity_space(register_value, cell)
+func has_input() -> bool:
+	return !m_input_stack.is_empty() || !m_input_buffer.is_empty()
 
-func execute_move(delta: float) -> void:
-	movement_timer += delta / movement_duration
+
+
+func m_calculate_move_target() -> bool:
+	var should_move: bool = false
 	
-	position = lerp(map.map_to_local(current_cell), map.map_to_local(target_cell), clamp(movement_timer, 0.0, 1.0))
+	if m_input_buffer.is_empty():
+		if !m_input_stack.is_empty():
+			should_move = true
+			m_use_path = false
+			
+			m_move_to_cell = m_move_from_cell + get_input_stack_direction()
+			m_move_to_pos = map.map_to_local(m_move_to_cell)
+			
+		elif m_use_path:
+			var next_cell: Vector2i
+			
+			next_cell = path_manager.calculate_path_segment(m_entity_id, m_path_target_cell)
+			
+			if next_cell == m_move_from_cell:
+				m_use_path = false
+				
+			else:
+				should_move = true
+				
+				m_move_to_cell = next_cell
+				m_move_to_pos = map.map_to_local(next_cell)
+				
+	else:
+		should_move = true
+		m_use_path = false
+		
+		m_move_to_cell = m_move_from_cell + m_input_actions[m_input_buffer]
+		m_move_to_pos = map.map_to_local(m_move_to_cell)
+		
+		m_input_buffer = &""
+		
+	return should_move
+
+func m_start_move() -> bool:
+	if !path_manager.update_pos(m_entity_id, m_move_to_cell):
+		m_use_path = false
+		
+		return false
+		
+	m_can_move = false
+	m_movement_timer = 0.0
 	
-	if movement_timer >= 1.0:
-		can_move = true
-		movement_timer = 0.0
-		current_cell = target_cell
+	return true
+
+func m_update_move(delta: float) -> void:
+	m_movement_timer += delta / movement_duration
+
+	if m_movement_timer < 1.0:
+		position = m_move_from_pos.lerp(m_move_to_pos, m_movement_timer)
+		
+		return
+		
+	var overflow: float = m_movement_timer - 1.0
+	
+	position = m_move_to_pos
+	m_move_from_cell = m_move_to_cell
+	m_move_from_pos = m_move_to_pos
+	
+	m_can_move = true
+	m_movement_timer = 0.0
+	
+	if m_calculate_move_target() && m_start_move():
+		m_movement_timer = minf(overflow, 1.0)
+		position = m_move_from_pos.lerp(m_move_to_pos, m_movement_timer)

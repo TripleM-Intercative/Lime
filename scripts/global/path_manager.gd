@@ -35,7 +35,7 @@ var m_dirty_cells: Dictionary[Vector2i, bool] = {}
 #Path
 var m_path_cache: Dictionary[int, Structs.CachedPath] = {}
 
-#Bulidin
+#Build In
 
 func _ready() -> void:
 	assert(map, "No Map in Map_Pathfinding")
@@ -139,8 +139,6 @@ func add_obstacle(type: Enums.ObstacleType, top_left: Vector2i, size: int, solid
 	
 	if solid:
 		m_update_clearance(top_left, size)
-	else:
-		m_set_area_dirty(top_left, size)
 		
 	return true
 
@@ -161,8 +159,6 @@ func remove_obstacle(type: Enums.ObstacleType, top_left: Vector2i, size: int, so
 	
 	if solid:
 		m_update_clearance(top_left, size)
-	else:
-		m_set_area_dirty(top_left, size)
 		
 	return true
 
@@ -239,22 +235,16 @@ func get_reachable_target(id: int) -> Vector2i:
 
 #Map
 
-func map_changed(cells: Array[Vector2i], top_left: Vector2i = Vector2i.ZERO, size: int = 0) -> void:
-	if cells.is_empty():
-		for offset in m_get_offset_caches(size):
-			var check_pos: Vector2i = top_left + offset
-			
-			if !m_map_rect.has_point(check_pos):
-				continue
-				
-		m_update_clearance(top_left, size)
-		
-	else:
-		for cell in cells:
-			if !m_map_rect.has_point(cell):
-				continue
-				
+func map_cells_changed(cells: Array[Vector2i]) -> void:
+	for cell in cells:
+		if m_map_rect.has_point(cell):
 			m_update_clearance(cell, 1)
+
+func map_area_changed(top_left: Vector2i, size: int) -> void:
+	if !m_map_rect.intersects(Rect2i(top_left, Vector2i(size, size))):
+		return
+		
+	m_update_clearance(top_left, size)
 
 #Private
 
@@ -412,35 +402,31 @@ func m_add_entity_data(id: int) -> void:
 	
 	m_add_obstacle_data(Enums.ObstacleType.Entity, entity.pos, entity.size, false)
 	
-	if entity.is_solid:
+	if entity.solid:
 		for offset in m_get_offset_caches(entity.size):
 			m_solid_entities[entity.pos + offset] = id
-			
-	m_set_area_dirty(entity.pos, entity.size)
 
 func m_remove_entity_data(id: int) -> void:
 	var entity: Structs.Entity = m_entities[id]
 	
 	m_remove_obstacle_data(Enums.ObstacleType.Entity, entity.pos, entity.size, false)
 	
-	if entity.is_solid:
+	if entity.solid:
 		for offset in m_get_offset_caches(entity.size):
-			var cell = entity.pos + offset
+			var cell: Vector2i = entity.pos + offset
 			
 			if m_solid_entities.get(cell, -1) == id:
 				m_solid_entities.erase(cell)
-				
-	m_set_area_dirty(entity.pos, entity.size)
 
 func m_is_entity_at(pos: Vector2i) -> bool:
-	var type = Enums.ObstacleType.Entity
+	var type: Enums.ObstacleType = Enums.ObstacleType.Entity
 	
 	return m_obstacles.has(pos) && m_obstacles[pos].has_type(type, false)
 
 #Obstacle
 func m_add_obstacle_data(type: int, top_left: Vector2i, size: int, solid: bool) -> void:
 	for offset in m_get_offset_caches(size):
-		var check_pos = top_left + offset
+		var check_pos: Vector2i = top_left + offset
 		
 		if !m_map_rect.has_point(check_pos):
 			continue
@@ -449,6 +435,8 @@ func m_add_obstacle_data(type: int, top_left: Vector2i, size: int, solid: bool) 
 			m_obstacles[check_pos] = Structs.Obstacle.new()
 			
 		m_obstacles[check_pos].add(type, solid)
+		
+	m_set_area_dirty(top_left, size)
 
 func m_remove_obstacle_data(type: int, top_left: Vector2i, size: int, solid: bool) -> void:
 	for offset in m_get_offset_caches(size):
@@ -459,6 +447,8 @@ func m_remove_obstacle_data(type: int, top_left: Vector2i, size: int, solid: boo
 			
 			if m_obstacles[check_pos].is_completely_empty():
 				m_obstacles.erase(check_pos)
+				
+	m_set_area_dirty(top_left, size)
 
 func m_get_offset_caches(size: int) -> Array:
 	if !m_offset_caches.has(size):

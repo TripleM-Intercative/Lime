@@ -11,6 +11,7 @@ extends Node2D
 
 func _ready() -> void:
 	gen_map()
+	MapManager.register_map(map)
 
 func gen_map():
 	map.clear()

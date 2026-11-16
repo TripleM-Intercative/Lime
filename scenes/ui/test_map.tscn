@@ -1,12 +1,13 @@
 [gd_scene format=4 uid="uid://drad3q8ffun4g"]
 
 [ext_resource type="Script" uid="uid://dj7ovgtxrksyp" path="res://scripts/test/test_map.gd" id="1_db1lb"]
-[ext_resource type="Texture2D" uid="uid://bm2behjkllwmj" path="res://ressources/neo_zero_buildings_02.png" id="1_ygxep"]
+[ext_resource type="Texture2D" uid="uid://bm2behjkllwmj" path="res://resources/neo_zero_buildings_02.png" id="1_ygxep"]
 [ext_resource type="Script" uid="uid://cpip88qtjtfn2" path="res://scripts/control/draggable_camera_2d.gd" id="2_2lkk8"]
 [ext_resource type="PackedScene" uid="uid://bqcubfv3obva3" path="res://scenes/player.tscn" id="4_lwawy"]
 [ext_resource type="PackedScene" uid="uid://dj0bmhx2igip3" path="res://scenes/pathfinding_manager.tscn" id="5_i1oa0"]
 [ext_resource type="Script" uid="uid://cec72wkmkjuvh" path="res://scripts/entity/pathfinding_manager.gd" id="6_7lmfh"]
 [ext_resource type="Script" uid="uid://blms7xpx38nwd" path="res://scripts/entity/player.gd" id="7_vr11v"]
+[ext_resource type="PackedScene" uid="uid://dy8s4h4a2uk7a" path="res://scenes/ui/player_deck.tscn" id="8_1vtn6"]
 [ext_resource type="Script" uid="uid://b4iobmkiaksc5" path="res://scripts/test/astar_debug_view.gd" id="8_vr11v"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_imscb"]
@@ -183,6 +184,7 @@ script = ExtResource("6_7lmfh")
 map = NodePath("../TileMapLayer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1412098393]
+position = Vector2(577, 326)
 script = ExtResource("2_2lkk8")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1504299760]
@@ -205,7 +207,10 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="PlayerDeck" parent="CanvasLayer/Control" unique_id=750561058 instance=ExtResource("5_i1oa0")]
+[node name="PlayerDeck" parent="CanvasLayer/Control" unique_id=750561058 instance=ExtResource("8_1vtn6")]
+layout_mode = 1
+offset_top = 1.0
+offset_bottom = 1.0
 
 [node name="AStarDebugView" type="Node2D" parent="." unique_id=1691525539 node_paths=PackedStringArray("map")]
 script = ExtResource("8_vr11v")

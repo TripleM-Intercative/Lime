@@ -49,7 +49,7 @@ func get_tile_data(cell: Vector2i) -> TileData:
 	else:
 		return null
 	
-func get_hoverd_cell() -> Vector2i:
+func get_hovered_cell() -> Vector2i:
 	return hovered_cell
 	
 func get_cells_in_range(cell_offsets: Array[Vector2i]) -> Array[Vector2i]:

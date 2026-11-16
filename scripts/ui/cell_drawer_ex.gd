@@ -36,7 +36,7 @@ func set_highlight(
 	line_width: float = 2.0,
 	fill_color: Color = Color.TRANSPARENT
 ) -> void:
-	var group := HighlightGroup.new()
+	var group: Object = HighlightGroup.new()
 	group.outline_color = outline_color
 	group.line_width = line_width
 	group.fill_color = fill_color
@@ -70,18 +70,18 @@ func _rebuild_geometry(group: HighlightGroup) -> void:
 	if not target_layer or not target_layer.tile_set:
 		return
 
-	var tile_size := Vector2(target_layer.tile_set.tile_size)
-	var half_size := tile_size * 0.5
+	var tile_size: Vector2 = Vector2(target_layer.tile_set.tile_size)
+	var half_size: Vector2 = tile_size * 0.5
 
 	for cell: Vector2i in group.cell_set.keys():
 		# Convert tile coordinate to the highlighter's local space
-		var layer_pos := target_layer.map_to_local(cell)
-		var center := to_local(target_layer.to_global(layer_pos))
+		var layer_pos: Vector2 = target_layer.map_to_local(cell)
+		var center: Vector2 = to_local(target_layer.to_global(layer_pos))
 
-		var top_left := center - half_size
-		var top_right := center + Vector2(half_size.x, -half_size.y)
-		var bottom_left := center + Vector2(-half_size.x, half_size.y)
-		var bottom_right := center + half_size
+		var top_left: Vector2 = center - half_size
+		var top_right: Vector2 = center + Vector2(half_size.x, -half_size.y)
+		var bottom_left: Vector2 = center + Vector2(-half_size.x, half_size.y)
+		var bottom_right: Vector2 = center + half_size
 
 		if group.fill_color.a > 0.0:
 			group.fill_rects.append(Rect2(top_left, tile_size))

@@ -8,7 +8,6 @@ var parent: LEntity
 
 var m_states: Array[State]
 var m_current_state: State
-var m_current_target: LEntity
 
 func _ready() -> void:
 	for child in get_children():

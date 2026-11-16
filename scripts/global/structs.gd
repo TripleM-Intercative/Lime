@@ -23,12 +23,12 @@ class BuffCardData:
 	var amount: float
 
 class Entity:
-	var type: Enums.EntityType
+	var type: LEntity
 	var pos: Vector2i
 	var size: int
 	var solid: bool
 	
-	func _init(_type: Enums.EntityType, _pos: Vector2i, _size: int, _solid: bool) -> void:
+	func _init(_type: LEntity, _pos: Vector2i, _size: int, _solid: bool) -> void:
 		type = _type
 		pos = _pos
 		size = _size

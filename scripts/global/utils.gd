@@ -6,6 +6,16 @@ const INT_MAX: int = 9223372036854775807
 const CARD_IMAGE_FOLDER_PATH: String = "res://assets/images/cards/"
 const DEFAULT_CARD_IMAGE: String = "res://assets/default_card_image.png"
 const CARD_SCRIPT_PATH: String = "res://scripts/cards/"
+const VALUE_CHILD_INDEX: int = 1
+
+const EFFECT_COLOR_TYPES: Dictionary = {
+	Enums.CardType.None: Color.WHITE,
+	Enums.CardType.Damage: Color.RED,
+	Enums.CardType.Heal: Color.GREEN,
+	Enums.CardType.Beacon: Color.GOLD,
+	Enums.CardType.Guardian: Color.BLUE,
+	Enums.CardType.Utility: Color.PURPLE,
+}
 
 static func safe_image_to_assets(source: String, save_name: String) -> String:
 	var full_path: String = CARD_IMAGE_FOLDER_PATH + save_name.to_lower().to_snake_case() + "_tex.png"
@@ -85,7 +95,7 @@ static func create_bool_input_field(text: String, on_value_changed: Callable) ->
 	return container
 	
 	
-static func create_dropdown_input_with_enum(options, text: String, on_value_changed: Callable) -> VBoxContainer:
+static func create_dropdown_input_with_enum(options: Dictionary	, text: String, on_value_changed: Callable) -> VBoxContainer:
 	var container: VBoxContainer = VBoxContainer.new()
 	var dropdown: OptionButton = OptionButton.new()
 	var input_text: Label = Label.new()

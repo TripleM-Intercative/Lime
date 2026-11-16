@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://drosqsbxjfgyp"]
+
+[ext_resource type="Texture2D" uid="uid://bror6gwktq5pv" path="res://resources/ui/player_hud/components/heatmeter/heatmeter_bg.png" id="1_p5ce5"]
+[ext_resource type="Script" uid="uid://buaolqdnkg87c" path="res://scripts/ui/player_hud/components/heat_meter.gd" id="1_wtq83"]
+[ext_resource type="Texture2D" uid="uid://bi12bantmfiru" path="res://resources/ui/player_hud/components/heatmeter/heatmeter_flame.png" id="2_wtq83"]
+[ext_resource type="Texture2D" uid="uid://dikjeqetdwg4j" path="res://resources/ui/player_hud/components/heatmeter/heatmeter_progress.png" id="3_f3i5v"]
+
+[node name="HeatMeter" type="Control" unique_id=1579342088]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wtq83")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=917218746]
+layout_mode = 1
+offset_right = 2013.0
+offset_bottom = 448.0
+max_value = 1.0
+step = 0.01
+value = 0.5
+texture_under = ExtResource("1_p5ce5")
+texture_over = ExtResource("2_wtq83")
+texture_progress = ExtResource("3_f3i5v")

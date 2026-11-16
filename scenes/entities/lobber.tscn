@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://b3y5dw7ggs8u8"]
+
+[ext_resource type="PackedScene" uid="uid://b4py7eu03xcp7" path="res://scenes/entities/l_entity.tscn" id="1_huml7"]
+[ext_resource type="Script" uid="uid://dtov5rpf0rubx" path="res://scripts/entities/lobber/lobber.gd" id="2_41eyd"]
+[ext_resource type="Texture2D" uid="uid://fpuvr67hkvl0" path="res://assets/images/cards/newcard_tex.png" id="2_svysr"]
+[ext_resource type="Script" uid="uid://cx1l6b8mgcf3g" path="res://scripts/entities/lobber/lobber_state_machine.gd" id="3_u3lgj"]
+[ext_resource type="Script" uid="uid://cue3koddtaq7n" path="res://scripts/entities/lobber/states/lobber_idle.gd" id="4_41eyd"]
+[ext_resource type="Script" uid="uid://bqb6c42h8005x" path="res://scripts/entities/lobber/states/lobber_patrol.gd" id="6_ncwyh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svysr"]
+size = Vector2(562, 610)
+
+[node name="Lobber" unique_id=1969356312 instance=ExtResource("1_huml7")]
+script = ExtResource("2_41eyd")
+
+[node name="Sprite" parent="." index="0" unique_id=1791472282]
+texture = ExtResource("2_svysr")
+
+[node name="Collision" parent="." index="1" unique_id=626519246]
+shape = SubResource("RectangleShape2D_svysr")
+
+[node name="StateMachine" type="Node" parent="." index="2" unique_id=666352180 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_u3lgj")
+initial_state = NodePath("LobberIdle")
+
+[node name="LobberIdle" type="Node" parent="StateMachine" index="0" unique_id=677687821]
+script = ExtResource("4_41eyd")
+metadata/_custom_type_script = "uid://cue3koddtaq7n"
+
+[node name="LobberPatrol" type="Node" parent="StateMachine" index="1" unique_id=638101275]
+script = ExtResource("6_ncwyh")
+metadata/_custom_type_script = "uid://bqb6c42h8005x"

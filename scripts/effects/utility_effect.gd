@@ -2,10 +2,13 @@
 class_name UtilityEffect
 extends CardEffect
 
-@export var amount: float = 0.0
+@export var amount: int = 2
 
 func _init() -> void:
 	card_type = Enums.CardType.Utility 
 
 func apply(_card: CardBase) -> void:
 	print("Utility: " + str(amount))
+
+func get_description() -> String:
+	return "Draw %s cards." % highlight(amount)

@@ -1,6 +1,8 @@
 class_name PathManager
 extends Node
 
+signal entity_cell_changed(type: LEntity, old: Vector2i, new: Vector2i)
+
 @export var map: TileMapLayer
 
 @export var supported_sizes: Array[int] = [1, 2]
@@ -77,7 +79,7 @@ func reinit() -> void:
 	m_sync_grids()
 
 #Entity
-func register_entity(type: Enums.EntityType, top_left: Vector2i, size: int, solid: bool) -> int:
+func register_entity(type: LEntity, top_left: Vector2i, size: int, solid: bool) -> int:
 	assert(m_astar_grids.has(size), "Größe %d nicht in supported_sizes" % size)
 	
 	if !m_has_space_map_and_entity(top_left, size):
@@ -120,6 +122,8 @@ func update_pos(id: int, target: Vector2i) -> bool:
 	if !m_has_space_map_and_entity(target, entity.size, id):
 		return false
 		
+	entity_cell_changed.emit(entity.type, entity.pos, target)
+	
 	m_remove_entity_data(id)
 	entity.pos = target
 	m_add_entity_data(id)
@@ -470,3 +474,22 @@ func m_is_cache_valid(cache: Structs.CachedPath, target: Vector2i) -> bool:
 	var diff: Vector2i = (cache.target - target).abs()
 	
 	return diff.x + diff.y <= path_target_recalculation_offset
+
+#Distance
+func is_entity_in_range(id: int, character: LEntity, radius: int) -> bool:
+	if !character || !m_entities.has(id):
+		return false
+		
+	var diff: Vector2i = (m_entities[id].pos - character.current_cell).abs()
+	
+	return (diff.x + diff.y) <= radius
+
+#Get
+func entities_of_type(type: LEntity) -> Array[Structs.Entity]:
+	var entities: Array[Structs.Entity]
+	
+	for entity: Structs.Entity in m_entities.values():
+		if entity.type == type:
+			entities.append(entity)
+			
+	return entities

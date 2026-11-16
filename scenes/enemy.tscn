@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cjmq0jrxdpwj7"]
 
-[ext_resource type="PackedScene" uid="uid://b4py7eu03xcp7" path="res://scenes/lime_character.tscn" id="1_4ra3w"]
+[ext_resource type="PackedScene" uid="uid://b4py7eu03xcp7" path="res://scenes/entities/l_entity.tscn" id="1_4ra3w"]
 [ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="3_c4w8v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c1fuu"]

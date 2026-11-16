@@ -15,8 +15,7 @@ var card_data: BaseCardRes
 @onready var heat_amount_label: Label = $MarginContainer/VBoxContainer/HeatInfo/HeatAmount
 
 @onready var card_name_label: Label = $MarginContainer/VBoxContainer/CardName
-@onready var card_description_label: Label = $MarginContainer/VBoxContainer/CardDescription
-
+@onready var card_description_label: RichTextLabel = $MarginContainer/VBoxContainer/CardDescription
 signal card_used(card: CardBase)
 signal returned_card_to_hand(card: CardBase)
 
@@ -42,8 +41,11 @@ func _ready() -> void:
 	if card_data:
 		init_card_ui()
 	viewport_size = get_viewport().get_visible_rect().size
+	if card_data.range_type == Enums.RangeType.SingelTarget:
+		target_cells.clear()
+		target_cells.append(Vector2i.ZERO)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_clicked:
 		self.offset_transform_position = calculat_card_target_pos()
 		snap_to_mouse()
@@ -71,9 +73,9 @@ func _input(event: InputEvent) -> void:
 func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
 	card_name_label.text = card_data.card_name
-	card_description_label.text = "Sehr tolle Karte, mit der man ganz viel Spaß hat!!"
+	card_description_label.text = create_card_description()
 	target_cells = card_data.target_cells
-
+	
 	match card_data.heat_cost:
 		Enums.HeatCost.NoCost:
 			heat_icon_rect.texture = load("res://assets/default_card_image.png")
@@ -81,9 +83,17 @@ func init_card_ui() -> void:
 			heat_icon_rect.texture = load("res://assets/images/test_heat_icon.png")
 		Enums.HeatCost.Cooldown:
 			heat_icon_rect.texture = load("res://assets/images/test_cooldown_icon.png")
-
+	
 	heat_amount_label.text = str(card_data.heat_cost_amount)
 	base_z_index = self.z_index
+
+func create_card_description() -> String:
+	var lines: PackedStringArray = []
+	for effect: CardEffect in card_data.effects:
+		var text: String = effect.get_description()
+		if text != "":
+			lines.append(text)
+	return "\n".join(lines)
 
 func _on_mouse_entered() -> void:
 	if rotation_tween:

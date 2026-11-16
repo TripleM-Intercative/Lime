@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bngk8t4oetucq"]
+
+[ext_resource type="PackedScene" uid="uid://drosqsbxjfgyp" path="res://scenes/ui/hud_components/heat_meter.tscn" id="1_e6e0b"]
+
+[node name="PlayerHud" type="Control" unique_id=1779690421]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HeatMeter" parent="." unique_id=1579342088 instance=ExtResource("1_e6e0b")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.1, 0.1)

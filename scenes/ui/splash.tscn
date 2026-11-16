@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://ddddjrm0a5d4x" path="res://assets/images/misc/FMOD Logo White - Transparent Background.png" id="2_fgod4"]
 [ext_resource type="PackedScene" uid="uid://daid1a8kuec7m" path="res://scenes/ui/main_menu.tscn" id="2_poid3"]
 [ext_resource type="Shader" uid="uid://dr5868mg3mrf" path="res://shader/screen_transition.gdshader" id="4_bkb80"]
+[ext_resource type="Texture2D" uid="uid://bjeow3eklc6uh" path="res://assets/images/misc/Triple M Interactive.png" id="5_rtpub"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8xeer"]
 shader = ExtResource("4_bkb80")
@@ -141,7 +142,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CompanyLogo" unique_id=2107343880]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 size_flags_vertical = 4
 alignment = 1
@@ -149,7 +150,7 @@ alignment = 1
 [node name="TextureRect" type="TextureRect" parent="CompanyLogo/HBoxContainer" unique_id=637980169]
 layout_mode = 2
 size_flags_horizontal = 3
-texture = ExtResource("1_sykqw")
+texture = ExtResource("5_rtpub")
 expand_mode = 2
 stretch_mode = 5
 

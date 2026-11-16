@@ -21,6 +21,7 @@ var grid_edit_button: Button
 
 var card_list: ItemList
 var found_cards: Array[Dictionary]
+var search_field: LineEdit
 
 
 func _run():
@@ -84,7 +85,7 @@ func show_card_select():
 	clear_content()
 	load_all_cards()
 
-	var search_field: LineEdit = LineEdit.new()
+	search_field = LineEdit.new()
 	search_field.placeholder_text = "Search cards..."
 	search_field.clear_button_enabled = true
 	search_field.text_changed.connect(fill_card_list)
@@ -99,6 +100,8 @@ func show_card_select():
 	var button_row: HBoxContainer = HBoxContainer.new()
 	button_row.add_child(_create_button("Back", show_start_screen))
 	button_row.add_child(_create_spacer())
+	button_row.add_child(_create_button("Delete", _on_delete_pressed))
+	button_row.add_child(_create_spacer())
 	button_row.add_child(_create_button("Edit", func():
 		var selected: PackedInt32Array = card_list.get_selected_items()
 		if not selected.is_empty():
@@ -107,6 +110,72 @@ func show_card_select():
 	
 	fill_card_list("")
 	search_field.grab_focus.call_deferred()
+
+func _on_delete_pressed():
+	var selected: PackedInt32Array = card_list.get_selected_items()
+	if selected.is_empty():
+		return
+
+	var index: int = selected[0]
+	var path: String = card_list.get_item_metadata(index)
+
+	var dialog: ConfirmationDialog = ConfirmationDialog.new()
+	dialog.title = "Delete Card"
+	dialog.dialog_text = "Are you sure you want to delete %s?" % card_list.get_item_text(index)
+	dialog.ok_button_text = "Delete"
+	dialog.confirmed.connect(func(): delete_card(path))
+	dialog.visibility_changed.connect(func():
+		if !dialog.visible:
+			dialog.queue_free())
+	window.add_child(dialog)
+	dialog.popup_centered()
+
+func delete_card(res_path: String):
+	var res: BaseCardRes = load(res_path)
+	var files: Array[String] = [res_path]
+
+	var script_path: String = find_card_script(res_path)
+	if script_path != "":
+		files.append(script_path)
+
+	if res.card_image:
+		var image_path: String = res.card_image.resource_path
+		if image_path.begins_with(Utils.CARD_IMAGE_FOLDER_PATH) && !is_image_in_use(image_path, res_path):
+			files.append(image_path)
+
+	for file: String in files:
+		_delete_file(file)
+		_delete_file(file + ".import")
+		_delete_file(file + ".uid")
+
+	EditorInterface.get_resource_filesystem().scan()
+	print("CardBuilder: Deleted " + res.card_name)
+
+	load_all_cards()
+	fill_card_list(search_field.text)
+
+func find_card_script(res_path: String) -> String:
+	if !DirAccess.dir_exists_absolute(Utils.CARD_SCRIPT_PATH):
+		return ""
+	for file: String in DirAccess.get_files_at(Utils.CARD_SCRIPT_PATH):
+		if file.get_extension() != "gd":
+			continue
+		var path: String = Utils.CARD_SCRIPT_PATH.path_join(file)
+		if FileAccess.get_file_as_string(path).contains('"%s"' % res_path):
+			return path
+	return ""
+
+func is_image_in_use(image_path: String, res_path: String) -> bool:
+	for entry: Dictionary in found_cards:
+		var other: BaseCardRes = entry["card"]
+		if entry["path"] != res_path && other.card_image && other.card_image.resource_path == image_path:
+			return true
+	return false
+
+func _delete_file(path: String):
+	if !FileAccess.file_exists(path):
+		return
+	OS.move_to_trash(ProjectSettings.globalize_path(path))
 
 func load_all_cards():
 	found_cards.clear()

@@ -15,7 +15,7 @@ colors = PackedColorArray(0, 1, 1, 0.5529412, 0.07058824, 0.38039216, 0.38039216
 script/source = "extends Line2D
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 "
 

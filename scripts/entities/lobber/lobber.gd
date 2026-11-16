@@ -21,10 +21,10 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
 
-func _on_cell_changed(old: Vector2i, new: Vector2i) -> void:
+func _on_cell_changed(_old: Vector2i, new: Vector2i) -> void:
 	center_rect = Rect2i(new, Vector2i(1, 1))
 	var aov_cells = MapManager.get_cells_in_radius(center_rect, area_of_view_radius)
 	m_cell_drawer.set_highlight(&"lobber_view", aov_cells, Color(0.97, 0.98, 0.99, 0.50), 2.0, Color(0.97, 0.98, 0.99, 0.10))

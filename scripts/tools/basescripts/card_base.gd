@@ -45,7 +45,7 @@ func _ready() -> void:
 		target_cells.clear()
 		target_cells.append(Vector2i.ZERO)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if is_clicked:
 		self.offset_transform_position = calculat_card_target_pos()
 		snap_to_mouse()

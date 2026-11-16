@@ -9,3 +9,6 @@ func _init() -> void:
 
 func apply(_card: CardBase) -> void:
 	print("Heal: " + str(amount))
+
+func get_description() -> String:
+	return "Heal %s HP." % highlight(amount)

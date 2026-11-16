@@ -9,3 +9,6 @@ func _init() -> void:
 
 func apply(_card: CardBase) -> void:
 	print("Buff: " + str(amount))
+
+func get_description() -> String:
+	return "Spawn Guardian."

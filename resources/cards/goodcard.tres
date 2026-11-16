@@ -8,8 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_7hvax"]
 script = ExtResource("3_2tb0y")
-amount = 5.0
-check = true
+damage_amount = 2.0
 
 [sub_resource type="Resource" id="Resource_wfe28"]
 script = ExtResource("4_1e0gl")

@@ -10,3 +10,6 @@ func _init() -> void:
 
 func apply(_card: CardBase) -> void:
 	print("Aura: " + str(amount))
+
+func get_description() -> String:
+	return "Applies aura of strength %s in range %s." % [highlight(amount), highlight(range, Color.WHITE)]

@@ -1,5 +1,5 @@
-extends State
 class_name LobberIdle
+extends State
 
 @export var idle_time: float = 1.0
 

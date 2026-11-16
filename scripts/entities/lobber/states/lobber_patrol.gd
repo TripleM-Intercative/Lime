@@ -1,5 +1,5 @@
-extends State
 class_name LobberPatrol
+extends State
 
 var parent: Lobber
 

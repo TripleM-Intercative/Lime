@@ -73,11 +73,6 @@ func remove_cell_drawer() -> void:
 		cell_drawer.queue_free()
 	cell_drawer = null
 
-## Returns an Array[Vector2i] of existing cells in the TileMapLayer within a circular radius.
-## center_rect: The origin footprint in tile coordinates (e.g., Rect2i(Vector2i(5, 5), Vector2i(2, 2))).
-## max_radius: How far outward from the edges of the center_rect to gather cells.
-## min_radius: Distance offset from the center_rect (set to > 0.0 to exclude the center or create a ring).
-## require_populated: If true, only returns coordinates that actually contain a placed tile.
 func get_cells_in_radius(
 	center_rect: Rect2i,
 	max_radius: float,

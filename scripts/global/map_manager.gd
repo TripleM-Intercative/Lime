@@ -71,3 +71,46 @@ func remove_cell_drawer() -> void:
 	if cell_drawer:
 		cell_drawer.queue_free()
 	cell_drawer = null
+
+func get_cells_in_radius(
+	center_rect: Rect2i,
+	max_radius: float,
+	min_radius: float = 0.0,
+	require_populated: bool = true
+) -> Array[Vector2i]:
+	var result: Array[Vector2i] = []
+
+	# Calculate the inclusive bottom-right tile of the center footprint
+	var rect_start: Vector2i = center_rect.position
+	var rect_end: Vector2i = center_rect.position + center_rect.size - Vector2i.ONE
+
+	# Define the outer bounding box to scan
+	var max_r_ceil: int = floor(max_radius)
+	var scan_min: Vector2i = rect_start - Vector2i(max_r_ceil, max_r_ceil)
+	var scan_max: Vector2i = rect_end + Vector2i(max_r_ceil, max_r_ceil)
+
+	# Pre-square the radii to avoid expensive square root calculations in the loop
+	var max_r_sq: float = max_radius * max_radius
+	var min_r_sq: float = min_radius * min_radius
+
+	for x in range(scan_min.x, scan_max.x + 1):
+		for y in range(scan_min.y, scan_max.y + 1):
+			var cell := Vector2i(x, y)
+
+			# Skip empty cells early if we only care about existing tiles
+			if require_populated and current_map.get_cell_source_id(cell) == -1:
+				continue
+
+			# Find the closest tile inside the center_rect to the current cell
+			var closest_x: int = clampi(x, rect_start.x, rect_end.x)
+			var closest_y: int = clampi(y, rect_start.y, rect_end.y)
+
+			# Calculate squared Euclidean distance from that closest tile
+			var dx: float = float(x - closest_x)
+			var dy: float = float(y - closest_y)
+			var dist_sq: float = dx * dx + dy * dy
+
+			if dist_sq <= max_r_sq and dist_sq >= min_r_sq:
+				result.append(cell)
+
+	return result

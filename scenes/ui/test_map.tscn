@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://drad3q8ffun4g"]
 
 [ext_resource type="Script" uid="uid://dj7ovgtxrksyp" path="res://scripts/test/test_map.gd" id="1_db1lb"]
-[ext_resource type="Texture2D" uid="uid://bm2behjkllwmj" path="res://ressources/neo_zero_buildings_02.png" id="1_ygxep"]
+[ext_resource type="Texture2D" uid="uid://bm2behjkllwmj" path="res://resources/neo_zero_buildings_02.png" id="1_ygxep"]
 [ext_resource type="Script" uid="uid://cpip88qtjtfn2" path="res://scripts/control/draggable_camera_2d.gd" id="2_2lkk8"]
 [ext_resource type="PackedScene" uid="uid://bqcubfv3obva3" path="res://scenes/player.tscn" id="4_lwawy"]
 [ext_resource type="PackedScene" uid="uid://dj0bmhx2igip3" path="res://scenes/pathfinding_manager.tscn" id="5_i1oa0"]

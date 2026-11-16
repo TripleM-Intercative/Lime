@@ -302,7 +302,7 @@ func m_refresh_grid_area(pos: Vector2i, size: int) -> void:
 func is_entity_in_range(id: int, character: LEntity, radius: int) -> bool:
 	if !character || !m_entities.has(id):
 		return false
-	var diff: Vector2i = (m_entities[id].current_cell - character.current_cell).abs()
+	var diff: Vector2i = (m_entities[id].pos - character.current_cell).abs()
 	return (diff.x + diff.y) <= radius
 
 func entities_of_type(type: LEntity) -> Array[Structs.Entity]:

@@ -14,7 +14,6 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	gen_map()
-	MapManager.register_map(map)
 
 func gen_map():
 	clear()

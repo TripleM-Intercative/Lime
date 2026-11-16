@@ -1,5 +1,5 @@
-extends Node
 class_name Deck
+extends Node
 
 const BASE_CARD_SCENE_PATH: String = "res://scenes/basecard.tscn"
 const CARD_SCRIPTS_PATH: String = "res://scripts/cards/"

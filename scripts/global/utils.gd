@@ -8,6 +8,15 @@ const DEFAULT_CARD_IMAGE: String = "res://assets/default_card_image.png"
 const CARD_SCRIPT_PATH: String = "res://scripts/cards/"
 const VALUE_CHILD_INDEX: int = 1
 
+const EFFECT_COLOR_TYPES: Dictionary = {
+	Enums.CardType.None: Color.WHITE,
+	Enums.CardType.Damage: Color.RED,
+	Enums.CardType.Heal: Color.GREEN,
+	Enums.CardType.Beacon: Color.GOLD,
+	Enums.CardType.Guardian: Color.BLUE,
+	Enums.CardType.Utility: Color.PURPLE,
+}
+
 static func safe_image_to_assets(source: String, save_name: String) -> String:
 	var full_path: String = CARD_IMAGE_FOLDER_PATH + save_name.to_lower().to_snake_case() + "_tex.png"
 	

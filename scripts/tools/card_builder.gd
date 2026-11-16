@@ -14,7 +14,7 @@ var content: VBoxContainer
 
 var card: BaseCardRes
 var edit_path: String = ""
-var new_image_path: String = "" 
+var new_image_path: String = ""
 var texture_rect: TextureRect
 var effects_list: VBoxContainer
 var grid_edit_button: Button

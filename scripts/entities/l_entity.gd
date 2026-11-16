@@ -38,5 +38,5 @@ func _set_target_cell(target: Vector2i) -> void:
 	target_cell = target
 	path_manager.update_pos(path_manager_id, target_cell)
 
-func _characer_cell_changed(type: LEntity, old: Vector2i, new: Vector2i) -> void:
+func _characer_cell_changed(_type: LEntity, _old: Vector2i, _new: Vector2i) -> void:
 	pass

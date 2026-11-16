@@ -16,7 +16,6 @@ func register_map(map: TileMapLayer) -> void:
 	cell_drawer = CellDrawer.new()
 	current_map.add_child.call_deferred(cell_drawer)
 	map_changed.emit(current_map)
-	print("Map registered")
 
 func unregister_map(map: TileMapLayer) -> void:
 	if current_map == map:
@@ -30,16 +29,16 @@ func has_map() -> bool:
 
 
 func _process(_delta: float) -> void:
-	if not has_map():
+	if !has_map():
 		return
-	var cell := current_map.local_to_map(current_map.get_local_mouse_position())
+	var cell: Vector2i = current_map.local_to_map(current_map.get_local_mouse_position())
 	if cell != hovered_cell:
 		hovered_cell = cell
 		hovered_cell_changed.emit(cell)
 
 
 func is_valid_cell(cell: Vector2i) -> bool:
-	return has_map() and current_map.get_cell_source_id(cell) != -1
+	return has_map() && current_map.get_cell_source_id(cell) != -1
 
 func cell_to_world(cell: Vector2i) -> Vector2:
 	return current_map.to_global(current_map.map_to_local(cell))
@@ -49,10 +48,10 @@ func get_tile_data(cell: Vector2i) -> TileData:
 		return current_map.get_cell_tile_data(cell)
 	else:
 		return null
-
-func get_hoverd_cell() -> Vector2i:
+	
+func get_hovered_cell() -> Vector2i:
 	return hovered_cell
-
+	
 func get_cells_in_range(cell_offsets: Array[Vector2i]) -> Array[Vector2i]:
 	var target_cells: Array[Vector2i] = []
 	for offset in cell_offsets:

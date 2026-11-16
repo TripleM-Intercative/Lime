@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dj0bmhx2igip3" path="res://scenes/pathfinding_manager.tscn" id="5_i1oa0"]
 [ext_resource type="Script" uid="uid://cec72wkmkjuvh" path="res://scripts/entity/pathfinding_manager.gd" id="6_7lmfh"]
 [ext_resource type="Script" uid="uid://dnxukpv7emftq" path="res://scripts/entity/player.gd" id="7_vr11v"]
+[ext_resource type="PackedScene" uid="uid://dy8s4h4a2uk7a" path="res://scenes/ui/player_deck.tscn" id="8_a77p0"]
 [ext_resource type="Script" uid="uid://b4iobmkiaksc5" path="res://scripts/test/astar_debug_view.gd" id="8_vr11v"]
 [ext_resource type="PackedScene" uid="uid://b3y5dw7ggs8u8" path="res://scenes/characters/lobber.tscn" id="9_1vtn6"]
 [ext_resource type="Script" uid="uid://d7gwfn08x7gr" path="res://scripts/ui/cell_drawer_ex.gd" id="10_bem4x"]
@@ -177,6 +178,7 @@ script = ExtResource("6_7lmfh")
 map = NodePath("../TileMapLayer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1412098393]
+position = Vector2(577, 326)
 script = ExtResource("2_2lkk8")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1504299760]
@@ -205,7 +207,8 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="PlayerDeck" parent="CanvasLayer/Control" unique_id=750561058 instance=ExtResource("5_i1oa0")]
+[node name="PlayerDeck" parent="CanvasLayer/Control" unique_id=750561058 instance=ExtResource("8_a77p0")]
+layout_mode = 1
 
 [node name="AStarDebugView" type="Node2D" parent="." unique_id=1691525539 node_paths=PackedStringArray("map")]
 script = ExtResource("8_vr11v")

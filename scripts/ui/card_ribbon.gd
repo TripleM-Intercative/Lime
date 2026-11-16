@@ -19,7 +19,7 @@ func _get_drawn_rect() -> Rect2:
 	var drawn: Vector2 = tex_size * fit
 	return Rect2((size - drawn) / 2.0, drawn)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not is_visible_in_tree():
 		if ribbon.get_point_count() > 0:
 			ribbon.clear_points()

@@ -24,6 +24,8 @@ var input_actions = {
 var current_path: Array[Vector2i] = []
 var astar = AStarGrid2D.new()
 
+var register_value
+
 func _ready() -> void:
 	assert(map, "No Map in Player")
 	
@@ -32,6 +34,12 @@ func _ready() -> void:
 	MapManager.register_map(map)
 	
 	setup_astar()
+	
+	register_value = %PathfindingManager.register_entity(Enums.EntityType.Player, current_cell, 2, true)
+	
+	print(%PathfindingManager.calculate_path_segment(register_value, Vector2i(10, 2)) - current_cell)
+	
+	#%PathfindingManager.update_pos(register_value, %PathfindingManager.calculate_path_segment(register_value, Vector2i(10, 2)))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_echo():
@@ -90,6 +98,7 @@ func _process(delta: float) -> void:
 			
 			can_move = false
 			movement_timer = 0.0
+			
 	else:
 		execute_move(delta)
 

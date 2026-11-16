@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b4py7eu03xcp7"]
+
+[node name="LimeCharacter" type="CharacterBody2D" unique_id=1969356312]
+
+[node name="Sprite" type="Sprite2D" parent="." unique_id=1791472282]
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=626519246]

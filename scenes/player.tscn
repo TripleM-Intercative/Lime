@@ -1,16 +1,17 @@
 [gd_scene format=3 uid="uid://bqcubfv3obva3"]
 
-[ext_resource type="Script" uid="uid://caexduckvq4ra" path="res://scripts/player/character_body_2d.gd" id="1_g2els"]
+[ext_resource type="PackedScene" uid="uid://b4py7eu03xcp7" path="res://scenes/lime_character.tscn" id="1_g2els"]
+[ext_resource type="Script" uid="uid://caexduckvq4ra" path="res://scripts/player/character_body_2d.gd" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="2_qhqgy"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1vivr"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_c1fuu"]
 
-[node name="Player" type="CharacterBody2D" unique_id=1067804140]
-script = ExtResource("1_g2els")
+[node name="Player" unique_id=1969356312 instance=ExtResource("1_g2els")]
+script = ExtResource("2_dqkch")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=925264922]
-shape = SubResource("CircleShape2D_1vivr")
-
-[node name="Sprite2D" type="Sprite2D" parent="." unique_id=850617548]
+[node name="Sprite" parent="." index="0" unique_id=1791472282]
 scale = Vector2(0.02, 0.02)
 texture = ExtResource("2_qhqgy")
+
+[node name="Collision" parent="." index="1" unique_id=626519246]
+shape = SubResource("CircleShape2D_c1fuu")

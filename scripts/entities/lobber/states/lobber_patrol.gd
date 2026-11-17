@@ -27,7 +27,8 @@ func _update(_delta: float) -> void:
 
 func _physics_update(_delta: float) -> void:
 	if !parent.can_move:
-		parent.execute_move(_delta)
+		pass
+		#parent.execute_move(_delta)
 	pass
 
 func new_patrol_cell() -> void:

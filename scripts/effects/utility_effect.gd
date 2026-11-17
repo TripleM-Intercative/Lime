@@ -7,7 +7,7 @@ extends CardEffect
 func _init() -> void:
 	card_type = Enums.CardType.Utility 
 
-func apply(_card: CardBase) -> void:
+func apply(target: LEntity) -> void:
 	print("Utility: " + str(amount))
 
 func get_description() -> String:

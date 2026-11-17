@@ -17,6 +17,8 @@ var map: TileMapLayer
 var current_cell := Vector2i(0, 0)
 var target_cell := Vector2i(0, 0): set = _set_target_cell
 
+var health_component: HealthComponent
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

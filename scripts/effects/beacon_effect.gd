@@ -8,7 +8,7 @@ extends CardEffect
 func _init() -> void:
 	card_type = Enums.CardType.Beacon
 
-func apply(_card: CardBase) -> void:
+func apply(target: LEntity) -> void:
 	print("Aura: " + str(amount))
 
 func get_description() -> String:

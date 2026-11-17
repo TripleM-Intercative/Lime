@@ -7,8 +7,9 @@ extends CardEffect
 func _init() -> void:
 	card_type = Enums.CardType.Damage
 
-func apply(_card: CardBase) -> void:
-	print("Damage: " + str(damage_amount))
+func apply(target: LEntity) -> void:
+	if is_instance_valid(target.health_component):
+		target.health_component.apply_damage(damage_amount)
 
 func get_description() -> String:
 	return "Deal %s damage." % highlight(damage_amount)

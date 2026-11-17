@@ -8,7 +8,7 @@
 
 [sub_resource type="Resource" id="Resource_gda4q"]
 script = ExtResource("3_wu2ud")
-amount = 1.0
+heal_amount = 20.0
 
 [sub_resource type="Resource" id="Resource_wu2ud"]
 script = ExtResource("4_gda4q")

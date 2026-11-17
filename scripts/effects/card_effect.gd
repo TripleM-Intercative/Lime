@@ -4,7 +4,7 @@ extends Resource
 
 var card_type: Enums.CardType = Enums.CardType.None
 
-func apply(_card: CardBase) -> void:
+func apply(target: LEntity) -> void:
 	push_warning("no effect placed")
 
 func get_description() -> String:

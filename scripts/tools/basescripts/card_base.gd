@@ -235,12 +235,15 @@ func is_in_activation_range() -> bool :
 	return get_viewport().get_mouse_position().y < activation_line
 
 func use_card():
+	var cells: Array[Vector2i] = MapManager.get_cells_in_range(target_cells)
+	var targets: Array[LEntity] = MapManager.get_entities_in_cells(cells)
+	
 	MapManager.clear_highlight()
-	for effect: CardEffect in card_data.effects:
-		effect.apply(self)
+	for target: LEntity in targets:
+		for effect: CardEffect in card_data.effects:
+			effect.apply(target)
+	
 	card_used.emit(self)
-	print("Used: " + card_data.card_name)
-	#self.queue_free()
 
 func reset_card():
 	is_clicked = false

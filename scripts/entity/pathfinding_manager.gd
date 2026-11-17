@@ -24,6 +24,8 @@ func _ready() -> void:
 
 	m_init_astar()
 
+	MapManager.path_manager = self
+
 func calculate_path(value: int, target: Vector2i) -> PackedVector2Array:
 	if !m_entities.has(value):
 		return []
@@ -313,3 +315,6 @@ func entities_of_type(type: LEntity) -> Array[Structs.Entity]:
 			entities.append(entity)
 
 	return entities
+
+func get_registerd_entitis() -> Dictionary:
+	return m_entities

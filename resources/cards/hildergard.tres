@@ -13,7 +13,6 @@ damage_amount = 4.0
 [sub_resource type="Resource" id="Resource_7iliu"]
 script = ExtResource("4_8jy2t")
 amount = 12.0
-range = 8.0
 
 [resource]
 script = ExtResource("5_8u1mj")

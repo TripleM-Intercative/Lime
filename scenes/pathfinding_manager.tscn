@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://dj0bmhx2igip3"]
-
-[ext_resource type="Script" uid="uid://bjua428ip31l8" path="res://scripts/global/path_manager.gd" id="1_21d31"]
-
-[node name="PathManager" type="Node" unique_id=2064917995]
-script = ExtResource("1_21d31")

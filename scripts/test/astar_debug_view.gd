@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var map: TileMapLayer
-@onready var mp := %PathManager
+@onready var mp: PathManager = %PathManager
 
 
 func _process(_delta: float) -> void:

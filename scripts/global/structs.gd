@@ -68,7 +68,7 @@ class Obstacle:
 	func is_completely_empty() -> bool:
 		return solid_data.is_empty() && soft_data.is_empty()
 		
-	func get_type_empty(type: int, solid: bool) -> bool:
+	func is_type_empty(type: int, solid: bool) -> bool:
 		if solid:
 			return solid_data.get(type, 0) == 0
 		else:

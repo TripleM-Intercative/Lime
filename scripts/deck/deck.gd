@@ -22,6 +22,7 @@ var discard_pile: Array[CardBase]
 var draw_deck: Array[CardBase]     
 var exile_deck: Array[CardBase]
 var pending_draws: int = 0
+var reshuffling_cards: Array[CardBase] = []
 
 var hand_container: HBoxContainer
 var viewport_size: Vector2
@@ -146,11 +147,16 @@ func draw_cards(amount: int) -> void:
 	while amount > 0 and not draw_deck.is_empty():
 		add_card_to_hand(draw_deck.pop_back())
 		amount -= 1
-	if amount > 0 and not discard_pile.is_empty():
-		var is_reshuffling: bool = pending_draws > 0
-		pending_draws += amount
-		if not is_reshuffling:
-			deck_animator.anim_reshuffle_multiple(discard_pile.size(), RESHUFFLE_TIME)
+	if amount <= 0:
+		return
+	if reshuffling_cards.is_empty():
+		if discard_pile.is_empty():
+			return
+		reshuffling_cards = discard_pile.duplicate()
+		discard_pile.clear()
+		reshuffling_cards.shuffle()
+		deck_animator.anim_reshuffle_multiple(reshuffling_cards.size(), RESHUFFLE_TIME)
+	pending_draws += amount
 
 
 func get_random_cards_form_deck(amount: int) -> void:
@@ -169,9 +175,9 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 	current_hand.remove_at(card_index)
 	if !card.card_data.exhausted_on_use:
 		discard_pile.append(card)
+		deck_animator.anim_move_to_deck_pos(discard_pile_img)
 	else:
 		exile_deck.append(card)
-	deck_animator.anim_move_to_deck_pos(discard_pile_img)
 	hand_container.remove_child(card)
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)
@@ -186,6 +192,7 @@ func remove_card_from_deck(card: CardBase) -> void:
 	current_hand.erase(card)
 	draw_deck.erase(card)
 	discard_pile.erase(card)
+	reshuffling_cards.erase(card)
 	spawn_positions.erase(card)
 	if card.get_parent() == hand_container:
 		hand_container.remove_child(card)
@@ -223,7 +230,9 @@ func create_deck_visuals():
 	deck_animator.finished_reshuffle_anim.connect(on_shuffle_finished)
 
 func on_shuffle_finished():
-	shuffle_to_draw_deck()
+	for card in reshuffling_cards:
+		draw_deck.push_front(card)
+	reshuffling_cards.clear()
 	var amount: int = pending_draws
 	pending_draws = 0
 	draw_cards(amount)

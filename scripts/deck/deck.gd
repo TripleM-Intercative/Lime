@@ -21,6 +21,7 @@ var current_hand: Array[CardBase]
 var discard_pile: Array[CardBase]   
 var draw_deck: Array[CardBase]     
 var exile_deck: Array[CardBase]
+var pending_draws: int = 0
 
 var hand_container: HBoxContainer
 var viewport_size: Vector2
@@ -65,13 +66,17 @@ func setup_deck_container() -> void:
 func creat_new_card(script: GDScript) -> CardBase:
 	var new_card: CardBase = card_blueprint.instantiate()
 	new_card.set_script(script)
-	new_card.card_used.connect(move_card_to_discard_pile)
+	new_card.card_used.connect(_handel_used_card)
 	new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
 	new_card.custom_minimum_size = new_card.size
 	new_card.offset_transform_enabled = true
 	new_card.offset_transform_visual_only = false
 	return new_card
 
+func _handel_used_card(card: CardBase):
+	for effect in card.card_data.effects:
+		effect.do_deck_operation(self)
+	move_card_to_discard_pile(card)
 
 func _on_card_returned_to_hand(_card: CardBase = null) -> void:
 	deck_animator.shake_hand_cards(current_hand)
@@ -138,15 +143,14 @@ func add_card_to_hand(card: CardBase) -> void:
 
 
 func draw_cards(amount: int) -> void:
-	if draw_deck.is_empty():
-		if discard_pile.is_empty():
-			return
-		deck_animator.anim_reshuffle_multiple(discard_pile.size(), RESHUFFLE_TIME)
-		return
-	for i in range(amount):
-		if draw_deck.is_empty():
-			break
+	while amount > 0 and not draw_deck.is_empty():
 		add_card_to_hand(draw_deck.pop_back())
+		amount -= 1
+	if amount > 0 and not discard_pile.is_empty():
+		var is_reshuffling: bool = pending_draws > 0
+		pending_draws += amount
+		if !is_reshuffling:
+			deck_animator.anim_reshuffle_multiple(discard_pile.size(), RESHUFFLE_TIME)
 
 
 func get_random_cards_form_deck(amount: int) -> void:
@@ -220,5 +224,6 @@ func create_deck_visuals():
 
 func on_shuffle_finished():
 	shuffle_to_draw_deck()
-	draw_cards(DEFAULT_HAND_SIZE)
+	pending_draws = 0
+	draw_cards(pending_draws + DEFAULT_HAND_SIZE)
 	organize_hand()

@@ -4,12 +4,15 @@ extends Resource
 
 var card_type: Enums.CardType = Enums.CardType.None
 
-func apply(target: LEntity) -> void:
-	push_warning("no effect placed")
+func apply(_target: LEntity) -> void:
+	pass
 
 func get_description() -> String:
 	return ""
-	
+
+func do_deck_operation(_deck: Deck):
+	pass
+
 func highlight(value, color: Variant = null) -> String:
 	var text_color: Color
 	

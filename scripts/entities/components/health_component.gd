@@ -5,6 +5,8 @@ signal died
 
 @export var max_health: float
 
+var is_invincible: bool = false
+
 var current_health: float:
 	set = _set_heath
 
@@ -22,6 +24,8 @@ func _ready() -> void:
 	#pass
 
 func apply_damage(amount: float):
+	if is_invincible:
+		return
 	current_health = clampf(current_health - amount, 0, max_health)
 	print("D - New Health: "  + str(current_health))
 

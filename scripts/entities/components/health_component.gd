@@ -20,9 +20,6 @@ func _ready() -> void:
 	m_parent.health_component = self
 	print(m_parent)
 
-#func _process(delta: float) -> void:
-	#pass
-
 func apply_damage(amount: float):
 	if is_invincible:
 		return
@@ -32,6 +29,10 @@ func apply_damage(amount: float):
 func apply_heal(amount: float):
 	current_health = clampf(current_health + amount, 0, max_health)
 	print("H - New Health: " + str(current_health))
+
+func kill():
+	current_health = 0.0
+	print("D - New Health: " + str(current_health))
 
 func _set_heath(val: float) -> void:
 	current_health = val

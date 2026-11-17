@@ -18,6 +18,7 @@ var entity_size: int = 1
 
 var move_from_cell: Vector2i = Vector2i.ZERO:
 	set = _move_from_cell
+
 var health_component: HealthComponent
 var gameplay_states: GameplayStates
 

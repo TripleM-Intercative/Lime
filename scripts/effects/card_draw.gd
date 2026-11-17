@@ -8,6 +8,8 @@ func _init() -> void:
 	card_type = Enums.CardType.Utility
 
 func do_deck_operation(_deck: Deck):
+	if !_deck:
+		return
 	_deck.draw_cards(draw_amount)
 
 func get_description() -> String:

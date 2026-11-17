@@ -50,6 +50,8 @@ func _ready() -> void:
 	m_init_clearance()
 	
 	m_sync_grids()
+	
+	MapManager.path_manager = self
 
 #Public
 
@@ -493,3 +495,6 @@ func entities_of_type(type: LEntity) -> Array[Structs.Entity]:
 			entities.append(entity)
 			
 	return entities
+
+func get_registerd_entitis() -> Dictionary:
+	return m_entities

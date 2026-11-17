@@ -6,7 +6,7 @@ signal map_changed(map: TileMapLayer)
 var current_map: TileMapLayer = null
 var hovered_cell: Vector2i = Vector2i.ZERO
 var cell_drawer: CellDrawer
-var path_manager: PathfindingManager
+var path_manager: PathManager
 
 
 func register_map(map: TileMapLayer) -> void:

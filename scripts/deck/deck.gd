@@ -149,7 +149,7 @@ func draw_cards(amount: int) -> void:
 	if amount > 0 and not discard_pile.is_empty():
 		var is_reshuffling: bool = pending_draws > 0
 		pending_draws += amount
-		if !is_reshuffling:
+		if not is_reshuffling:
 			deck_animator.anim_reshuffle_multiple(discard_pile.size(), RESHUFFLE_TIME)
 
 
@@ -224,6 +224,7 @@ func create_deck_visuals():
 
 func on_shuffle_finished():
 	shuffle_to_draw_deck()
+	var amount: int = pending_draws
 	pending_draws = 0
-	draw_cards(pending_draws + DEFAULT_HAND_SIZE)
+	draw_cards(amount)
 	organize_hand()

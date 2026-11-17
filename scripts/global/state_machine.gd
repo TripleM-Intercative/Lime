@@ -37,7 +37,7 @@ func _on_lobber_state_changed(old: State, new: StringName) -> void:
 	m_current_state._enter()
 
 func _set_initial() -> void:
-	parent.path_manager.character_cell_changed.connect(_on_character_cell_changed)
+	parent.path_manager.entity_cell_changed.connect(_on_character_cell_changed)
 
 	m_current_state = initial_state
 	m_current_state._enter()

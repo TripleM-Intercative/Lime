@@ -1,15 +1,13 @@
 [gd_scene format=4 uid="uid://drad3q8ffun4g"]
 
+[ext_resource type="Script" uid="uid://bjua428ip31l8" path="res://scripts/global/path_manager.gd" id="1_1vtn6"]
 [ext_resource type="Script" uid="uid://dj7ovgtxrksyp" path="res://scripts/test/test_map.gd" id="1_db1lb"]
 [ext_resource type="Texture2D" uid="uid://bm2behjkllwmj" path="res://resources/neo_zero_buildings_02.png" id="1_ygxep"]
 [ext_resource type="Script" uid="uid://cpip88qtjtfn2" path="res://scripts/control/draggable_camera_2d.gd" id="2_2lkk8"]
-[ext_resource type="PackedScene" uid="uid://bqcubfv3obva3" path="res://scenes/player.tscn" id="4_lwawy"]
-[ext_resource type="PackedScene" uid="uid://dj0bmhx2igip3" path="res://scenes/pathfinding_manager.tscn" id="5_i1oa0"]
-[ext_resource type="Script" uid="uid://cec72wkmkjuvh" path="res://scripts/entity/pathfinding_manager.gd" id="6_7lmfh"]
-[ext_resource type="Script" uid="uid://dnxukpv7emftq" path="res://scripts/entity/player.gd" id="7_vr11v"]
+[ext_resource type="PackedScene" uid="uid://bqcubfv3obva3" path="res://scenes/entities/player.tscn" id="4_lwawy"]
 [ext_resource type="PackedScene" uid="uid://dy8s4h4a2uk7a" path="res://scenes/ui/player_deck.tscn" id="8_a77p0"]
 [ext_resource type="Script" uid="uid://b4iobmkiaksc5" path="res://scripts/test/astar_debug_view.gd" id="8_vr11v"]
-[ext_resource type="PackedScene" uid="uid://b3y5dw7ggs8u8" path="res://scenes/characters/lobber.tscn" id="9_1vtn6"]
+[ext_resource type="PackedScene" uid="uid://b3y5dw7ggs8u8" path="res://scenes/entities/lobber.tscn" id="9_1vtn6"]
 [ext_resource type="Script" uid="uid://d7gwfn08x7gr" path="res://scripts/ui/cell_drawer_ex.gd" id="10_bem4x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_db1lb"]
@@ -172,9 +170,9 @@ noise = SubResource("FastNoiseLite_bem4x")
 
 [node name="TestMap" type="Node2D" unique_id=852506447]
 
-[node name="PathfindingManager" parent="." unique_id=2064917995 node_paths=PackedStringArray("map") instance=ExtResource("5_i1oa0")]
+[node name="PathManager" type="Node" parent="." unique_id=1933197022 node_paths=PackedStringArray("map")]
 unique_name_in_owner = true
-script = ExtResource("6_7lmfh")
+script = ExtResource("1_1vtn6")
 map = NodePath("../TileMapLayer")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1412098393]
@@ -192,9 +190,6 @@ noise_threshold = 0.3
 
 [node name="Player" parent="." unique_id=1969356312 instance=ExtResource("4_lwawy")]
 position = Vector2(77, 33)
-script = ExtResource("7_vr11v")
-health = 0
-faction_id = 0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1565212998]
 

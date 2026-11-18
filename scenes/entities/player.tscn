@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dnxukpv7emftq" path="res://scripts/entities/player/l_player.gd" id="2_dqkch"]
 [ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="2_qhqgy"]
 [ext_resource type="Script" uid="uid://bwnj4tlg4f738" path="res://scripts/entities/components/health_component.gd" id="4_5u6hq"]
-[ext_resource type="Script" uid="uid://dwvxtq8wy2hfx" path="res://scripts/entities/components/gameplay_.gd" id="5_d4qa6"]
+[ext_resource type="Script" uid="uid://dwvxtq8wy2hfx" path="res://scripts/entities/components/gameplay_states_component.gd" id="5_d4qa6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c1fuu"]
 

@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://cx1l6b8mgcf3g" path="res://scripts/entities/lobber/lobber_state_machine.gd" id="3_u3lgj"]
 [ext_resource type="Script" uid="uid://bwnj4tlg4f738" path="res://scripts/entities/components/health_component.gd" id="4_7uc36"]
 [ext_resource type="Script" uid="uid://cue3koddtaq7n" path="res://scripts/entities/lobber/states/lobber_idle.gd" id="4_41eyd"]
-[ext_resource type="Script" uid="uid://dwvxtq8wy2hfx" path="res://scripts/entities/components/gameplay_.gd" id="5_kcvr8"]
+[ext_resource type="Script" uid="uid://dwvxtq8wy2hfx" path="res://scripts/entities/components/gameplay_states_component.gd" id="5_kcvr8"]
 [ext_resource type="Script" uid="uid://bqb6c42h8005x" path="res://scripts/entities/lobber/states/lobber_patrol.gd" id="6_ncwyh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_svysr"]
@@ -24,6 +24,7 @@ shape = SubResource("RectangleShape2D_svysr")
 [node name="HealthComponent" type="Node" parent="." index="2" unique_id=1252795309]
 script = ExtResource("4_7uc36")
 max_health = 200.0
+shield = 200.0
 metadata/_custom_type_script = "uid://bwnj4tlg4f738"
 
 [node name="GameplayStates" type="Node" parent="." index="3" unique_id=791416559]

@@ -7,6 +7,7 @@ const SHIELD_NEGATE_FACTOR: float = 0.2
 
 @export var max_health: float
 @export var shield:float = 0
+@export var revive_aktiv: bool
 
 var is_invincible: bool = false
 
@@ -34,25 +35,29 @@ func apply_heal(amount: float):
 	print("H - New Health: " + str(current_health))
 
 func damage_shield(amount: float) -> float:
-	var remaining_shield: float = shield - amount
-	shield = clampf(remaining_shield, 0, 999999)
-	return remaining_shield
+	var blocked_amount: float = minf(shield, amount)
+	shield -= blocked_amount
+	return blocked_amount
 
 func calculate_health_damage(amount: float) -> float:
-	var remaining_shield: float = damage_shield(amount)
-	if remaining_shield >= 0:
-		return amount - (amount * SHIELD_NEGATE_FACTOR)
-	else:
-		var flat_damage: float = abs(remaining_shield)
-		var shielded_amount: float = amount + remaining_shield
-		var blocked_damage: float = shielded_amount - (shielded_amount * SHIELD_NEGATE_FACTOR)
-		return flat_damage + blocked_damage
+	var blocked: float = damage_shield(amount)
+	return (amount - blocked) + (blocked - blocked * SHIELD_NEGATE_FACTOR)
 
 func kill():
 	current_health = 0.0
 	print("D - New Health: " + str(current_health))
 
+func set_reviving(aktiv: bool):
+	revive_aktiv = aktiv
+
 func _set_heath(val: float) -> void:
 	current_health = val
 	if (current_health <= 0):
-		died.emit()
+		if revive_aktiv:
+			revive_aktiv = false
+			current_health = max_health
+			print("Revived: " + str(m_parent))
+		else:
+			m_parent.path_manager.unregister_entity(m_parent.path_manager_id)
+			m_parent.queue_free()
+			died.emit()

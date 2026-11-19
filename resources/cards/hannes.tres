@@ -5,7 +5,7 @@
 [ext_resource type="Script" uid="uid://dt2cdeq26rral" path="res://scripts/effects/stealth.gd" id="3_vmksa"]
 [ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_bmh4q"]
 
-[sub_resource type="Resource" id="Resource_ntu73"]
+[sub_resource type="Resource" id="Resource_vmksa"]
 script = ExtResource("3_vmksa")
 duration = 2.0
 
@@ -15,6 +15,6 @@ card_name = "Hannes"
 card_image = ExtResource("1_vmksa")
 heat_cost = 1
 heat_cost_amount = 3
-target_cells = Array[Vector2i]([Vector2i(-2, -1), Vector2i(-2, 0), Vector2i(-2, 1), Vector2i(-1, -2), Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(-1, 2), Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(1, -2), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2), Vector2i(2, -1), Vector2i(2, 0), Vector2i(2, 1)])
+target_cells = Array[Vector2i]([Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0)])
 card_range = 5
-effects = Array[ExtResource("2_ntu73")]([SubResource("Resource_ntu73")])
+effects = Array[ExtResource("2_ntu73")]([SubResource("Resource_vmksa")])

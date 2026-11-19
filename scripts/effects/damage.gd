@@ -1,5 +1,5 @@
 @tool
-class_name DamageEffect
+class_name Damage
 extends CardEffect
 
 @export var damage_amount: float = 0.0

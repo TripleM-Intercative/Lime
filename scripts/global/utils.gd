@@ -133,7 +133,6 @@ static func get_mouse_velocity(event: InputEvent, delta: float) -> Vector2:
 		return event.relative / delta
 	else:
 		return Vector2.ZERO
-	
-	
-	
-	
+
+static func chance(probability: float = 0.5) -> bool:
+		return randf() < probability

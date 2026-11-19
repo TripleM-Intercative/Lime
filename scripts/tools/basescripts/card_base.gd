@@ -37,6 +37,8 @@ var can_activate: bool = false
 var target_cells: Array[Vector2i]
 var anchor_blend: float = 0.0
 
+var gamble_active: bool = false
+
 func _ready() -> void:
 	if card_data:
 		init_card_ui()
@@ -44,6 +46,8 @@ func _ready() -> void:
 	if card_data.range_type == Enums.RangeType.SingelTarget:
 		target_cells.clear()
 		target_cells.append(Vector2i.ZERO)
+	for effect in card_data.effects:
+		effect.init_effect(self)
 
 func _process(_delta: float) -> void:
 	if is_clicked:
@@ -237,11 +241,17 @@ func is_in_activation_range() -> bool :
 func use_card():
 	var cells: Array[Vector2i] = MapManager.get_cells_in_range(target_cells)
 	var targets: Array[LEntity] = MapManager.get_entities_in_cells(cells)
-	
 	MapManager.clear_highlight()
-	for target: LEntity in targets:
-		for effect: CardEffect in card_data.effects:
-			effect.apply(target)
+	
+	if !gamble_active:
+		apply_card_effects(targets)
+	else:
+		if Utils.chance(0.5):
+			apply_card_effects(targets)
+			apply_card_effects(targets)
+			print("luckie you")
+		else:
+			print("no luck")
 	
 	card_used.emit(self)
 
@@ -266,3 +276,8 @@ func rotate_on_movment() -> void:
 	
 	rotate_card(clampf(filtered * 0.02, -90, 90), 0.1)
 	mouse_velocity = Vector2.ZERO
+
+func apply_card_effects(targets: Array[LEntity]):
+	for target: LEntity in targets:
+		for effect: CardEffect in card_data.effects:
+			effect.apply(target)

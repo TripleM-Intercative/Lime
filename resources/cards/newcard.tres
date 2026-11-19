@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://fpuvr67hkvl0" path="res://assets/images/cards/newcard_tex.png" id="1_nej2e"]
 [ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_kyoa3"]
-[ext_resource type="Script" uid="uid://ca8i5mdaplfnr" path="res://scripts/effects/damage_effect.gd" id="3_wlta4"]
-[ext_resource type="Script" uid="uid://dnclnten8i4rt" path="res://scripts/effects/heal_effect.gd" id="4_bvqih"]
+[ext_resource type="Script" uid="uid://ca8i5mdaplfnr" path="res://scripts/effects/damage.gd" id="3_wlta4"]
+[ext_resource type="Script" uid="uid://dnclnten8i4rt" path="res://scripts/effects/heal.gd" id="4_bvqih"]
 [ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="5_bcres"]
 
 [sub_resource type="Resource" id="Resource_nej2e"]

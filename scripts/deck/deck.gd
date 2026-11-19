@@ -135,13 +135,27 @@ func create_random_deck(amount: int) -> void:
 		card_size = current_deck[0].size
 
 
-func add_card_to_hand(card: CardBase) -> void:
+func add_card_to_hand(card: CardBase, from_discard: bool = false) -> void:
 	card.reset_card()
 	current_hand.append(card)
-	spawn_positions[card] = Vector2(0, viewport_size.y)
+	if from_discard:
+		spawn_positions[card] = discard_pile_img.global_position
+		deck_animator.change_deck_count(discard_pile_img, -1)
+		deck_animator.bounce_deck_anim(discard_pile_img, 0.1)
+	else:
+		spawn_positions[card] = Vector2(0, viewport_size.y)
+		deck_animator.change_deck_count(draw_deck_img, -1)
 	hand_container.add_child(card)
-	deck_animator.change_deck_count(draw_deck_img, -1)
 
+
+func return_cards_from_discard(amount: int) -> void:
+	amount = mini(amount, discard_pile.size())
+	if amount <= 0:
+		return
+	for i in amount:
+		var card_index: int = randi_range(0, discard_pile.size() - 1)
+		add_card_to_hand(discard_pile.pop_at(card_index), true)
+	organize_hand()
 
 func draw_cards(amount: int) -> void:
 	while amount > 0 and not draw_deck.is_empty():

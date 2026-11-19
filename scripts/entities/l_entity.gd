@@ -21,6 +21,7 @@ var move_from_cell: Vector2i = Vector2i.ZERO:
 
 var health_component: HealthComponent
 var gameplay_states: GameplayStates
+var is_stunned: bool = false
 
 var move_to_cell: Vector2i = Vector2i.ZERO:
 	set = _move_to_cell

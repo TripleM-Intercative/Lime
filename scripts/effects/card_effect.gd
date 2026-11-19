@@ -23,3 +23,6 @@ func highlight(value, color: Variant = null) -> String:
 	
 	var color_as_hex: String = text_color.to_html(false)
 	return "[color=#" + color_as_hex + "][b]" + str(value) + "[/b][/color]"
+
+func init_effect(_card: CardBase):
+	pass

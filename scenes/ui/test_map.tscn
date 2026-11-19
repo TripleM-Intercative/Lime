@@ -210,11 +210,12 @@ script = ExtResource("8_vr11v")
 map = NodePath("../TileMapLayer")
 
 [node name="CellDrawerEx" type="Node2D" parent="." unique_id=1069753441]
+visible = false
 script = ExtResource("10_bem4x")
 metadata/_custom_type_script = "uid://d7gwfn08x7gr"
 
 [node name="Lobber" parent="." unique_id=1306159416 node_paths=PackedStringArray("m_cell_drawer") instance=ExtResource("9_1vtn6")]
-position = Vector2(595, 114.000015)
+position = Vector2(515, 76)
 scale = Vector2(0.06, 0.06)
 reaction_field_radius = 10.0
 area_of_view_radius = 20.0

@@ -321,8 +321,7 @@ func m_update_clearance(top_left: Vector2i, size: int) -> void:
 			
 			if m_map_rect.has_point(check_pos):
 				m_calculate_clearance_value(check_pos)
-				
-	m_set_area_dirty(top_left, size)
+				m_dirty_cells[check_pos] = true
 	
 	m_clearance_version += 1
 

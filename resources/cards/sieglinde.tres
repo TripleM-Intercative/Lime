@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://cr8mt0npndwrp"]
+
+[ext_resource type="Texture2D" uid="uid://bconmmvlku1o6" path="res://assets/images/cards/sieglinde_tex.png" id="1_32v62"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_1k4k8"]
+[ext_resource type="Script" uid="uid://hotnteg0fyvc" path="res://scripts/effects/back_up.gd" id="3_7ru7r"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_mtmg5"]
+
+[sub_resource type="Resource" id="Resource_32v62"]
+script = ExtResource("3_7ru7r")
+amount = 3
+
+[resource]
+script = ExtResource("4_mtmg5")
+card_name = "Sieglinde"
+card_image = ExtResource("1_32v62")
+heat_cost = 1
+heat_cost_amount = 7
+exhausted_on_use = true
+target_cells = Array[Vector2i]([Vector2i(-2, -1), Vector2i(-2, 0), Vector2i(-2, 1), Vector2i(-1, -2), Vector2i(-1, -1), Vector2i(-1, 0), Vector2i(-1, 1), Vector2i(-1, 2), Vector2i(0, -2), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(1, -2), Vector2i(1, -1), Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2), Vector2i(2, -1), Vector2i(2, 0), Vector2i(2, 1)])
+card_range = 7
+effects = Array[ExtResource("2_1k4k8")]([SubResource("Resource_32v62")])

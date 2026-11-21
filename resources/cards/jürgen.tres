@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://djd4v3dsawasv"]
+
+[ext_resource type="Texture2D" uid="uid://bq83nc1fw0i78" path="res://assets/images/cards/jürgen_tex.png" id="1_xchk4"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_76d7u"]
+[ext_resource type="Script" uid="uid://drbgia41exdyq" path="res://scripts/effects/card_draw.gd" id="3_e2v8b"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_qkrck"]
+
+[sub_resource type="Resource" id="Resource_hao63"]
+script = ExtResource("3_e2v8b")
+draw_amount = 3
+
+[resource]
+script = ExtResource("4_qkrck")
+card_name = "Jürgen"
+card_image = ExtResource("1_xchk4")
+heat_cost = 2
+heat_cost_amount = 3
+range_type = 1
+card_range = 6
+effects = Array[ExtResource("2_76d7u")]([SubResource("Resource_hao63")])

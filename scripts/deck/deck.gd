@@ -1,7 +1,7 @@
 class_name Deck
 extends Node
 
-const BASE_CARD_SCENE_PATH: String = "res://scenes/basecard.tscn"
+const BASE_CARD_SCENE_PATH: String = "res://scenes/ui/basecard.tscn"
 const CARD_SCRIPTS_PATH: String = "res://scripts/cards/"
 const BASE_Z_INDEX: int = 10
 
@@ -21,6 +21,8 @@ var current_hand: Array[CardBase]
 var discard_pile: Array[CardBase]   
 var draw_deck: Array[CardBase]     
 var exile_deck: Array[CardBase]
+var pending_draws: int = 0
+var reshuffling_cards: Array[CardBase] = []
 
 var hand_container: HBoxContainer
 var viewport_size: Vector2
@@ -65,13 +67,17 @@ func setup_deck_container() -> void:
 func creat_new_card(script: GDScript) -> CardBase:
 	var new_card: CardBase = card_blueprint.instantiate()
 	new_card.set_script(script)
-	new_card.card_used.connect(move_card_to_discard_pile)
+	new_card.card_used.connect(_handel_used_card)
 	new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
 	new_card.custom_minimum_size = new_card.size
 	new_card.offset_transform_enabled = true
 	new_card.offset_transform_visual_only = false
 	return new_card
 
+func _handel_used_card(card: CardBase):
+	for effect in card.card_data.effects:
+		effect.do_deck_operation(self)
+	move_card_to_discard_pile(card)
 
 func _on_card_returned_to_hand(_card: CardBase = null) -> void:
 	deck_animator.shake_hand_cards(current_hand)
@@ -129,24 +135,42 @@ func create_random_deck(amount: int) -> void:
 		card_size = current_deck[0].size
 
 
-func add_card_to_hand(card: CardBase) -> void:
+func add_card_to_hand(card: CardBase, from_discard: bool = false) -> void:
 	card.reset_card()
 	current_hand.append(card)
-	spawn_positions[card] = Vector2(0, viewport_size.y)
+	if from_discard:
+		spawn_positions[card] = discard_pile_img.global_position
+		deck_animator.change_deck_count(discard_pile_img, -1)
+		deck_animator.bounce_deck_anim(discard_pile_img, 0.1)
+	else:
+		spawn_positions[card] = Vector2(0, viewport_size.y)
+		deck_animator.change_deck_count(draw_deck_img, -1)
 	hand_container.add_child(card)
-	deck_animator.change_deck_count(draw_deck_img, -1)
 
+
+func return_cards_from_discard(amount: int) -> void:
+	amount = mini(amount, discard_pile.size())
+	if amount <= 0:
+		return
+	for i in amount:
+		var card_index: int = randi_range(0, discard_pile.size() - 1)
+		add_card_to_hand(discard_pile.pop_at(card_index), true)
+	organize_hand()
 
 func draw_cards(amount: int) -> void:
-	if draw_deck.is_empty():
+	while amount > 0 && !draw_deck.is_empty():
+		add_card_to_hand(draw_deck.pop_back())
+		amount -= 1
+	if amount <= 0:
+		return
+	if reshuffling_cards.is_empty():
 		if discard_pile.is_empty():
 			return
-		deck_animator.anim_reshuffle_multiple(discard_pile.size(), RESHUFFLE_TIME)
-		return
-	for i in range(amount):
-		if draw_deck.is_empty():
-			break
-		add_card_to_hand(draw_deck.pop_back())
+		reshuffling_cards = discard_pile.duplicate()
+		discard_pile.clear()
+		reshuffling_cards.shuffle()
+		deck_animator.anim_reshuffle_multiple(reshuffling_cards.size(), RESHUFFLE_TIME)
+	pending_draws += amount
 
 
 func get_random_cards_form_deck(amount: int) -> void:
@@ -165,9 +189,9 @@ func move_card_to_discard_pile(card: CardBase) -> void:
 	current_hand.remove_at(card_index)
 	if !card.card_data.exhausted_on_use:
 		discard_pile.append(card)
+		deck_animator.anim_move_to_deck_pos(discard_pile_img)
 	else:
 		exile_deck.append(card)
-	deck_animator.anim_move_to_deck_pos(discard_pile_img)
 	hand_container.remove_child(card)
 	if(current_hand.is_empty()):
 		draw_cards(DEFAULT_HAND_SIZE)
@@ -182,6 +206,7 @@ func remove_card_from_deck(card: CardBase) -> void:
 	current_hand.erase(card)
 	draw_deck.erase(card)
 	discard_pile.erase(card)
+	reshuffling_cards.erase(card)
 	spawn_positions.erase(card)
 	if card.get_parent() == hand_container:
 		hand_container.remove_child(card)
@@ -219,6 +244,10 @@ func create_deck_visuals():
 	deck_animator.finished_reshuffle_anim.connect(on_shuffle_finished)
 
 func on_shuffle_finished():
-	shuffle_to_draw_deck()
-	draw_cards(DEFAULT_HAND_SIZE)
+	for card in reshuffling_cards:
+		draw_deck.push_front(card)
+	reshuffling_cards.clear()
+	var amount: int = pending_draws
+	pending_draws = 0
+	draw_cards(amount)
 	organize_hand()

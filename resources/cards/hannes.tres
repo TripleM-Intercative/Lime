@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://hxoi4t5qvyrk"]
+
+[ext_resource type="Texture2D" uid="uid://bjpmt57ebc7m0" path="res://assets/images/cards/hannes_tex.png" id="1_vmksa"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_ntu73"]
+[ext_resource type="Script" uid="uid://dt2cdeq26rral" path="res://scripts/effects/stealth.gd" id="3_vmksa"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_bmh4q"]
+
+[sub_resource type="Resource" id="Resource_vmksa"]
+script = ExtResource("3_vmksa")
+duration = 2.0
+
+[resource]
+script = ExtResource("4_bmh4q")
+card_name = "Hannes"
+card_image = ExtResource("1_vmksa")
+heat_cost = 1
+heat_cost_amount = 3
+target_cells = Array[Vector2i]([Vector2i(-1, 0), Vector2i(0, -1), Vector2i(0, 0), Vector2i(0, 1), Vector2i(1, 0)])
+card_range = 5
+effects = Array[ExtResource("2_ntu73")]([SubResource("Resource_vmksa")])

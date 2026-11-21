@@ -1,7 +1,7 @@
 class_name Deck
 extends Node
 
-const BASE_CARD_SCENE_PATH: String = "res://scenes/basecard.tscn"
+const BASE_CARD_SCENE_PATH: String = "res://scenes/ui/basecard.tscn"
 const CARD_SCRIPTS_PATH: String = "res://scripts/cards/"
 const BASE_Z_INDEX: int = 10
 

@@ -74,14 +74,21 @@ func remove_cell_drawer() -> void:
 	cell_drawer = null
 
 func get_entities_in_cells(cells: Array[Vector2i]) -> Array[LEntity]:
-	var found_entitis: Array[LEntity] = []
+	var found_entities: Array[LEntity] = []
 	for entity: Structs.Entity in path_manager.get_registerd_entitis().values():
 		if !entity.type:
 			continue
-		if cells.has(entity.pos):
-			found_entitis.append(entity.type)
-			break
-	return found_entitis
+		if _has_overlapping_cells(entity.pos, entity.type.entity_size, cells):
+			found_entities.append(entity.type)
+	return found_entities
+
+
+func _has_overlapping_cells(origin: Vector2i, size: int, cells: Array[Vector2i]) -> bool:
+	for x in range(size):
+		for y in range(size):
+			if cells.has(origin + Vector2i(x, y)):
+				return true
+	return false
 
 
 func get_cells_in_radius(

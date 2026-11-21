@@ -45,6 +45,7 @@ func _ready() -> void:
 	position = move_from_pos
 
 	path_manager.entity_cell_changed.connect(_characer_cell_changed)
+	
 
 func _set_heath(val: int) -> void:
 	health = val

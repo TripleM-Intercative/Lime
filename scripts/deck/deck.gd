@@ -158,7 +158,7 @@ func return_cards_from_discard(amount: int) -> void:
 	organize_hand()
 
 func draw_cards(amount: int) -> void:
-	while amount > 0 and not draw_deck.is_empty():
+	while amount > 0 && !draw_deck.is_empty():
 		add_card_to_hand(draw_deck.pop_back())
 		amount -= 1
 	if amount <= 0:

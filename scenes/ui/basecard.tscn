@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d4neaumr7uo6g"]
 
-[ext_resource type="Texture2D" uid="uid://bdnat5iongv35" path="res://assets/images/test_card_background.png" id="1_efksb"]
-[ext_resource type="Script" uid="uid://ccjpvr0tigl3o" path="res://scripts/tools/basescripts/card_base.gd" id="1_m8ymu"]
-[ext_resource type="Texture2D" uid="uid://dxyj53kleu7te" path="res://assets/default_card_image.png" id="2_efksb"]
-[ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="2_ff14k"]
+[ext_resource type="Script" uid="uid://ccjpvr0tigl3o" path="res://scripts/tools/basescripts/card_base.gd" id="1_ism2o"]
+[ext_resource type="Texture2D" uid="uid://bdnat5iongv35" path="res://assets/images/test_card_background.png" id="2_1ktro"]
+[ext_resource type="Texture2D" uid="uid://dxyj53kleu7te" path="res://assets/default_card_image.png" id="3_rmyrn"]
+[ext_resource type="Texture2D" uid="uid://dv73wh51bt2mk" path="res://assets/images/cards/test_tex.png" id="4_n3afl"]
 
 [node name="BaseCard" type="Control" unique_id=210052219]
 layout_mode = 3
@@ -11,7 +11,7 @@ anchors_preset = 0
 offset_right = 250.0
 offset_bottom = 350.0
 pivot_offset = Vector2(125, 175)
-script = ExtResource("1_m8ymu")
+script = ExtResource("1_ism2o")
 
 [node name="CardBackground" type="TextureRect" parent="." unique_id=1202582835]
 layout_mode = 1
@@ -21,7 +21,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 rotation = -0.00021610557
-texture = ExtResource("1_efksb")
+texture = ExtResource("2_1ktro")
 expand_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="." unique_id=122675471]
@@ -46,7 +46,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(30, 30)
 layout_mode = 2
 size_flags_horizontal = 0
-texture = ExtResource("2_efksb")
+texture = ExtResource("3_rmyrn")
 expand_mode = 1
 
 [node name="HeatAmount" type="Label" parent="MarginContainer/VBoxContainer/HeatInfo" unique_id=341298260]
@@ -61,7 +61,7 @@ horizontal_alignment = 2
 custom_minimum_size = Vector2(150, 150)
 layout_mode = 2
 size_flags_horizontal = 4
-texture = ExtResource("2_ff14k")
+texture = ExtResource("4_n3afl")
 expand_mode = 1
 
 [node name="CardName" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1090644287]
@@ -76,7 +76,6 @@ size_flags_vertical = 3
 mouse_filter = 2
 bbcode_enabled = true
 text = "[This is empty space to describe the unique properties of a given card]"
-fit_content = true
 autowrap_mode = 2
 horizontal_alignment = 1
 

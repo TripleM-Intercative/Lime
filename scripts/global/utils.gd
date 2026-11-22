@@ -11,7 +11,7 @@ const VALUE_CHILD_INDEX: int = 1
 const EFFECT_COLOR_TYPES: Dictionary = {
 	Enums.CardType.None: Color.WHITE,
 	Enums.CardType.Damage: Color.RED,
-	Enums.CardType.Heal: Color.GREEN,
+	Enums.CardType.Defense: Color.GREEN,
 	Enums.CardType.Beacon: Color.GOLD,
 	Enums.CardType.Guardian: Color.BLUE,
 	Enums.CardType.Utility: Color.PURPLE,
@@ -133,7 +133,6 @@ static func get_mouse_velocity(event: InputEvent, delta: float) -> Vector2:
 		return event.relative / delta
 	else:
 		return Vector2.ZERO
-	
-	
-	
-	
+
+static func chance(probability: float = 0.5) -> bool:
+		return randf() < probability

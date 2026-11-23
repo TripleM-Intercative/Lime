@@ -52,9 +52,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		if !path_manager.has_entity_space(path_manager_id, clicked_cell):
 			return
 			
-		if clicked_cell == move_from_cell:
-			return
-			
 		path_target_cell = clicked_cell
 		use_path = true
 

@@ -12,6 +12,7 @@ signal entity_cell_changed(type: LEntity, old: Vector2i, new: Vector2i)
 	Enums.ObstacleType.Attack: 2.0
 }
 
+@export var always_update_on_move: bool = false
 @export var path_target_recalculation_offset: int = 2
 
 var m_map_rect: Rect2i
@@ -50,6 +51,8 @@ func _ready() -> void:
 	m_init_clearance()
 	
 	m_sync_grids()
+	
+	MapManager.path_manager = self
 
 #Public
 
@@ -183,13 +186,13 @@ func calculate_path(id: int, target: Vector2i) -> Array[Vector2i]:
 
 func calculate_path_segment(id: int, target: Vector2i) -> Vector2i:
 	if !m_entities.has(id):
-		return Vector2i.ZERO
+		return Vector2i(-1, -1)
 		
 	var entity: Structs.Entity = m_entities[id]
 	
 	var cache: Structs.CachedPath = m_path_cache.get(id)
 	
-	if cache != null && m_is_cache_valid(cache, target):
+	if !always_update_on_move && cache != null && m_is_cache_valid(cache, target):
 		var index: int = cache.cells.find(entity.pos)
 		
 		if index != -1:
@@ -204,14 +207,15 @@ func calculate_path_segment(id: int, target: Vector2i) -> Vector2i:
 	
 	var path: Array[Vector2i] = calculate_path(id, target)
 	
-	if !m_path_cache.has(id):
-		m_path_cache[id] = Structs.CachedPath.new()
-		
-	cache = m_path_cache[id]
-	cache.cells = path
-	cache.target = target
-	cache.complete = !path.is_empty() && path[-1] == target
-	cache.version = m_clearance_version
+	if !always_update_on_move:
+		if !m_path_cache.has(id):
+			m_path_cache[id] = Structs.CachedPath.new()
+			
+		cache = m_path_cache[id]
+		cache.cells = path
+		cache.target = target
+		cache.complete = !path.is_empty() && path[-1] == target
+		cache.version = m_clearance_version
 	
 	if path.size() <= 1:
 		return entity.pos
@@ -228,7 +232,7 @@ func is_target_reachable(id: int) -> bool:
 
 func get_reachable_target(id: int) -> Vector2i:
 	if !m_path_cache.has(id):
-		return Vector2i.ZERO
+		return Vector2i(-1, -1)
 		
 	var cache: Structs.CachedPath = m_path_cache[id]
 	
@@ -238,7 +242,6 @@ func get_reachable_target(id: int) -> Vector2i:
 	return cache.cells[-1]
 
 #Map
-
 func map_cells_changed(cells: Array[Vector2i]) -> void:
 	for cell in cells:
 		if m_map_rect.has_point(cell):
@@ -249,6 +252,28 @@ func map_area_changed(top_left: Vector2i, size: int) -> void:
 		return
 		
 	m_update_clearance(top_left, size)
+
+#Distance
+func is_entity_in_range(id: int, character: LEntity, radius: int) -> bool:
+	if !character || !m_entities.has(id):
+		return false
+		
+	var diff: Vector2i = (m_entities[id].pos - character.current_cell).abs()
+	
+	return (diff.x + diff.y) <= radius
+
+#Get
+func get_entities_of_type(type: LEntity) -> Array[Structs.Entity]:
+	var entities: Array[Structs.Entity]
+	
+	for entity: Structs.Entity in m_entities.values():
+		if entity.type == type:
+			entities.append(entity)
+			
+	return entities
+
+func get_registerd_entitis() -> Dictionary[int, Structs.Entity]:
+	return m_entities
 
 #Private
 
@@ -322,7 +347,7 @@ func m_update_clearance(top_left: Vector2i, size: int) -> void:
 			if m_map_rect.has_point(check_pos):
 				m_calculate_clearance_value(check_pos)
 				m_dirty_cells[check_pos] = true
-	
+				
 	m_clearance_version += 1
 
 #Space checks
@@ -453,7 +478,7 @@ func m_remove_obstacle_data(type: int, top_left: Vector2i, size: int, solid: boo
 				
 	m_set_area_dirty(top_left, size)
 
-func m_get_offset_caches(size: int) -> Array:
+func m_get_offset_caches(size: int) -> Array[Vector2i]:
 	if !m_offset_caches.has(size):
 		var offsets: Array[Vector2i] = []
 		
@@ -473,22 +498,3 @@ func m_is_cache_valid(cache: Structs.CachedPath, target: Vector2i) -> bool:
 	var diff: Vector2i = (cache.target - target).abs()
 	
 	return diff.x + diff.y <= path_target_recalculation_offset
-
-#Distance
-func is_entity_in_range(id: int, character: LEntity, radius: int) -> bool:
-	if !character || !m_entities.has(id):
-		return false
-		
-	var diff: Vector2i = (m_entities[id].pos - character.current_cell).abs()
-	
-	return (diff.x + diff.y) <= radius
-
-#Get
-func entities_of_type(type: LEntity) -> Array[Structs.Entity]:
-	var entities: Array[Structs.Entity]
-	
-	for entity: Structs.Entity in m_entities.values():
-		if entity.type == type:
-			entities.append(entity)
-			
-	return entities

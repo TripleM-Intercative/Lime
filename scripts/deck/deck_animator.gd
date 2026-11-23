@@ -53,7 +53,7 @@ func create_new_card_vis() -> TextureRect:
 	new_card_vis.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	new_card_vis.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	new_card_vis.z_index = CARD_VIS_Z_INDEX
-	get_tree().current_scene.add_child(new_card_vis)
+	add_child(new_card_vis)
 	
 	new_card_vis.size = draw_deck_img.size
 	new_card_vis.pivot_offset = new_card_vis.size / 2.0

@@ -19,6 +19,10 @@ var entity_size: int = 1
 var move_from_cell: Vector2i = Vector2i.ZERO:
 	set = _move_from_cell
 
+var health_component: HealthComponent
+var gameplay_states: GameplayStates
+var is_stunned: bool = false
+
 var move_to_cell: Vector2i = Vector2i.ZERO:
 	set = _move_to_cell
 
@@ -41,6 +45,7 @@ func _ready() -> void:
 	position = move_from_pos
 
 	path_manager.entity_cell_changed.connect(_characer_cell_changed)
+	
 
 func _set_heath(val: int) -> void:
 	health = val

@@ -6,6 +6,7 @@ signal map_changed(map: TileMapLayer)
 var current_map: TileMapLayer = null
 var hovered_cell: Vector2i = Vector2i.ZERO
 var cell_drawer: CellDrawer
+var path_manager: PathManager
 
 
 func register_map(map: TileMapLayer) -> void:
@@ -71,6 +72,24 @@ func remove_cell_drawer() -> void:
 	if cell_drawer:
 		cell_drawer.queue_free()
 	cell_drawer = null
+
+func get_entities_in_cells(cells: Array[Vector2i]) -> Array[LEntity]:
+	var found_entities: Array[LEntity] = []
+	for entity: Structs.Entity in path_manager.get_registerd_entitis().values():
+		if !entity.type:
+			continue
+		if _has_overlapping_cells(entity.pos, entity.type.entity_size, cells):
+			found_entities.append(entity.type)
+	return found_entities
+
+
+func _has_overlapping_cells(origin: Vector2i, size: int, cells: Array[Vector2i]) -> bool:
+	for x in range(size):
+		for y in range(size):
+			if cells.has(origin + Vector2i(x, y)):
+				return true
+	return false
+
 
 func get_cells_in_radius(
 	center_rect: Rect2i,

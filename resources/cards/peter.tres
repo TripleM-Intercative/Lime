@@ -2,13 +2,13 @@
 
 [ext_resource type="Texture2D" uid="uid://b2qo4jfc28orp" path="res://assets/images/cards/peter_tex.png" id="1_c1fuu"]
 [ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_gda4q"]
-[ext_resource type="Script" uid="uid://dnclnten8i4rt" path="res://scripts/effects/heal_effect.gd" id="3_wu2ud"]
+[ext_resource type="Script" uid="uid://dnclnten8i4rt" path="res://scripts/effects/heal.gd" id="3_wu2ud"]
 [ext_resource type="Script" uid="uid://dc8pmj10prp8e" path="res://scripts/effects/guardian_effect.gd" id="4_gda4q"]
 [ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_vtpaf"]
 
 [sub_resource type="Resource" id="Resource_gda4q"]
 script = ExtResource("3_wu2ud")
-amount = 1.0
+heal_amount = 20.0
 
 [sub_resource type="Resource" id="Resource_wu2ud"]
 script = ExtResource("4_gda4q")

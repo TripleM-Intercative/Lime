@@ -17,6 +17,8 @@ func _ready() -> void:
 
 	center_rect = Rect2i(current_cell, Vector2i(current_cell.x + 1, current_cell.y + 1))
 
+	entity_size = 2
+
 	pass # Replace with function body.
 
 

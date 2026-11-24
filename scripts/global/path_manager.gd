@@ -3,6 +3,13 @@ extends Node
 
 signal entity_cell_changed(type: LEntity, old: Vector2i, new: Vector2i)
 
+const FOUR_DIRECTIONS: Array[Vector2i] = [
+	Vector2i.UP,
+	Vector2i.DOWN,
+	Vector2i.LEFT,
+	Vector2i.RIGHT
+]
+
 @export var map: TileMapLayer
 
 @export var supported_sizes: Array[int] = [1, 2]
@@ -14,6 +21,7 @@ signal entity_cell_changed(type: LEntity, old: Vector2i, new: Vector2i)
 
 @export var always_update_on_move: bool = false
 @export var path_target_recalculation_offset: int = 2
+@export var distance_path_position_tolerance_pow2: float = 0.25
 
 var m_map_rect: Rect2i
 
@@ -222,6 +230,57 @@ func calculate_path_segment(id: int, target: Vector2i) -> Vector2i:
 		
 	return path[1]
 
+func calculate_distance_path_segment(id: int, target: Vector2i, distance: float, away_only: bool) -> Vector2i:
+	if !m_entities.has(id):
+		return Vector2i(-1, -1)
+		
+	var entity: Structs.Entity = m_entities[id]
+	
+	if entity.pos == target:
+		return entity.pos
+		
+	var entity_distance_pow2: float = entity.pos.distance_squared_to(target)
+	
+	if absf(entity_distance_pow2 - distance * distance) <= distance_path_position_tolerance_pow2:
+		return entity.pos
+		
+	var move_away: bool = entity_distance_pow2 < distance * distance
+	
+	if !move_away && away_only:
+		return entity.pos
+		
+	var direction: Vector2 = Vector2(entity.pos - target).normalized() * (distance + 0.5)
+	
+	var distance_target: Vector2i = target + Vector2i(direction.round())
+	
+	var path: Array[Vector2i] = calculate_path(id, distance_target)
+	
+	if path.size() > 1 && m_has_space_map_and_entity(path[1], entity.size, id):
+		return path[1]
+		
+	#Flow Field
+	var best_cell: Vector2i = entity.pos
+	var best_error: float = absf(entity_distance_pow2 - distance * distance)
+	
+	for move_direction in FOUR_DIRECTIONS:
+		var neighbor: Vector2i = entity.pos + move_direction
+		
+		if !m_has_space_map_and_entity(neighbor, entity.size, id):
+			continue
+			
+		var neighbor_distance_pow2: float = neighbor.distance_squared_to(target)
+		
+		if away_only && neighbor_distance_pow2 < entity_distance_pow2:
+			continue
+			
+		var error: float = absf(neighbor_distance_pow2 - distance * distance)
+		
+		if error < best_error:
+			best_cell = neighbor
+			best_error = error
+		
+	return best_cell
+
 func is_target_reachable(id: int) -> bool:
 	if !m_path_cache.has(id):
 		return false
@@ -272,7 +331,7 @@ func get_entities_of_type(type: LEntity) -> Array[Structs.Entity]:
 			
 	return entities
 
-func get_registerd_entitis() -> Dictionary[int, Structs.Entity]:
+func get_registered_entities() -> Dictionary[int, Structs.Entity]:
 	return m_entities
 
 #Private

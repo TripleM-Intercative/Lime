@@ -1,6 +1,7 @@
 class_name BaseCardRes
 extends Resource
 
+var rarity: Enums.Rarity = Enums.Rarity.Common
 @export var card_name: String = ""
 @export var card_image: Texture2D = null
 @export var heat_cost: Enums.HeatCost = Enums.HeatCost.NoCost

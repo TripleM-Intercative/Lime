@@ -8,3 +8,5 @@ enum HeatCost {NoCost, Increase, Cooldown}
 enum ObstacleType {Entity, Attack}
 
 enum RangeType {AOE, SingelTarget, All}
+
+enum Rarity {Common, Rare, Epic, Legendary}

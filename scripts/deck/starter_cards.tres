@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="StartDeck" format=3 uid="uid://c0ffoftywn0p2"]
+
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="1_jff5n"]
+[ext_resource type="Resource" uid="uid://dk4yviuftrkym" path="res://resources/cards/peter.tres" id="2_4igdm"]
+[ext_resource type="Resource" uid="uid://hxoi4t5qvyrk" path="res://resources/cards/hannes.tres" id="3_lphu1"]
+[ext_resource type="Resource" uid="uid://chiqhroeg1g5k" path="res://resources/cards/hildergard.tres" id="4_rauy5"]
+[ext_resource type="Resource" uid="uid://da7oyoj0tj0hk" path="res://resources/cards/otto.tres" id="5_shurc"]
+[ext_resource type="Resource" uid="uid://d15depolwau1d" path="res://resources/cards/johanna.tres" id="6_roq7d"]
+[ext_resource type="Resource" uid="uid://bk4tevy02ar3r" path="res://resources/cards/bestcard.tres" id="7_m2bcn"]
+[ext_resource type="Resource" uid="uid://chalvb1edwp25" path="res://resources/cards/goodcard.tres" id="8_l5po7"]
+[ext_resource type="Resource" uid="uid://bmtebn3vfofcx" path="res://resources/cards/rüdiger.tres" id="9_lipqd"]
+[ext_resource type="Script" uid="uid://cegj22onebuxv" path="res://scripts/deck/start_deck.gd" id="10_4igdm"]
+[ext_resource type="Resource" uid="uid://bb1y1stamete4" path="res://resources/cards/newcard.tres" id="10_lphu1"]
+
+[resource]
+script = ExtResource("10_4igdm")
+cards = Dictionary[ExtResource("1_jff5n"), int]({
+ExtResource("2_4igdm"): 3,
+ExtResource("3_lphu1"): 1,
+ExtResource("4_rauy5"): 2,
+ExtResource("5_shurc"): 2,
+ExtResource("6_roq7d"): 2,
+ExtResource("7_m2bcn"): 1,
+ExtResource("8_l5po7"): 1,
+ExtResource("9_lipqd"): 2,
+ExtResource("10_lphu1"): 1
+})
+metadata/_custom_type_script = "uid://cegj22onebuxv"

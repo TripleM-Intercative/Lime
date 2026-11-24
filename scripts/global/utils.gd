@@ -17,6 +17,13 @@ const EFFECT_COLOR_TYPES: Dictionary = {
 	Enums.CardType.Utility: Color.PURPLE,
 }
 
+const RARITY_COLOR: Dictionary = {
+	Enums.Rarity.Common: Color.WEB_GRAY,
+	Enums.Rarity.Rare: Color.ROYAL_BLUE,
+	Enums.Rarity.Epic: Color.PURPLE,
+	Enums.Rarity.Legendary: Color.GOLDENROD
+}
+
 static func safe_image_to_assets(source: String, save_name: String) -> String:
 	var full_path: String = CARD_IMAGE_FOLDER_PATH + save_name.to_lower().to_snake_case() + "_tex.png"
 	

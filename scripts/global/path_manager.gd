@@ -253,6 +253,8 @@ func calculate_distance_path_segment(id: int, target: Vector2i, distance: float,
 	
 	var distance_target: Vector2i = target + Vector2i(direction.round())
 	
+	distance_target = distance_target.clamp(m_map_rect.position, m_map_rect.end - Vector2i.ONE)
+	
 	var path: Array[Vector2i] = calculate_path(id, distance_target)
 	
 	if path.size() > 1 && m_has_space_map_and_entity(path[1], entity.size, id):

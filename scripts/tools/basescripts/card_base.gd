@@ -76,6 +76,7 @@ func _input(event: InputEvent) -> void:
 
 func init_card_ui() -> void:
 	card_image_rect.texture = card_data.card_image
+	card_image_rect.self_modulate = Utils.RARITY_COLOR.get(card_data.rarity, Color.WHITE)
 	card_name_label.text = card_data.card_name
 	card_description_label.text = create_card_description()
 	target_cells = card_data.target_cells

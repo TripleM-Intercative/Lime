@@ -75,7 +75,7 @@ func remove_cell_drawer() -> void:
 
 func get_entities_in_cells(cells: Array[Vector2i]) -> Array[LEntity]:
 	var found_entities: Array[LEntity] = []
-	for entity: Structs.Entity in path_manager.get_registerd_entitis().values():
+	for entity: Structs.Entity in path_manager.get_registered_entities().values():
 		if !entity.type:
 			continue
 		if _has_overlapping_cells(entity.pos, entity.type.entity_size, cells):

@@ -69,19 +69,9 @@ func setup_deck_container() -> void:
 	hand_container.offset_bottom = card_size.y / 2.0
 	
 
-#func creat_new_card(script: GDScript) -> CardBase:
-	#var new_card: CardBase = card_blueprint.instantiate()
-	#new_card.set_script(script)
-	#new_card.card_used.connect(_handel_used_card)
-	#new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
-	#new_card.custom_minimum_size = new_card.size
-	#new_card.offset_transform_enabled = true
-	#new_card.offset_transform_visual_only = false
-	#return new_card
-
 func create_new_card(data: BaseCardRes) -> CardBase:
 	var new_card: CardBase = card_blueprint.instantiate()
-	new_card.card_data = data  # vor add_child setzen, _ready braucht es
+	new_card.card_data = data
 	new_card.card_used.connect(_handel_used_card)
 	new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
 	new_card.custom_minimum_size = new_card.size
@@ -139,15 +129,6 @@ func organize_hand() -> void:
 	
 		card.z_index = BASE_Z_INDEX + index
 		card.base_z_index = card.z_index
-
-
-#func create_random_deck(amount: int) -> void:
-	#for i in range(amount):
-		#var new_card: CardBase = creat_new_card(card_pool[randi_range(0, card_pool.size() - 1)])
-		#current_deck.append(new_card)
-		#draw_deck.append(new_card)
-	#if !current_deck.is_empty():
-		#card_size = current_deck[0].size
 
 func create_starter_deck() -> void:
 	for data: BaseCardRes in STARTER_CARDS.cards:

@@ -2,12 +2,17 @@ extends Node2D
 
 @export var map: TileMapLayer
 @onready var mp: PathManager = %PathManager
+var draw_debug: bool = false
 
+func _ready() -> void:
+	DebugMenu.add_toggle("Draw A* Debug", draw_debug, func(on: bool): draw_debug = on, self)
 
 func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw() -> void:
+	if !draw_debug:
+		return
 	var cell_size = Vector2(map.tile_set.tile_size)
 
 	for x in range(100):

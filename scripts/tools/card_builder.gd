@@ -240,6 +240,7 @@ func show_card_form(card_res: BaseCardRes, path: String):
 	clear_content()
 	create_name_input()
 	create_image_input()
+	create_base_rarity_input()
 	create_heat_input()
 	create_card_range_input()
 	create_exhaust_input()
@@ -297,6 +298,13 @@ func create_range_type_input():
 func _on_range_type_changed(new_type: Enums.RangeType):
 	card.range_type = new_type
 	_update_grid_edit_button()
+
+func create_base_rarity_input():
+	var base_rarity_input: VBoxContainer = Utils.create_dropdown_input_with_enum(Enums.Rarity, "Base Rarity", _on_base_rarity_changed)
+	content.add_child(base_rarity_input)
+
+func _on_base_rarity_changed(new_rarity: Enums.Rarity):
+	card.rarity = new_rarity
 
 func _update_grid_edit_button():
 	if grid_edit_button:

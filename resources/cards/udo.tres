@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="BaseCardRes" format=3 uid="uid://d0qphjpghue3p"]
+
+[ext_resource type="Texture2D" uid="uid://ycv38kt7b8ne" path="res://assets/images/cards/udo_tex.png" id="1_hjc1h"]
+[ext_resource type="Script" uid="uid://coxyr1en15sn2" path="res://scripts/effects/card_effect.gd" id="2_0w57p"]
+[ext_resource type="Script" uid="uid://ca8i5mdaplfnr" path="res://scripts/effects/damage.gd" id="3_dvd1l"]
+[ext_resource type="Script" uid="uid://dkww2h5dqbefv" path="res://scripts/tools/basescripts/base_card_res.gd" id="4_gyto7"]
+
+[sub_resource type="Resource" id="Resource_vs5ln"]
+script = ExtResource("3_dvd1l")
+damage_amount = 10.0
+
+[resource]
+script = ExtResource("4_gyto7")
+card_name = "Udo"
+card_image = ExtResource("1_hjc1h")
+heat_cost = 1
+heat_cost_amount = 4
+range_type = 2
+card_range = 4
+effects = Array[ExtResource("2_0w57p")]([SubResource("Resource_vs5ln")])

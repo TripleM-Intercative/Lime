@@ -46,6 +46,7 @@ func _ready() -> void:
 	viewport_size = get_viewport().get_visible_rect().size
 	create_deck_visuals()
 	init_card_deck()
+	var peter = LootTable.new()
 	
 #Debug
 	DebugMenu.add_button("Draw 5 Cards", draw_cards.bind(5), self)

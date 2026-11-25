@@ -37,9 +37,11 @@ func roll_base_rarity() -> Enums.Rarity:
 	var pulled_rarity: Enums.Rarity = Enums.Rarity.Common
 	var rarities: Array[int] = Enums.Rarity.values()
 	var roll: float = randf()
+	var cumulative_chance: float = 0.0
 	for i in range(rarities.size() - 1, -1, -1):
 		var rarity = rarities[i]
-		if roll <= RARITY_CHANCES.get(rarity, 0.0):
+		cumulative_chance += RARITY_CHANCES.get(rarity, 0.0)
+		if roll <= cumulative_chance:
 			pulled_rarity = rarity as Enums.Rarity
 			break
 	return pulled_rarity

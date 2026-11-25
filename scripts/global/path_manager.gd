@@ -178,6 +178,7 @@ func remove_obstacle(type: Enums.ObstacleType, top_left: Vector2i, size: int, so
 	return true
 
 #Path
+##This function calculates the path for an entity to a target.
 func calculate_path(id: int, target: Vector2i) -> Array[Vector2i]:
 	if !m_entities.has(id):
 		return []
@@ -192,6 +193,7 @@ func calculate_path(id: int, target: Vector2i) -> Array[Vector2i]:
 	
 	return astar.get_id_path(entity.pos, target, true)
 
+##This function calculates the next segment of the path for an entity to a target.
 func calculate_path_segment(id: int, target: Vector2i) -> Vector2i:
 	if !m_entities.has(id):
 		return Vector2i(-1, -1)
@@ -230,6 +232,10 @@ func calculate_path_segment(id: int, target: Vector2i) -> Vector2i:
 		
 	return path[1]
 
+##This function calculates the next segment of a path.
+##The target of that path is the point from the given target to that Entity with the given distance.
+##If away_only is true and the distance between the Entity and the given target is larger than
+##the given distance, this function returns Entity.pos
 func calculate_distance_path_segment(id: int, target: Vector2i, distance: float, away_only: bool) -> Vector2i:
 	if !m_entities.has(id):
 		return Vector2i(-1, -1)

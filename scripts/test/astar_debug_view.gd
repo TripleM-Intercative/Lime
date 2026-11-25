@@ -14,7 +14,7 @@ func _draw() -> void:
 		for y in range(100):
 			var pos = Vector2i(x, y)
 
-			if mp.m_astar_grids[2].is_point_solid(pos):
+			if mp.m_astar_grids[2].is_point_solid(pos) || mp.m_solid_entities.has(pos):
 				var world_pos = map.map_to_local(pos)
 				var rect = Rect2(world_pos - (cell_size / 2.0), cell_size)
 				draw_rect(rect, Color(1, 0, 0, 0.4))

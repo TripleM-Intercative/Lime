@@ -78,30 +78,33 @@ func is_valid_target(cell: Vector2i) -> bool:
 	return path_manager.has_entity_space(path_manager_id, cell)
 
 func m_calculate_move_target() -> bool:
-	var should_move: bool = false
-	
-	if input_buffer.is_empty():
-		if !input_stack.is_empty():
-			should_move = true
-			use_path = false
-			
-			move_to_cell = move_from_cell + get_input_stack_direction()
-			
-		elif use_path:
-			var next_cell: Vector2i
-			next_cell = path_manager.calculate_path_segment(path_manager_id, path_target_cell)
-			
-			if next_cell == move_from_cell:
-				use_path = false
-				
-			else:
-				should_move = true
-				move_to_cell = next_cell
-				
-	else:
-		should_move = true
+	if !input_buffer.is_empty():
 		use_path = false
 		move_to_cell = move_from_cell + input_actions[input_buffer]
 		input_buffer = &""
 		
-	return should_move
+		return true
+		
+	if !input_stack.is_empty():
+		use_path = false
+		move_to_cell = move_from_cell + get_input_stack_direction()
+		
+		return true
+		
+	if !use_path:
+		return false
+		
+	if path_target_cell == move_from_cell:
+		use_path = false
+		
+		return false
+		
+	var next_cell: Vector2i = path_manager.calculate_path_segment(path_manager_id, path_target_cell)
+	if next_cell == move_from_cell:
+		use_path = false
+		
+		return false
+		
+	move_to_cell = next_cell
+	
+	return true

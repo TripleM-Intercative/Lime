@@ -1,7 +1,6 @@
 class_name Deck
 extends Node
 
-const BASE_CARD_SCENE_PATH: String = "res://scenes/ui/basecard.tscn"
 const CARD_SCRIPTS_PATH: String = "res://scripts/cards/"
 const STARTER_CARDS: Resource = preload("res://scripts/deck/starter_cards.tres")
 const BASE_Z_INDEX: int = 10
@@ -14,7 +13,6 @@ const DECK_HEIGHT: float = 30.0
 const DEFAULT_HAND_SIZE: int = 5
 const RESHUFFLE_TIME: float = 1.0
 
-var card_blueprint: Resource = preload(BASE_CARD_SCENE_PATH)
 var card_pool: Array[GDScript]
 
 var current_deck: Array[CardBase]   
@@ -71,13 +69,11 @@ func setup_deck_container() -> void:
 	
 
 func create_new_card(data: BaseCardRes) -> CardBase:
-	var new_card: CardBase = card_blueprint.instantiate()
+	var new_card: CardBase = CardBase.new()
 	new_card.card_data = data
 	new_card.card_used.connect(_handel_used_card)
 	new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
 	new_card.custom_minimum_size = new_card.size
-	new_card.offset_transform_enabled = true
-	new_card.offset_transform_visual_only = false
 	return new_card
 
 func _handel_used_card(card: CardBase):
@@ -101,7 +97,7 @@ func organize_hand() -> void:
 	
 	var old_visual_pos: Dictionary = {}
 	for card in current_hand:
-		old_visual_pos[card] = spawn_positions.get(card, card.get_visual_global_pos())
+		old_visual_pos[card] = spawn_positions.get(card, card.card_visual.get_visual_global_pos())
 	spawn_positions.clear()
 	
 	var spacing: float = calculate_card_spacing(current_hand.size())
@@ -122,11 +118,12 @@ func organize_hand() -> void:
 		var target_offset: Vector2 = Vector2(0.0, hand_pos * hand_pos * DECK_HEIGHT)
 		var target_rotation: float = hand_pos * MAX_ROTATION
 	
-		card.offset_transform_position = old_visual_pos[card] - card.get_layout_global_pos()
-		card.origin_offset = target_offset
-		card.origin_rotation = target_rotation
-		card.move_card(target_offset, 0.5, false)
-		card.rotate_card(target_rotation, 0.5)
+		var visual: CardVisual = card.card_visual
+		visual.offset_transform_position = old_visual_pos[card] - visual.get_layout_global_pos()
+		visual.origin_offset = target_offset
+		visual.origin_rotation = target_rotation
+		visual.move_card(target_offset, 0.5, false)
+		visual.rotate_card(target_rotation, 0.5)
 	
 		card.z_index = BASE_Z_INDEX + index
 		card.base_z_index = card.z_index

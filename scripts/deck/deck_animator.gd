@@ -174,4 +174,4 @@ func emit_reshuffle_done():
 
 func shake_hand_cards(current_hand: Array[CardBase]):
 	for card in current_hand:
-		card.shake_card()
+		card.card_visual.shake_card()

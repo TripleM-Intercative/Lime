@@ -335,12 +335,29 @@ func get_entities_of_type(type: LEntity) -> Array[Structs.Entity]:
 	
 	for entity: Structs.Entity in m_entities.values():
 		if entity.type == type:
-			entities.append(entity)
+			entities.push_back(entity)
 			
 	return entities
 
 func get_registered_entities() -> Dictionary[int, Structs.Entity]:
 	return m_entities
+
+func get_entites_at_cell(cell: Vector2i) -> Array[LEntity]:
+	if m_obstacles.has(cell):
+		return []
+		
+	if m_obstacles[cell].is_type_empty(Enums.ObstacleType.Entity, false):
+		return []
+		
+	var entites: Array[LEntity] = []
+	
+	for entity in m_entities.values():
+		var rect: Rect2i = Rect2i(entity.pos, Vector2i(entity.size, entity.size))
+		
+		if rect.has_point(cell):
+			entites.push_back(entity.type)
+		
+	return entites
 
 #Private
 

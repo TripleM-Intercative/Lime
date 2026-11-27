@@ -335,7 +335,7 @@ func get_entities_of_type(type: LEntity) -> Array[Structs.Entity]:
 	
 	for entity: Structs.Entity in m_entities.values():
 		if entity.type == type:
-			entities.append(entity)
+			entities.push_back(entity)
 			
 	return entities
 

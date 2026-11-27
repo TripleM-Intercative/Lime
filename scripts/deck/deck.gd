@@ -3,6 +3,7 @@ extends Node
 
 const BASE_CARD_SCENE_PATH: String = "res://scenes/ui/basecard.tscn"
 const CARD_SCRIPTS_PATH: String = "res://scripts/cards/"
+const STARTER_CARDS: Resource = preload("res://scripts/deck/starter_cards.tres")
 const BASE_Z_INDEX: int = 10
 
 const MAX_SPACING: float = 120.0
@@ -45,10 +46,14 @@ func _ready() -> void:
 	viewport_size = get_viewport().get_visible_rect().size
 	create_deck_visuals()
 	init_card_deck()
+	
+#Debug
+	DebugMenu.add_button("Draw 5 Cards", draw_cards.bind(5), self)
 
 
 func init_card_deck() -> void:
-	create_random_deck(15)
+	#create_random_deck(15)
+	create_starter_deck()
 	deck_animator.set_deck_count(draw_deck_img, draw_deck.size())
 	deck_animator.set_deck_count(discard_pile_img, discard_pile.size())
 	setup_deck_container()
@@ -64,9 +69,9 @@ func setup_deck_container() -> void:
 	hand_container.offset_bottom = card_size.y / 2.0
 	
 
-func creat_new_card(script: GDScript) -> CardBase:
+func create_new_card(data: BaseCardRes) -> CardBase:
 	var new_card: CardBase = card_blueprint.instantiate()
-	new_card.set_script(script)
+	new_card.card_data = data
 	new_card.card_used.connect(_handel_used_card)
 	new_card.returned_card_to_hand.connect(_on_card_returned_to_hand)
 	new_card.custom_minimum_size = new_card.size
@@ -125,15 +130,14 @@ func organize_hand() -> void:
 		card.z_index = BASE_Z_INDEX + index
 		card.base_z_index = card.z_index
 
-
-func create_random_deck(amount: int) -> void:
-	for i in range(amount):
-		var new_card: CardBase = creat_new_card(card_pool[randi_range(0, card_pool.size() - 1)])
-		current_deck.append(new_card)
-		draw_deck.append(new_card)
-	if not current_deck.is_empty():
+func create_starter_deck() -> void:
+	for data: BaseCardRes in STARTER_CARDS.cards:
+		for i in STARTER_CARDS.cards[data]:
+			current_deck.append(create_new_card(data))
+	current_deck.shuffle()
+	draw_deck = current_deck.duplicate()
+	if !current_deck.is_empty():
 		card_size = current_deck[0].size
-
 
 func add_card_to_hand(card: CardBase, from_discard: bool = false) -> void:
 	card.reset_card()
